@@ -35,9 +35,11 @@
     ${util.data(ctx, with_dl=False)}
 </dl>
 
-<h3 style="clear: left">${_('Contributions')}</h3>
-<ul>b
-    % for c in ctx.contribution_assocs:
-    <li>${h.link(request, c.contribution)}</li>
-    % endfor
-</ul>
+% if ctx.contribution_assocs:
+    <h3 style="clear: left">${_('Contributions')}</h3>
+    <ul>
+        % for c in ctx.contribution_assocs:
+            <li>${h.link(request, c.contribution)}</li>
+        % endfor
+    </ul>
+% endif
