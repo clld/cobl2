@@ -100,6 +100,8 @@ def main(args):
             latitude=float(row['Latitude']),
             longitude=float(row['Longitude']),
             contribution=c,
+            color=row['Color'],
+            clade=row['Clade'],
         )
 
     for row in ds['FormTable']:

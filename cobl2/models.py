@@ -24,3 +24,5 @@ class Variety(CustomModelMixin, Language):
     contribution_pk = sa.Column(sa.Integer, sa.ForeignKey('contribution.pk'))
     contribution = sa.orm.relationship(
         Contribution, backref=sa.orm.backref('variety', uselist=False))
+    color = sa.Column(sa.Unicode)
+    clade = sa.Column(sa.Unicode)
