@@ -3,6 +3,8 @@ from setuptools import setup, find_packages
 
 requires = [
     'clldmpg>=1.1.0',
+    'clld-cognacy-plugin>=0.1',
+    'markdown',
 ]
 
 tests_require = [
