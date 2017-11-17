@@ -1,9 +1,10 @@
-from clld.interfaces import IContribution, ILinkAttrs, IValueSet, ILanguage, IMapMarker
+from clld.interfaces import IContribution, ILinkAttrs, IValueSet, ILanguage, IMapMarker, IValue
 from clld.web.icon import MapMarker
 from pyramid.config import Configurator
 
 # we must make sure custom models are known at database initialization!
 from cobl2 import models
+from cobl2 import datatables
 
 
 _ = lambda s: s
@@ -23,6 +24,9 @@ def link_attrs(req, obj, **kw):
 class CoblMapMarker(MapMarker):
     def __call__(self, ctx, req):
         color = None
+        if IValue.providedBy(ctx):
+            color = ctx.valueset.language.color
+
         if IValueSet.providedBy(ctx):
             color = ctx.language.color
 
@@ -42,6 +46,7 @@ def main(global_config, **settings):
     config.include('clldmpg')
     #config.include('clld_glottologfamily_plugin')
     config.include('clld_cognacy_plugin')
+    config.register_datatable('cognatesets', datatables.CognateClasses)
     config.add_route('test', '/test')
     config.registry.registerUtility(link_attrs, ILinkAttrs)
     config.registry.registerUtility(CoblMapMarker(), IMapMarker)

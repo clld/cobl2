@@ -1,14 +1,16 @@
+# coding: utf8
 from __future__ import unicode_literals
 import sys
+from collections import OrderedDict
 
 from clld.scripts.util import initializedb, Data
 from clld.db.meta import DBSession
 from clld.db.models import common
 from clld.lib.bibtex import EntryType
-from clldutils.misc import slug
+from clld.web.util.helpers import data_uri
 from clldutils.path import Path, read_text
-from nameparser import HumanName
 from pycldf import Wordlist
+
 
 import cobl2
 from cobl2 import models
@@ -17,15 +19,16 @@ import clld_cognacy_plugin.models
 ds = Wordlist.from_metadata(
     Path(cobl2.__file__).parent / '../..' / 'cobl-data' / 'cldf' / 'Wordlist-metadata.json')
 wiki = Path(cobl2.__file__).parent / '../..' / 'CoBL-public.wiki'
-
-
-def get_contributor(data, name):
-    name = HumanName(name.strip())
-    id_ = slug(name.last + name.first)
-    res = data['Contributor'].get(id_)
-    if not res:
-        res = data.add(common.Contributor, id_, id=id_, name=name.original)
-    return res
+photos = {
+    p.stem: p.as_posix() for p in
+    (Path(cobl2.__file__).parent / '../..' / 'CoBL-public' / 'static' / 'contributors').iterdir()
+    if p.suffix == '.jpg'}
+for k, v in {
+    'Kümmel': 'Kuemmel',
+    'de Vaan': 'deVaan',
+    'Dewey-Findell': 'Dewey',
+}.items():
+    photos[k] = photos[v]
 
 
 def main(args):
@@ -44,8 +47,21 @@ def main(args):
             'license_name': 'Creative Commons Attribution 4.0 International License'})
 
     DBSession.add(dataset)
-    for i, ed in enumerate(['Paul Heggarty', 'Cormac Anderson']):
-        common.Editor(dataset=dataset, contributor=get_contributor(data, ed), ord=i + 1)
+
+    editors = OrderedDict([('Heggarty', None), ('Anderson', None)])
+    for row in ds['authors.csv']:
+        if row['Last_Name'] in editors:
+            editors[row['Last_Name']] = row['ID']
+        data.add(
+            models.Author,
+            row['ID'],
+            id=row['ID'],
+            name='{0} {1}'.format(row['First_Name'], row['Last_Name']),
+            url=row['URL'],
+            photo=data_uri(photos[row['Last_Name']], 'image/jpg') if row['Last_Name'] in photos else None)
+
+    for i, cid in enumerate(editors.values()):
+        common.Editor(dataset=dataset, contributor=data['Author'][cid], ord=i + 1)
 
     for src in ds.sources.items():
         for invalid in ['isbn', 'part', 'institution']:
@@ -88,10 +104,9 @@ def main(args):
             id=row['ID'],
             name='{0} Dataset'.format(row['Name']),
         )
-        for i, author in enumerate(row['Authors']):
-            contrib = get_contributor(data, author)
+        for i, cid in enumerate(row['Author_ID']):
             DBSession.add(common.ContributionContributor(
-                contribution=c, contributor=contrib, ord=i + 1))
+                contribution=c, contributor=data['Author'][cid], ord=i + 1))
         data.add(
             models.Variety,
             row['ID'],
@@ -128,7 +143,7 @@ def main(args):
                 valueset=vs, source=data['Source'][sid], description=pages))
 
     for row in ds['CognatesetTable']:
-        data.add(
+        cc = data.add(
             models.CognateClass,
             row['ID'],
             id=row['ID'],
@@ -137,6 +152,10 @@ def main(args):
             root_gloss=row['Root_Gloss'],
             root_language=row['Root_Language'],
         )
+        for src in row['Source']:
+            sid, pages = ds.sources.parse(src)
+            DBSession.add(clld_cognacy_plugin.models.CognatesetReference(
+                cognateset=cc, source=data['Source'][sid], description=pages))
 
     for row in ds['CognateTable']:
         data.add(
