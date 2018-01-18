@@ -94,7 +94,7 @@ def main(args):
             description=param['Description'],
             wiki=clean_md(read_text(wiki_page)) if wiki_page.exists() else None,
             example_context=param['Example_Context'],
-            concepticon_id=int(param['Conceptset']) if param['Conceptset'] != '0' else None,
+            concepticon_id=int(param['Concepticon_ID']) if param['Concepticon_ID'] != '0' else None,
         )
 
     for row in ds['LanguageTable']:
@@ -119,6 +119,7 @@ def main(args):
             clade=row['Clade'],
         )
 
+    vsrs = set()
     for row in ds['FormTable']:
         vs = data['ValueSet'].get((row['Language_ID'], row['Parameter_ID']))
         if not vs:
@@ -139,8 +140,11 @@ def main(args):
         )
         for src in row['Source']:
             sid, pages = ds.sources.parse(src)
-            DBSession.add(common.ValueSetReference(
-                valueset=vs, source=data['Source'][sid], description=pages))
+            key = (vs.id, sid, pages)
+            if key not in vsrs:
+                DBSession.add(common.ValueSetReference(
+                    valueset=vs, source=data['Source'][sid], description=pages))
+                vsrs.add(key)
 
     for row in ds['CognatesetTable']:
         cc = data.add(
