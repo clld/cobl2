@@ -1,9 +1,22 @@
+from __future__ import unicode_literals
+
 import sqlalchemy as sa
 import sqlalchemy.orm
 
-from clld.db.meta import CustomModelMixin
-from clld.db.models.common import Parameter, Language, Contribution, Contributor
+from clld.db.meta import CustomModelMixin, Base
+from clld.db.models.common import Parameter, Language, Contribution, Contributor, Value
 from clld_cognacy_plugin.models import MeaningMixin, Cognateset
+
+
+#
+# lexemes: native_script, url
+# languages: fossil (Boolean)
+#
+
+class Lexeme(CustomModelMixin, Value):
+    pk = sa.Column(sa.Integer, sa.ForeignKey('value.pk'), primary_key=True)
+    native_script = sa.Column(sa.Unicode)
+    url = sa.Column(sa.Unicode)
 
 
 class Meaning(CustomModelMixin, Parameter, MeaningMixin):
@@ -18,6 +31,28 @@ class CognateClass(CustomModelMixin, Cognateset):
     root_gloss = sa.Column(sa.Unicode)
     root_language = sa.Column(sa.Unicode)
     source = sa.Column(sa.Unicode, default=None)
+    meaning_pk = sa.Column(sa.Integer, sa.ForeignKey('meaning.pk'))
+    meaning = sa.orm.relationship(Meaning, backref='cognateclasses')
+    color = sa.Column(sa.Unicode)
+
+    loan_source_pk = sa.Column(sa.Integer, sa.ForeignKey('cognateclass.pk'))
+    loan_notes = sa.Column(sa.Unicode)
+    loan_source_form = sa.Column(sa.Unicode)
+    loan_source_languoid = sa.Column(sa.Unicode)
+    loans = sa.orm.relationship(
+        'CognateClass',
+        foreign_keys=[loan_source_pk],
+        backref=sa.orm.backref('loan_source', remote_side=[pk]))
+
+    def __unicode__(self):
+        if self.root_form:
+            res = self.root_form
+            if self.root_gloss:
+                res += ' ({0})'.format(self.root_gloss)
+            if self.root_language:
+                res += ' [{0}]'.format(self.root_language)
+            return res
+        return Cognateset.__unicode__(self)
 
 
 class Variety(CustomModelMixin, Language):
@@ -27,6 +62,15 @@ class Variety(CustomModelMixin, Language):
         Contribution, backref=sa.orm.backref('variety', uselist=False))
     color = sa.Column(sa.Unicode)
     clade = sa.Column(sa.Unicode)
+    fossil = sa.Column(sa.Boolean)
+    glottocode = sa.Column(sa.Unicode)
+
+    @property
+    def fontcolor(self):
+        R, G, B = [int(c, 16) for c in [self.color[i:i+2] for i in range(3)]]
+        if 0.299 * R + 0.587 * G + 0.114 * B < 125:
+            return '#eee'
+        return '#000'
 
 
 class Author(CustomModelMixin, Contributor):

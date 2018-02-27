@@ -2,7 +2,8 @@ from clld.web.datatables.base import DetailsRowLinkCol, IdCol, RefsCol, Col, Lin
 from clld.web.datatables import value
 from clld.db.models.common import Language, Value
 from clld_cognacy_plugin.datatables import Meanings, Cognatesets
-from clld_cognacy_plugin.models import Cognate
+from clld_cognacy_plugin.models import Cognate, Cognateset
+from clld_cognacy_plugin.datatables import Cognatesets
 
 from cobl2.models import CognateClass
 
@@ -15,10 +16,16 @@ class CoblMeanings(Meanings):
 class CognateClasses(Cognatesets):
     def col_defs(self):
         return [
-            IdCol(self, 'ID'),
-            Col(self, 'Root form', model_col=CognateClass.root_form),
-            Col(self, 'Root gloss', model_col=CognateClass.root_gloss),
-            Col(self, 'Root language', model_col=CognateClass.root_language),
+            IdCol(self, 'ID', model_col=Cognateset.id),
+            Col(self, 'Root_form', model_col=CognateClass.root_form),
+            Col(self, 'Root_gloss', model_col=CognateClass.root_gloss),
+            Col(self, 'Root_language', model_col=CognateClass.root_language),
+            LinkCol(
+                self,
+                'loaned_from',
+                sClass='left',
+                model_col=CognateClass.loan_source_pk,
+                get_object=lambda cc: cc.loan_source),
             RefsCol(self, 'Source'),
         ]
 
@@ -62,4 +69,5 @@ def includeme(config):
     # "manually", i.e. in cobl2.main.
     #
     config.register_datatable('values', Forms)
+    config.register_datatable('cognatesets', CognateClasses)
     config.register_datatable('parameters', CoblMeanings)
