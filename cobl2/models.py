@@ -5,6 +5,7 @@ import sqlalchemy.orm
 
 from clld.db.meta import CustomModelMixin, Base
 from clld.db.models.common import Parameter, Language, Contribution, Contributor, Value
+from clld.lib.color import is_bright
 from clld_cognacy_plugin.models import MeaningMixin, Cognateset
 
 
@@ -23,6 +24,8 @@ class Meaning(CustomModelMixin, Parameter, MeaningMixin):
     pk = sa.Column(sa.Integer, sa.ForeignKey('parameter.pk'), primary_key=True)
     example_context = sa.Column(sa.Unicode)
     wiki = sa.Column(sa.Unicode)
+    count_languages = sa.Column(sa.Integer)
+    count_cognateclasses = sa.Column(sa.Integer)
 
 
 class CognateClass(CustomModelMixin, Cognateset):
@@ -67,10 +70,7 @@ class Variety(CustomModelMixin, Language):
 
     @property
     def fontcolor(self):
-        R, G, B = [int(c, 16) for c in [self.color[i:i+2] for i in range(3)]]
-        if 0.299 * R + 0.587 * G + 0.114 * B < 125:
-            return '#eee'
-        return '#000'
+        return '#000' if is_bright(self.color) else '#eee'
 
 
 class Author(CustomModelMixin, Contributor):

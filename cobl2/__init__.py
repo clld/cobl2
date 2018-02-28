@@ -2,6 +2,7 @@ from base64 import b64encode
 
 from clld.interfaces import IContribution, ILinkAttrs, IValueSet, ILanguage, IMapMarker, IValue
 from clld.web.icon import MapMarker
+from clld.lib import svg
 from pyramid.config import Configurator
 
 # we must make sure custom models are known at database initialization!
@@ -10,6 +11,8 @@ from cobl2 import datatables
 
 
 _ = lambda s: s
+_('Value')
+_('Values')
 _('Contributor')
 _('Contributors')
 _('Parameter')
@@ -43,16 +46,8 @@ class CoblMapMarker(MapMarker):
 
         if color:
             if color.startswith('#'):
-                svg = """\
-<svg xmlns="http://www.w3.org/2000/svg" 
-     xmlns:xlink="http://www.w3.org/1999/xlink"
-     height="20"
-     width="20">
-    <circle cx="10" cy="10" r="8" style="stroke:#000000; fill:{0}" opacity="0.8"/>
-</svg>""".format(color)
-                return 'data:image/svg+xml;base64,%s' % b64encode(svg.encode('utf8')).decode()
-
-            return req.static_url('cobl2:static/icons/c%s.png' % color)
+                color = color[1:]
+            return svg.data_url(svg.icon('c' + color))
 
         return super(CoblMapMarker, self).__call__(ctx, req)
 

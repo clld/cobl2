@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-11-15 19:46+0100\n"
+"POT-Creation-Date: 2018-02-28 17:19+0100\n"
 "PO-Revision-Date: 2017-11-15 19:40+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -16,21 +16,29 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.5.1\n"
+"Generated-By: Babel 2.5.3\n"
 
-#: cobl2/__init__.py:8
+#: cobl2/__init__.py:14
+msgid "Value"
+msgstr "Lexeme"
+
+#: cobl2/__init__.py:15
+msgid "Values"
+msgstr "Lexemes"
+
+#: cobl2/__init__.py:16
 msgid "Contributor"
 msgstr "Author"
 
-#: cobl2/__init__.py:9
+#: cobl2/__init__.py:17
 msgid "Contributors"
 msgstr "Authors"
 
-#: cobl2/__init__.py:10
+#: cobl2/__init__.py:18
 msgid "Parameter"
 msgstr "Meaning"
 
-#: cobl2/__init__.py:11
+#: cobl2/__init__.py:19
 msgid "Parameters"
 msgstr "Meanings"
 

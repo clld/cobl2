@@ -4,11 +4,13 @@ import sys
 from collections import OrderedDict
 from itertools import groupby
 
+from sqlalchemy.orm import joinedload, joinedload_all
 from clld.scripts.util import initializedb, Data
 from clld.db.meta import DBSession
 from clld.db.models import common
 from clld.lib.bibtex import EntryType
 from clld.web.util.helpers import data_uri
+from clld.lib.color import qualitative_colors, rgb_as_hex
 from clldutils.path import Path, read_text
 from clldutils.misc import slug
 from pycldf import Wordlist
@@ -20,95 +22,6 @@ import cobl2
 from cobl2 import models
 import clld_cognacy_plugin.models
 
-
-CC_COLORS = [
-    '#ff0000',
-    '#e5bf73',
-    '#003330',
-    '#b1a3d9',
-    '#bf0000',
-    '#403610',
-    '#bffffb',
-    '#6930bf',
-    '#4c0000',
-    '#f2e200',
-    '#00e2f2',
-    '#a200f2',
-    '#ff8080',
-    '#a69b00',
-    '#59adb3',
-    '#81698c',
-    '#8c4646',
-    '#736d1d',
-    '#0099bf',
-    '#da79f2',
-    '#331a1a',
-    '#f2eeb6',
-    '#002933',
-    '#912699',
-    '#e6acac',
-    '#66644d',
-    '#1a5766',
-    '#40103d',
-    '#735656',
-    '#a3a67c',
-    '#303d40',
-    '#e639c3',
-    '#f26d3d',
-    '#334000',
-    '#738c99',
-    '#e6acda',
-    '#4c2213',
-    '#b8d936',
-    '#001b33',
-    '#332630',
-    '#bf7960',
-    '#7f994d',
-    '#3d9df2',
-    '#a6006f',
-    '#7f3300',
-    '#296600',
-    '#406280',
-    '#660044',
-    '#b2622d',
-    '#299900',
-    '#bfe1ff',
-    '#f20081',
-    '#8c6246',
-    '#bef2b6',
-    '#4073ff',
-    '#66334e',
-    '#f2ceb6',
-    '#1a331a',
-    '#5369a6',
-    '#8c0038',
-    '#4c2900',
-    '#00e61f',
-    '#0000ff',
-    '#40001a',
-    '#d98d36',
-    '#36d977',
-    '#0000d9',
-    '#d96c98',
-    '#33210d',
-    '#4d996b',
-    '#2d2d59',
-    '#997382',
-    '#4c3b26',
-    '#4d6657',
-    '#070033',
-    '#7f0011',
-    '#332d26',
-    '#004d33',
-    '#31238c',
-    '#cc3347',
-    '#ffaa00',
-    '#40ffd9',
-    '#180059',
-    '#664400',
-    '#00736b',
-    '#7159b3'
-]
 
 ds = Wordlist.from_metadata(
     Path(cobl2.__file__).parent / '../..' / 'cobl-data' / 'cldf' / 'Wordlist-metadata.json')
@@ -209,7 +122,7 @@ def main(args):
             latitude=float(row['Latitude']),
             longitude=float(row['Longitude']),
             contribution=c,
-            color=row['Color'],
+            color=rgb_as_hex(row['Color']),
             clade=row['Clade'],
             glottocode=row['Glottocode'],
         )
@@ -312,8 +225,27 @@ def prime_cache(args):
         DBSession.query(models.CognateClass).order_by(models.CognateClass.meaning_pk),
         lambda c: c.meaning_pk
     ):
+        ccs = list(ccs)
+        colors = qualitative_colors(len(ccs))
         for i, cc in enumerate(ccs):
-            cc.color = CC_COLORS[i]
+            cc.color = colors[i]
+
+    for meaning in DBSession.query(models.Meaning).options(
+        joinedload(models.Meaning.cognateclasses),
+        joinedload_all(common.Parameter.valuesets, common.ValueSet.language)
+    ):
+        meaning.count_cognateclasses = len(meaning.cognateclasses)
+        meaning.count_languages = len([vs.language for vs in meaning.valuesets])
+
+    for language in DBSession.query(common.Language).options(
+        joinedload_all(common.Language.valuesets, common.ValueSet.references)
+    ):
+        spks = set()
+        for vs in language.valuesets:
+            for ref in vs.references:
+                spks.add(ref.source_pk)
+        for spk in spks:
+            DBSession.add(common.LanguageSource(language_pk=language.pk, source_pk=spk))
 
 
 if __name__ == '__main__':

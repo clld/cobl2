@@ -5,12 +5,23 @@ from clld_cognacy_plugin.datatables import Meanings, Cognatesets
 from clld_cognacy_plugin.models import Cognate, Cognateset
 from clld_cognacy_plugin.datatables import Cognatesets
 
-from cobl2.models import CognateClass
+from cobl2.models import CognateClass, Meaning
 
 
 class CoblMeanings(Meanings):
     def col_defs(self):
-        return [DetailsRowLinkCol(self, 'more')] + Meanings.col_defs(self)
+        return [
+            DetailsRowLinkCol(self, 'more'),
+        ] + Meanings.col_defs(self) + [
+            Col(self,
+                'count_languages',
+                sTitle='# langs',
+                model_col=Meaning.count_languages),
+            Col(self,
+                'count_cognateclasses',
+                sTitle='# cognate classes',
+                model_col=Meaning.count_cognateclasses),
+        ]
 
 
 class CognateClasses(Cognatesets):
@@ -53,10 +64,16 @@ class Forms(value.Values):
                     'language',
                     model_col=Language.name,
                     get_object=lambda i: i.valueset.language),
-                value.ValueNameCol(self, 'form'),
+                Col(self, 'name', sTitle='Lexeme'),
                 CognatesetCol(self, 'cognate_class'),
                 value.RefsCol(self, 'source'),
                 LinkToMapCol(self, 'm', get_object=lambda i: i.valueset.language),
+            ]
+        if self.language:
+            return [
+                Col(self, 'name', sTitle='Lexeme'),
+                CognatesetCol(self, 'cognate_class'),
+                value.RefsCol(self, 'source'),
             ]
         return value.Values.col_defs(self)
 

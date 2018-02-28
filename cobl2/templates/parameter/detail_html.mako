@@ -38,6 +38,11 @@
     <p>${ctx.description}</p>
 % endif
 
+
+<div class="alert alert-info">
+    Represented in ${len([vs.language for vs in ctx.valuesets])} languages with ${len(ctx.cognateclasses)} cognate classes.
+</div>
+
 ${(map_ or request.map).render()}
 
 <%util:section title="Lexemes" id="table-container" prefix="">
