@@ -8,7 +8,7 @@ from clld_phylogeny_plugin.models import Phylogeny
 class CognateClassTree(Tree):
     def __init__(self, req, param):
         self._param = param
-        Tree.__init__(self, DBSession.query(Phylogeny).first(), req)
+        Tree.__init__(self, Phylogeny.get('2'), req)
 
     @property
     def parameters(self):

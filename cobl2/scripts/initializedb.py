@@ -125,6 +125,7 @@ def main(args):
             color=rgb_as_hex(row['Color']),
             clade=row['Clade'],
             glottocode=row['Glottocode'],
+            ascii_name=row['ascii_name'],
         )
 
     vsrs = set()
@@ -201,7 +202,7 @@ def main(args):
 
     tree = Phylogeny(
         id='1',
-        name='phy',
+        name='Bouckaert et al.',
         description='',
         newick=read_text(args.data_file('cldf', 'bouckaert_et_al2012', 'newick.txt')),
     )
@@ -213,6 +214,25 @@ def main(args):
             description=taxon.glottocode)
         if taxon.glottocode in l_by_gc:
             LanguageTreeLabel(language_pk=l_by_gc[taxon.glottocode], treelabel=label)
+    DBSession.add(tree)
+
+    l_by_ascii = {}
+    for s in DBSession.query(models.Variety):
+        l_by_ascii[s.ascii_name] = s.pk
+
+    tree = Phylogeny(
+        id='2',
+        name='CoBL consensu',
+        description='',
+        newick=read_text(args.data_file('cldf', 'ie122', 'newick.txt')),
+    )
+    for k, taxon in enumerate(reader(args.data_file('cldf', 'ie122', 'taxa.csv'), namedtuples=True)):
+        label = TreeLabel(
+            id='{0}-{1}-{2}'.format(tree.id, slug(taxon.taxon), k + 1),
+            name=taxon.taxon,
+            phylogeny=tree)
+        if taxon.taxon in l_by_ascii:
+            LanguageTreeLabel(language_pk=l_by_ascii[taxon.taxon], treelabel=label)
     DBSession.add(tree)
 
 

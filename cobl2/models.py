@@ -67,6 +67,7 @@ class Variety(CustomModelMixin, Language):
     clade = sa.Column(sa.Unicode)
     fossil = sa.Column(sa.Boolean)
     glottocode = sa.Column(sa.Unicode)
+    ascii_name = sa.Column(sa.Unicode)
 
     @property
     def fontcolor(self):
