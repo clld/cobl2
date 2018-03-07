@@ -2,13 +2,12 @@ from clld.db.meta import DBSession
 
 from clld_phylogeny_plugin.interfaces import ITree
 from clld_phylogeny_plugin.tree import Tree
-from clld_phylogeny_plugin.models import Phylogeny
 
 
 class CognateClassTree(Tree):
-    def __init__(self, req, param):
+    def __init__(self, req, param, phylo):
         self._param = param
-        Tree.__init__(self, Phylogeny.get('2'), req)
+        Tree.__init__(self, phylo, req, eid='tree' + phylo.id)
 
     @property
     def parameters(self):
