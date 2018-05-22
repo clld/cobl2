@@ -50,10 +50,10 @@ ${(map_ or request.map).render()}
 </%util:section>
 
 <%util:section title="Phylogeny" id="tree-container" prefix="">
-    <div class="span5">
-    ${tree1.render()}
-    </div>
-    <div class="span5">
+    ##<div class="span5">
+    ##${tree1.render()}
+    ##</div>
+    <div class="span10">
     ${tree2.render()}
     </div>
 </%util:section>
