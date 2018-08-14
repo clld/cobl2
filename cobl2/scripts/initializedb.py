@@ -28,7 +28,7 @@ ds = Wordlist.from_metadata(
 wiki = Path(cobl2.__file__).parent / '../..' / 'CoBL-public.wiki'
 photos = {
     p.stem: p.as_posix() for p in
-    (Path(cobl2.__file__).parent / '../..' / 'CoBL-public' / 'static' / 'contributors').iterdir()
+    (Path(cobl2.__file__).parent / '../..' / 'CoBL-public' / 'cobl' / 'static' / 'contributors').iterdir()
     if p.suffix == '.jpg'}
 for k, v in {
     'Kümmel': 'Kuemmel',
@@ -119,8 +119,8 @@ def main(args):
             row['ID'],
             id=row['ID'],
             name=row['Name'],
-            latitude=float(row['Latitude']),
-            longitude=float(row['Longitude']),
+            latitude=float(row['Latitude']) if row['Latitude'] is not None else None,
+            longitude=float(row['Longitude']) if row['Longitude'] is not None else None,
             contribution=c,
             color=rgb_as_hex(row['Color']),
             clade=row['Clade'],
