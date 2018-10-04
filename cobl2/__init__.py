@@ -28,7 +28,7 @@ def link_attrs(req, obj, **kw):
 
 class CoblMapMarker(MapMarker):
     def __call__(self, ctx, req):
-        color = None
+        color, shape = None, 'c'
         if IValue.providedBy(ctx):
             if ctx.cognates:
                 color = ctx.cognates[0].cognateset.color
@@ -43,11 +43,13 @@ class CoblMapMarker(MapMarker):
 
         if ILanguage.providedBy(ctx):
             color = ctx.color
+            if ctx.historical:
+                shape = 'd'
 
         if color:
             if color.startswith('#'):
                 color = color[1:]
-            return svg.data_url(svg.icon('c' + color))
+            return svg.data_url(svg.icon(shape + color))
 
         return super(CoblMapMarker, self).__call__(ctx, req)
 

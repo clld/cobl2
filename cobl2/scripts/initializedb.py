@@ -125,6 +125,7 @@ def main(args):
             color=rgb_as_hex(row['Color']),
             clade=row['Clade'],
             glottocode=row['Glottocode'],
+            historical=row['historical'],
             ascii_name=row['ascii_name'],
         )
 
