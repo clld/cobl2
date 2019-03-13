@@ -23,8 +23,9 @@ from cobl2 import models
 import clld_cognacy_plugin.models
 
 
-ds = Wordlist.from_metadata(
-    Path(cobl2.__file__).parent / '../..' / 'cobl-data' / 'cldf' / 'Wordlist-metadata.json')
+data_file_path = Path(cobl2.__file__).parent / '../..' / 'iecog'
+
+ds = Wordlist.from_metadata(data_file_path / 'cldf' / 'Wordlist-metadata.json')
 wiki = Path(cobl2.__file__).parent / '../..' / 'CoBL-public.wiki'
 photos = {
     p.stem: p.as_posix() for p in
@@ -145,7 +146,7 @@ def main(args):
             common.Value,
             row['ID'],
             id=row['ID'],
-            name=row['Romanised'],
+            name=row['Form'],
             valueset=vs
         )
         for src in row['Source']:
@@ -205,9 +206,9 @@ def main(args):
         id='1',
         name='Bouckaert et al.',
         description='',
-        newick=read_text(args.data_file('cldf', 'bouckaert_et_al2012', 'newick.txt')),
+        newick=read_text(data_file_path / 'raw' / 'bouckaert_et_al2012' / 'newick.txt'),
     )
-    for k, taxon in enumerate(reader(args.data_file('cldf', 'bouckaert_et_al2012', 'taxa.csv'), namedtuples=True)):
+    for k, taxon in enumerate(reader(data_file_path / 'raw' / 'bouckaert_et_al2012' / 'taxa.csv', namedtuples=True)):
         label = TreeLabel(
             id='{0}-{1}-{2}'.format(tree.id, slug(taxon.taxon), k + 1),
             name=taxon.taxon,
@@ -225,9 +226,9 @@ def main(args):
         id='2',
         name='CoBL consensu',
         description='',
-        newick=read_text(args.data_file('cldf', 'ie122', 'newick.txt')),
+        newick=read_text(data_file_path / 'raw' / 'ie122' / 'newick.txt'),
     )
-    for k, taxon in enumerate(reader(args.data_file('cldf', 'ie122', 'taxa.csv'), namedtuples=True)):
+    for k, taxon in enumerate(reader(data_file_path / 'raw' / 'ie122' / 'taxa.csv', namedtuples=True)):
         label = TreeLabel(
             id='{0}-{1}-{2}'.format(tree.id, slug(taxon.taxon), k + 1),
             name=taxon.taxon,
