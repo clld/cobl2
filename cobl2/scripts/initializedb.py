@@ -184,6 +184,7 @@ def main(args):
             cc.loan_notes = le['Comment']
             cc.loan_source_languoid = le['Source_languoid']
             cc.loan_source_form = le['Source_form']
+            cc.parallel_loan_event = le['Parallel_loan_event']
 
     for row in ds['CognateTable']:
         cc = data['CognateClass'][row['Cognateset_ID']]
