@@ -5,27 +5,48 @@
 
 <%def name="sidebar()">
     <div class="well">
+        <h4>${_('Meaning')}: ${h.link(req, ctx.meaning)}</h4>
         <dl>
-            <dt>Meaning:</dt>
-            <dd>${h.link(req, ctx.meaning)}</dd>
             % if ctx.root_form:
-                <dt>Root form</dt>
+                <dt>${_('Root form')}</dt>
                 <dd><i>${ctx.root_form}</i></dd>
             % endif
             % if ctx.root_gloss:
-                <dt>Root gloss</dt>
+                <dt>${_('Root gloss')}</dt>
                 <dd>${ctx.root_gloss}</dd>
             % endif
             % if ctx.root_language:
-                <dt>Root languoid</dt>
+                <dt>${_('Root languoid')}</dt>
                 <dd>${ctx.root_language}</dd>
             % endif
-            % if ctx.loan_source:
-                <dt>Loan from</dt>
-                <dd>${h.link(req, ctx.loan_source)}</dd>
-            % endif
         </dl>
+    % if ctx.parallel_loan_event or ctx.loan_source or ctx.loan_source_form or ctx.loan_source_languoid or ctx.loan_notes:
+        % if ctx.parallel_loan_event:
+          <h4>${_('Parallel loan event:')}</h4>
+        % else:
+          <h4>${_('Loan event:')}</h4>
+        % endif
+        <dl>
+          % if ctx.loan_source:
+              <dt>${_('Loan from')}</dt>
+              <dd>${h.link(req, ctx.loan_source)}</dd>
+          % endif
+          % if ctx.loan_source_languoid:
+              <dt>${_('Loan source')}</dt>
+              <dd>${ctx.loan_source_languoid}</dd>
+          % endif
+          % if ctx.loan_source_form:
+              <dt>${_('Loan source form')}</dt>
+              <dd>${ctx.loan_source_form}</dd>
+          % endif
+          % if ctx.loan_notes:
+              <dt>${_('Loan notes')}</dt>
+              <dd>${ctx.loan_notes}</dd>
+          % endif
+        </dl>
+     % endif
     </div>
+
 </%def>
 
 
