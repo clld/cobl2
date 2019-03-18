@@ -124,7 +124,7 @@ def main(args):
             longitude=float(row['Longitude']) if row['Longitude'] is not None else None,
             contribution=c,
             color=rgb_as_hex(row['Color']),
-            clade=row['Clade'],
+            clade=', '.join(filter(None, row['Clade'])),
             glottocode=row['Glottocode'],
             historical=row['historical'],
             ascii_name=row['ascii_name'],
