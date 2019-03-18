@@ -1,13 +1,11 @@
 from clld.web.datatables.base import DetailsRowLinkCol, IdCol, RefsCol, Col, LinkCol, LinkToMapCol
-from clld.web.datatables import value
+from clld.web.datatables import value, Languages
 from clld.db.models.common import Language, Value
 from clld.db.util import icontains
 from clld_cognacy_plugin.datatables import Meanings, Cognatesets
 from clld_cognacy_plugin.models import Cognate, Cognateset
-from clld_cognacy_plugin.datatables import Cognatesets
 
-from cobl2.models import CognateClass, Meaning
-
+from cobl2.models import CognateClass, Meaning, Variety
 
 class CoblMeanings(Meanings):
     def col_defs(self):
@@ -31,6 +29,41 @@ class CoblMeaningCol(LinkCol):
 
     def search(self, qs):
         return icontains(Meaning.name, qs)
+
+
+class CoblLanguages(Languages):
+    def get_options(self):
+        opts = super(Languages, self).get_options()
+        # default sort order on clade name first then on language name
+        opts['aaSorting'] = [[1, 'asc'], [2, 'asc']]
+        return opts
+
+    def col_defs(self):
+        return [
+            IdCol(self, 'id', bSortable=False),
+            CoblCladeCol(self, 'Clade', model_col=Variety.clade),
+            CoblLgNameLinkCol(self, 'name'),
+            LinkToMapCol(self, 'm'),
+            Col(self, 'latitude',
+                sDescription='<small>The geographic latitude</small>'),
+            Col(self, 'longitude',
+                sDescription='<small>The geographic longitude</small>'),
+        ]
+
+
+class CoblLgNameLinkCol(LinkCol):
+    def format(self, item):
+        # add to link the historical info as superscript dagger if given
+        hist = '<sup title="historical">†</sup>' if item.historical else ''
+        obj = super(CoblLgNameLinkCol, self).format(item)
+        return '%s%s' % (obj, hist) if obj else ''
+
+
+class CoblCladeCol(Col):
+    def format(self, item):
+        # add to clade name the color code as left border
+        return '<span style="border-left:12px solid %s;padding-left:5px">%s</span>' % (
+            item.color, item.clade)
 
 
 class CognateClasses(Cognatesets):
@@ -104,3 +137,4 @@ def includeme(config):
     config.register_datatable('values', Forms)
     config.register_datatable('cognatesets', CognateClasses)
     config.register_datatable('parameters', CoblMeanings)
+    config.register_datatable('languages', CoblLanguages)
