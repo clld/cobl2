@@ -34,8 +34,8 @@ class CoblMeaningCol(LinkCol):
 class CoblLanguages(Languages):
     def get_options(self):
         opts = super(Languages, self).get_options()
-        # default sort order on language name
-        opts['aaSorting'] = [[2, 'asc']]
+        # default sort order on clade name first then on language name
+        opts['aaSorting'] = [[1, 'asc'], [2, 'asc']]
         return opts
 
     def col_defs(self):
@@ -60,9 +60,6 @@ class CoblLgNameLinkCol(LinkCol):
 
 
 class CoblCladeCol(Col):
-    def order(self):
-        return [Variety.clade, Language.name]
-
     def format(self, item):
         # add to clade name the color code as left border
         return '<span style="border-left:12px solid %s;padding-left:5px">%s</span>' % (
