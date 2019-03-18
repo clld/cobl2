@@ -1,6 +1,7 @@
 from clld.web.datatables.base import DetailsRowLinkCol, IdCol, RefsCol, Col, LinkCol, LinkToMapCol
 from clld.web.datatables import value
 from clld.db.models.common import Language, Value
+from clld.db.util import icontains
 from clld_cognacy_plugin.datatables import Meanings, Cognatesets
 from clld_cognacy_plugin.models import Cognate, Cognateset
 from clld_cognacy_plugin.datatables import Cognatesets
@@ -24,13 +25,28 @@ class CoblMeanings(Meanings):
         ]
 
 
+class CoblMeaningCol(LinkCol):
+    def order(self):
+        return [Meaning.name, CognateClass.root_language, CognateClass.root_form]
+
+    def search(self, qs):
+        return icontains(Meaning.name, qs)
+
+
 class CognateClasses(Cognatesets):
+    def base_query(self, query):
+        return query.outerjoin(Meaning)
+
     def col_defs(self):
         return [
             IdCol(self, 'ID', model_col=Cognateset.id),
+            CoblMeaningCol(self, 'name',
+                get_object=lambda cc: cc.meaning_rel,
+                sTitle='Meaning'),
             Col(self, 'Root_form', model_col=CognateClass.root_form),
             Col(self, 'Root_gloss', model_col=CognateClass.root_gloss),
             Col(self, 'Root_language', model_col=CognateClass.root_language),
+            Col(self, 'Loan_source', model_col=CognateClass.loan_source_languoid),
             LinkCol(
                 self,
                 'loaned_from',

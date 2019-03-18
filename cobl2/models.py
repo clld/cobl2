@@ -48,6 +48,8 @@ class CognateClass(CustomModelMixin, Cognateset):
         foreign_keys=[loan_source_pk],
         backref=sa.orm.backref('loan_source', remote_side=[pk]))
 
+    meaning_rel = sa.orm.relationship('Meaning', viewonly=True)
+
     def __unicode__(self):
         if self.root_form:
             res = self.root_form
