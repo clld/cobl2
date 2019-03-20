@@ -143,10 +143,13 @@ def main(args):
                 contribution=data['Contribution'][row['Language_ID']],
             )
         v = data.add(
-            common.Value,
+            models.Lexeme,
             row['ID'],
             id=row['ID'],
             name=row['Form'],
+            native_script=row['native_script'],
+            phonetic=row['phon_form'],
+            phonemic=row['Phonemic'],
             valueset=vs
         )
         for src in row['Source']:
@@ -189,14 +192,14 @@ def main(args):
     for row in ds['CognateTable']:
         cc = data['CognateClass'][row['Cognateset_ID']]
         if cc.meaning_pk is None:
-            cc.meaning_pk = data['Value'][row['Form_ID']].valueset.parameter_pk
+            cc.meaning_pk = data['Lexeme'][row['Form_ID']].valueset.parameter_pk
         else:
-            assert data['Value'][row['Form_ID']].valueset.parameter_pk == cc.meaning_pk
+            assert data['Lexeme'][row['Form_ID']].valueset.parameter_pk == cc.meaning_pk
         data.add(
             clld_cognacy_plugin.models.Cognate,
             row['ID'],
             cognateset=data['CognateClass'][row['Cognateset_ID']],
-            counterpart=data['Value'][row['Form_ID']],
+            counterpart=data['Lexeme'][row['Form_ID']],
         )
 
     l_by_gc = {}

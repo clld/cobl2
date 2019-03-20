@@ -62,12 +62,18 @@ ${(map_ or request.map).render()}
 
 <%util:table args="item" items="${ctx.cognates}">
     <%def name="head()">
-        <th>Form</th>
         <th>Language</th>
+        <th>Form</th>
+        <th>Native script</th>
+        <th>Phonetic</th>
+        <th>Phonemic</th>
     </%def>
-    <td>${h.link(request, item.counterpart)|n}</td>
     <td>
         ${h.map_marker_img(req, item.counterpart.valueset.language)}
         ${h.link(request, item.counterpart.valueset.language)}
     </td>
+    <td>${h.link(request, item.counterpart)|n}</td>
+    <td>${item.counterpart.native_script or ''}</td>
+    <td>${item.counterpart.phonetic or ''}</td>
+    <td>${item.counterpart.phonemic or ''}</td>
 </%util:table>
