@@ -120,7 +120,8 @@ class Forms(value.Values):
             ]
         if self.language:
             return [
-                Col(self, 'name', sTitle='Lexeme'),
+                LinkCol(self, 'name', sTitle='Lexeme'),
+                Col(self, 'native_script'),
                 CognatesetCol(self, 'cognate_class'),
                 value.RefsCol(self, 'source'),
             ]
