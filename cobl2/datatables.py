@@ -25,7 +25,7 @@ class CoblMeanings(Meanings):
 
 class CoblMeaningCol(LinkCol):
     def order(self):
-        return [Meaning.name, CognateClass.root_language, CognateClass.root_form]
+        return Meaning.name
 
     def search(self, qs):
         return icontains(Meaning.name, qs)
@@ -122,6 +122,9 @@ class Forms(value.Values):
             return [
                 LinkCol(self, 'name', sTitle='Lexeme'),
                 Col(self, 'native_script'),
+                CoblMeaningCol(self, 'name',
+                    get_object=lambda i: i.valueset.parameter,
+                    sTitle='Meaning'),
                 CognatesetCol(self, 'cognate_class'),
                 value.RefsCol(self, 'source'),
             ]
