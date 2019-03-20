@@ -63,7 +63,7 @@ ${(map_ or request.map).render()}
 <%util:table args="item" items="${ctx.cognates}">
     <%def name="head()">
         <th>Language</th>
-        <th>Form</th>
+        <th>Lexeme</th>
         <th>Native script</th>
         <th>Phonetic</th>
         <th>Phonemic</th>
