@@ -1,7 +1,6 @@
 from clld.web.datatables.base import DetailsRowLinkCol, IdCol, RefsCol, Col, LinkCol, LinkToMapCol
 from clld.web.datatables import value, Languages
 from clld.db.models.common import Language, Value
-from clld.db.util import icontains
 from clld_cognacy_plugin.datatables import Meanings, Cognatesets
 from clld_cognacy_plugin.models import Cognate, Cognateset
 
@@ -21,14 +20,6 @@ class CoblMeanings(Meanings):
                 sTitle='# cognate classes',
                 model_col=Meaning.count_cognateclasses),
         ]
-
-
-class CoblMeaningCol(LinkCol):
-    def order(self):
-        return [Meaning.name, CognateClass.root_language, CognateClass.root_form]
-
-    def search(self, qs):
-        return icontains(Meaning.name, qs)
 
 
 class CoblLanguages(Languages):
@@ -73,7 +64,7 @@ class CognateClasses(Cognatesets):
     def col_defs(self):
         return [
             IdCol(self, 'ID', model_col=Cognateset.id),
-            CoblMeaningCol(self, 'name',
+            LinkCol(self, 'name', model_col=Meaning.name,
                 get_object=lambda cc: cc.meaning_rel,
                 sTitle='Meaning'),
             Col(self, 'Root_form', model_col=CognateClass.root_form),
@@ -113,7 +104,7 @@ class Forms(value.Values):
                     'language',
                     model_col=Language.name,
                     get_object=lambda i: i.valueset.language),
-                Col(self, 'name', sTitle='Lexeme'),
+                LinkCol(self, 'name', sTitle='Lexeme'),
                 CognatesetCol(self, 'cognate_class'),
                 value.RefsCol(self, 'source'),
                 LinkToMapCol(self, 'm', get_object=lambda i: i.valueset.language),
@@ -122,6 +113,9 @@ class Forms(value.Values):
             return [
                 LinkCol(self, 'name', sTitle='Lexeme'),
                 Col(self, 'native_script'),
+                LinkCol(self, 'name', model_col=Meaning.name,
+                    get_object=lambda i: i.valueset.parameter,
+                    sTitle='Meaning'),
                 CognatesetCol(self, 'cognate_class'),
                 value.RefsCol(self, 'source'),
             ]
