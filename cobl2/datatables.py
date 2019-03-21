@@ -4,7 +4,7 @@ from clld.db.models.common import Language, Value
 from clld_cognacy_plugin.datatables import Meanings, Cognatesets
 from clld_cognacy_plugin.models import Cognate, Cognateset
 
-from cobl2.models import CognateClass, Meaning, Variety
+from cobl2.models import CognateClass, Meaning, Variety, Lexeme
 
 class CoblMeanings(Meanings):
     def col_defs(self):
@@ -112,7 +112,7 @@ class Forms(value.Values):
         if self.language:
             return [
                 LinkCol(self, 'name', sTitle='Lexeme'),
-                Col(self, 'native_script'),
+                Col(self, 'native_script', model_col=Lexeme.native_script),
                 LinkCol(self, 'name', model_col=Meaning.name,
                     get_object=lambda i: i.valueset.parameter,
                     sTitle='Meaning'),
