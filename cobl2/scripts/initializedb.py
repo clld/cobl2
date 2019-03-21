@@ -150,6 +150,7 @@ def main(args):
             native_script=row['native_script'],
             phonetic=row['phon_form'],
             phonemic=row['Phonemic'],
+            comment=row['Comment'],
             valueset=vs
         )
         for src in row['Source']:

@@ -9,16 +9,12 @@ from clld.lib.color import is_bright
 from clld_cognacy_plugin.models import MeaningMixin, Cognateset
 
 
-#
-# lexemes: native_script, url
-# languages: fossil (Boolean)
-#
-
 class Lexeme(CustomModelMixin, Value):
     pk = sa.Column(sa.Integer, sa.ForeignKey('value.pk'), primary_key=True)
     native_script = sa.Column(sa.Unicode)
     phonetic = sa.Column(sa.Unicode)
     phonemic = sa.Column(sa.Unicode)
+    comment = sa.Column(sa.Unicode)
     url = sa.Column(sa.Unicode)
 
 
