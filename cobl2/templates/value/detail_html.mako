@@ -38,6 +38,11 @@
         % endif
     </dl>
 </div>
+% if ctx.comment:
+<div class="container" style="overflow:auto;width:100%;margin-bottom:30px">
+    <b>Notes: </b>${ctx.comment}
+</div>
+% endif
 <div>
 
 % if ctx.sentence_assocs:
