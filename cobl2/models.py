@@ -41,6 +41,9 @@ class CognateClass(CustomModelMixin, Cognateset):
     loan_source_form = sa.Column(sa.Unicode)
     loan_source_languoid = sa.Column(sa.Unicode)
     parallel_loan_event = sa.Column(sa.Boolean)
+    ideophonic = sa.Column(sa.Boolean)
+    comment = sa.Column(sa.Unicode)
+    justification = sa.Column(sa.Unicode)
     loans = sa.orm.relationship(
         'CognateClass',
         foreign_keys=[loan_source_pk],

@@ -170,6 +170,9 @@ def main(args):
             root_form=row['Root_Form'] or None,
             root_gloss=row['Root_Gloss'] or None,
             root_language=row['Root_Language'] or None,
+            comment=row['Comment'] or None,
+            justification=row['Justification'] or None,
+            ideophonic=row['Ideophonic'] or None,
         )
         for src in row['Source']:
             sid, pages = ds.sources.parse(src)

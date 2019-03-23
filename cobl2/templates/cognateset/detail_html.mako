@@ -3,33 +3,34 @@
 <%! active_menu_item = "cognatesets" %>
 <%block name="title">${_('Cognateset')} ${ctx.name}</%block>
 
-<h2>${_('Cognateset')} ${ctx.name}</h2>
+<h2>${_('Cognateset')} ${ctx.name}<span style="font-weight: normal;"> – ${_('Meaning')}: ${h.link(req, ctx.meaning)}</span></h2>
 <div class="container-fluid">
-    <div style="float: left">
-        <h4>${_('Meaning')}: ${h.link(req, ctx.meaning)}</h4>
+    <div style="float: left;margin-right: 30px;">
         <dl>
-            % if ctx.root_form:
-                <dt>${_('Root form')}</dt>
-                <dd><i>${ctx.root_form}</i></dd>
-            % endif
-            % if ctx.root_gloss:
-                <dt>${_('Root gloss')}</dt>
-                <dd>${ctx.root_gloss}</dd>
-            % endif
-            % if ctx.root_language:
-                <dt>${_('Root languoid')}</dt>
-                <dd>${ctx.root_language}</dd>
-            % endif
+          % if ctx.root_form:
+            <dt>${_('Root form')}</dt>
+            <dd><i>${ctx.root_form}</i></dd>
+          % endif
+          % if ctx.root_gloss:
+            <dt>${_('Root gloss')}</dt>
+            <dd>${ctx.root_gloss}</dd>
+          % endif
+          % if ctx.root_language:
+            <dt>${_('Root languoid')}</dt>
+            <dd>${ctx.root_language}</dd>
+          % endif
+            <dt>${_('Ideophonic')}</dt>
+            <dd>${_('yes') if ctx.ideophonic else _('no')}</dd>
         </dl>
     </div>
+
 % if ctx.parallel_loan_event or ctx.loan_source or ctx.loan_source_form or ctx.loan_source_languoid or ctx.loan_notes:
-    <div class="" style="float: left;margin-left: 30px;">
-      % if ctx.parallel_loan_event:
-        <h4>${_('Parallel loan event:')}</h4>
-      % else:
-        <h4>${_('Loan event:')}</h4>
-      % endif
+    <div style="float: left;margin-right: 30px;">
         <dl>
+            <dt>${_('Loan event')}</dt>
+            <dd>${_('yes')}</dd>
+            <dt>${_('Parallel loan event')}</dt>
+            <dd>${_('yes') if ctx.parallel_loan_event else _('no')}</dd>
           % if ctx.loan_source:
             <dt>${_('Loan from')}</dt>
             <dd>${h.link(req, ctx.loan_source)}</dd>
@@ -45,6 +46,21 @@
           % if ctx.loan_notes:
             <dt>${_('Loan notes')}</dt>
             <dd>${ctx.loan_notes}</dd>
+          % endif
+        </dl>
+    </div>
+% endif
+
+% if ctx.comment or ctx.justification:
+    <div style="float: left">
+        <dl>
+          % if ctx.comment:
+            <dt>${_('Notes')}</dt>
+            <dd>${ctx.comment}</dd>
+          % endif
+          % if ctx.justification:
+            <dt>${_('Justification')}</dt>
+            <dd>${ctx.justification}</dd>
           % endif
         </dl>
     </div>
