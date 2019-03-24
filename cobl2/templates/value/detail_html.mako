@@ -40,7 +40,7 @@
 </div>
 % if ctx.comment:
 <div class="container" style="overflow:auto;width:100%;margin-bottom:30px">
-    <b>Notes: </b>${ctx.comment}
+    <b>Notes: </b>${ctx.comment | n}
 </div>
 % endif
 <div>
