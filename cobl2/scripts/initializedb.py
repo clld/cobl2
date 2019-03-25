@@ -1,6 +1,7 @@
 # coding: utf8
 from __future__ import unicode_literals
 import sys
+import re
 from collections import OrderedDict
 from itertools import groupby
 
@@ -92,6 +93,20 @@ def main(args):
             lines.append(line)
         return '\n'.join(lines)
 
+    re_links = re.compile(r'\[(?P<label>[^\]]+?)\]\((?P<type>.+?)-(?P<id>\d+)\)')
+    link_map = {
+        'cog': '/cognatesets/',
+        'lex': '/values/',
+        'src': '/sources/',
+    }
+    def parse_links(m):
+        try:
+            return '<a href="%s%s">%s</a>' % (
+                link_map[m.group('type')], m.group('id'), m.group('label'))
+        except:
+            print("parse_links: type error in '%s'" % (":".join(m.groups())))
+            return '[%s](%s-%s)' % (m.group('label'), m.group('type'), m.group('id'))
+
     for param in ds['ParameterTable']:
         wiki_page = wiki / '{0}.md'.format(param['Name'])
         data.add(
@@ -150,7 +165,7 @@ def main(args):
             native_script=row['native_script'],
             phonetic=row['phon_form'],
             phonemic=row['Phonemic'],
-            comment=row['Comment'],
+            comment=re_links.sub(parse_links, row['Comment'] or ''),
             valueset=vs
         )
         for src in row['Source']:
@@ -170,8 +185,8 @@ def main(args):
             root_form=row['Root_Form'] or None,
             root_gloss=row['Root_Gloss'] or None,
             root_language=row['Root_Language'] or None,
-            comment=row['Comment'] or None,
-            justification=row['Justification'] or None,
+            comment=re_links.sub(parse_links, row['Comment'] or ''),
+            justification=re_links.sub(parse_links, row['Justification'] or ''),
             ideophonic=row['Ideophonic'] or None,
         )
         for src in row['Source']:
