@@ -56,11 +56,11 @@
         <dl>
           % if ctx.comment:
             <dt>${_('Notes')}</dt>
-            <dd>${ctx.comment}</dd>
+            <dd>${ctx.comment | n}</dd>
           % endif
           % if ctx.justification:
             <dt>${_('Justification')}</dt>
-            <dd>${ctx.justification}</dd>
+            <dd>${ctx.justification | n}</dd>
           % endif
         </dl>
     </div>
