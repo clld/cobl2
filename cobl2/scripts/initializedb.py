@@ -103,7 +103,7 @@ def main(args):
         try:
             return '<a href="%s%s">%s</a>' % (
                 link_map[m.group('type')], m.group('id'), m.group('label'))
-        except:
+        except KeyError:
             print("parse_links: type error in '%s'" % (":".join(m.groups())))
             return '[%s](%s-%s)' % (m.group('label'), m.group('type'), m.group('id'))
 
