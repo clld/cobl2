@@ -4,6 +4,7 @@ from clld.db.models.common import Language, Value
 from clld_cognacy_plugin.datatables import Meanings, Cognatesets
 from clld_cognacy_plugin.models import Cognate, Cognateset
 from clld.web.util.glottolog import url
+from clld.web.util.htmllib import HTML
 
 from cobl2.models import CognateClass, Meaning, Variety, Lexeme
 
@@ -47,7 +48,7 @@ class CoblLanguages(Languages):
 class CoblGlottologCol(Col):
     def format(self, item):
         if item.glottocode:
-            return '<a href="%s">%s</a>' % (url(item.glottocode), item.glottocode)
+            return HTML.a(item.glottocode, href=url(item.glottocode))
         return ''
 
 
