@@ -20,7 +20,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'clld~=4.1',
+        'clld>=4.5',
         'clldmpg~=3.1',
         'clld-cognacy-plugin>=0.1',
         'clld-phylogeny-plugin',
