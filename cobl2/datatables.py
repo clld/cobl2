@@ -3,6 +3,8 @@ from clld.web.datatables import value, Languages
 from clld.db.models.common import Language, Value
 from clld_cognacy_plugin.datatables import Meanings, Cognatesets
 from clld_cognacy_plugin.models import Cognate, Cognateset
+from clld.web.util.glottolog import url
+from clld.web.util.htmllib import HTML
 
 from cobl2.models import CognateClass, Meaning, Variety, Lexeme
 
@@ -34,12 +36,20 @@ class CoblLanguages(Languages):
             IdCol(self, 'id', bSortable=False),
             CoblCladeCol(self, 'Clade', model_col=Variety.clade),
             CoblLgNameLinkCol(self, 'name'),
+            CoblGlottologCol(self, 'Glottocode', model_col=Variety.glottocode),
             LinkToMapCol(self, 'm'),
             Col(self, 'latitude',
                 sDescription='<small>The geographic latitude</small>'),
             Col(self, 'longitude',
                 sDescription='<small>The geographic longitude</small>'),
         ]
+
+
+class CoblGlottologCol(Col):
+    def format(self, item):
+        if item.glottocode:
+            return HTML.a(item.glottocode, href=url(item.glottocode))
+        return ''
 
 
 class CoblLgNameLinkCol(LinkCol):
