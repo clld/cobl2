@@ -86,10 +86,12 @@ class Variety(CustomModelMixin, Language):
     def get_identifier_objs(self, type_):
         o = Identifier()
         if getattr(type_, 'value', type_) == str(IdentifierType.glottolog):
+            if not self.glottocode: return []
             o.name = self.glottocode
             o.type = str(IdentifierType.glottolog)
             return [o]
         if getattr(type_, 'value', type_) == str(IdentifierType.iso):
+            if not self.iso: return []
             o.name = self.iso
             o.type = str(IdentifierType.iso)
             return [o]
