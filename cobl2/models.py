@@ -4,7 +4,7 @@ import sqlalchemy as sa
 import sqlalchemy.orm
 
 from clld.db.meta import CustomModelMixin, Base
-from clld.db.models.common import Parameter, Language, Contribution, Contributor, Value
+from clld.db.models.common import Parameter, Language, Contribution, Contributor, Value, Identifier, IdentifierType
 from clld.lib.color import is_bright
 from clld_cognacy_plugin.models import MeaningMixin, Cognateset
 
@@ -73,10 +73,27 @@ class Variety(CustomModelMixin, Language):
     historical = sa.Column(sa.Boolean)
     glottocode = sa.Column(sa.Unicode)
     ascii_name = sa.Column(sa.Unicode)
+    iso = sa.Column(sa.Unicode)
+    earliest_time_depth_bound = sa.Column(sa.Integer)
+    latest_time_depth_bound = sa.Column(sa.Integer)
+    lang_description = sa.Column(sa.Unicode)
+    variety = sa.Column(sa.Unicode)
 
     @property
     def fontcolor(self):
         return '#000' if is_bright(self.color) else '#eee'
+
+    def get_identifier_objs(self, type_):
+        o = Identifier()
+        if getattr(type_, 'value', type_) == str(IdentifierType.glottolog):
+            o.name = self.glottocode
+            o.type = str(IdentifierType.glottolog)
+            return [o]
+        if getattr(type_, 'value', type_) == str(IdentifierType.iso):
+            o.name = self.iso
+            o.type = str(IdentifierType.iso)
+            return [o]
+        return []
 
 
 class Author(CustomModelMixin, Contributor):

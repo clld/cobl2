@@ -143,6 +143,11 @@ def main(args):
             glottocode=row['Glottocode'],
             historical=row['historical'],
             ascii_name=row['ascii_name'],
+            iso=row['ISO639P3code'],
+            lang_description=row['Description'],
+            variety=row['Variety'],
+            earliest_time_depth_bound=row['Earliest_Time_Depth_Bound'],
+            latest_time_depth_bound=row['Latest_Time_Depth_Bound'],
         )
 
     vsrs = set()
