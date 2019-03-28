@@ -1,7 +1,7 @@
 from clld.web.datatables.base import DetailsRowLinkCol, IdCol, RefsCol, Col, LinkCol, LinkToMapCol
 from clld.web.datatables import value, Languages
-from clld.db.models.common import Language, Value
-from clld_cognacy_plugin.datatables import Meanings, Cognatesets
+from clld.db.models.common import Language, Value, Parameter
+from clld_cognacy_plugin.datatables import Meanings, Cognatesets, ConcepticonCol
 from clld_cognacy_plugin.models import Cognate, Cognateset
 from clld.web.util.glottolog import url
 from clld.web.util.htmllib import HTML
@@ -9,10 +9,20 @@ from clld.web.util.htmllib import HTML
 from cobl2.models import CognateClass, Meaning, Variety, Lexeme
 
 class CoblMeanings(Meanings):
+    def get_options(self):
+        opts = super(Meanings, self).get_options()
+        opts['aaSorting'] = [[2, 'asc']]
+        return opts
+
     def col_defs(self):
+        meaning_cls = list(Parameter.__subclasses__())[0]
         return [
             DetailsRowLinkCol(self, 'more'),
-        ] + Meanings.col_defs(self) + [
+            ConcepticonCol(self, '',
+                model_col=getattr(meaning_cls, 'concepticon_id'),
+                bSortable=False),
+            LinkCol(self, 'name'),
+            Col(self, 'description', sTitle="Specification"),
             Col(self,
                 'count_languages',
                 sTitle='# langs',
@@ -101,6 +111,31 @@ class CognatesetCol(LinkCol):
         return item.cognates[0].cognateset
 
 
+class CognatesetColorCol(LinkCol):
+    __kw__ = dict(bSearchable=False)
+
+    def order(self):
+        return Cognate.cognateset_pk
+
+    def get_obj(self, item):
+        return item.cognates[0].cognateset
+
+    def format(self, item):
+        obj = super(CognatesetColorCol, self).format(item)
+        if item.cognates[0].cognateset.color:
+            return '<div style="background-color:%s33;padding:0px 2px;">%s</div>' % (
+                item.cognates[0].cognateset.color, obj)
+        return obj
+
+
+class CoblFormLanguageCol(LinkCol):
+    def format(self, item):
+        obj = super(CoblFormLanguageCol, self).format(item)
+        # add to language name the color code as left border with tooltip
+        return '<span style="border-left:12px solid %s;padding-left:5px" title="Clade: %s">&nbsp;</span>%s' % (
+            item.valueset.language.color, item.valueset.language.clade, obj)
+
+
 class Forms(value.Values):
     def base_query(self, query):
         query = value.Values.base_query(self, query)
@@ -109,13 +144,13 @@ class Forms(value.Values):
     def col_defs(self):
         if self.parameter:
             return [
-                LinkCol(
+                CoblFormLanguageCol(
                     self,
                     'language',
                     model_col=Language.name,
                     get_object=lambda i: i.valueset.language),
                 LinkCol(self, 'name', sTitle='Lexeme'),
-                CognatesetCol(self, 'cognate_class'),
+                CognatesetColorCol(self, 'cognate_class'),
                 value.RefsCol(self, 'source'),
                 LinkToMapCol(self, 'm', get_object=lambda i: i.valueset.language),
             ]
