@@ -78,6 +78,7 @@ class Variety(CustomModelMixin, Language):
     latest_time_depth_bound = sa.Column(sa.Integer)
     lang_description = sa.Column(sa.Unicode)
     variety = sa.Column(sa.Unicode)
+    sort_order = sa.Column(sa.Integer)
 
     @property
     def fontcolor(self):

@@ -37,6 +37,9 @@
 % if ctx.description:
     <p>${ctx.description}</p>
 % endif
+% if ctx.example_context:
+    <p><b>Example context:</b> <i>${ctx.example_context}</i></p>
+% endif
 
 
 <div class="alert alert-info">
