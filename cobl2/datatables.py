@@ -5,6 +5,7 @@ from clld_cognacy_plugin.datatables import Meanings, Cognatesets, ConcepticonCol
 from clld_cognacy_plugin.models import Cognate, Cognateset
 from clld.web.util.glottolog import url
 from clld.web.util.htmllib import HTML
+from clld.db.util import as_int
 
 from cobl2.models import CognateClass, Meaning, Variety, Lexeme
 
@@ -35,15 +36,15 @@ class CoblMeanings(Meanings):
 
 
 class CoblLanguages(Languages):
-    def get_options(self):
-        opts = super(Languages, self).get_options()
-        # default sort order on clade name first then on language name
-        opts['aaSorting'] = [[1, 'asc'], [2, 'asc']]
+    def get_default_options(self):
+        opts = super(Languages, self).get_default_options()
+        opts['iDisplayLength'] = 200,
         return opts
 
     def col_defs(self):
         return [
-            IdCol(self, 'id', bSortable=False),
+            CoblSortIntCol(self, 'sort_order',
+                model_col=Variety.sort_order, bSearchable=False),
             CoblCladeCol(self, 'Clade', model_col=Variety.clade),
             CoblLgNameLinkCol(self, 'name'),
             CoblGlottologCol(self, 'Glottocode', model_col=Variety.glottocode),
@@ -54,6 +55,15 @@ class CoblLanguages(Languages):
                 sDescription='<small>The geographic longitude</small>'),
         ]
 
+
+class CoblSortIntCol(Col):
+    __kw__ = {'sTitle': ''}
+
+    def order(self):
+        return as_int(self.model_col)
+
+    def format(self, item):
+        return ''
 
 class CoblGlottologCol(Col):
     def format(self, item):
@@ -141,9 +151,16 @@ class Forms(value.Values):
         query = value.Values.base_query(self, query)
         return query.join(Value.cognates)
 
+    def get_default_options(self):
+        opts = super(value.Values, self).get_default_options()
+        opts['iDisplayLength'] = 200,
+        return opts
+
     def col_defs(self):
         if self.parameter:
             return [
+                CoblSortIntCol(self, 'sort_order',
+                    model_col=Variety.sort_order, bSearchable=False),
                 CoblFormLanguageCol(
                     self,
                     'language',
@@ -156,11 +173,11 @@ class Forms(value.Values):
             ]
         if self.language:
             return [
-                LinkCol(self, 'name', sTitle='Lexeme'),
-                Col(self, 'native_script', model_col=Lexeme.native_script),
                 LinkCol(self, 'name', model_col=Meaning.name,
                     get_object=lambda i: i.valueset.parameter,
                     sTitle='Meaning'),
+                LinkCol(self, 'name', sTitle='Lexeme'),
+                Col(self, 'native_script', model_col=Lexeme.native_script),
                 CognatesetCol(self, 'cognate_class'),
                 value.RefsCol(self, 'source'),
             ]

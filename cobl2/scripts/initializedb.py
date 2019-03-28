@@ -148,6 +148,7 @@ def main(args):
             variety=row['Variety'],
             earliest_time_depth_bound=row['Earliest_Time_Depth_Bound'],
             latest_time_depth_bound=row['Latest_Time_Depth_Bound'],
+            sort_order=row['sort_order']
         )
 
     vsrs = set()
