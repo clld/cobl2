@@ -104,7 +104,7 @@ class CognateClasses(Cognatesets):
                 sTitle='Meaning'),
             CoblRootFormCol(self, 'Root_form', model_col=CognateClass.root_form),
             Col(self, 'Root_gloss', model_col=CognateClass.root_gloss),
-            ColRootLanguage(self, 'Root_language', model_col=CognateClass.root_language),
+            CoblRootLanguageCol(self, 'Root_language', model_col=CognateClass.root_language),
             Col(self, 'Loan_source', model_col=CognateClass.loan_source_languoid),
             LinkCol(
                 self,
@@ -133,7 +133,7 @@ class CoblRootFormCol(Col):
         return '<i>%s</i>' % (item.root_form_calc)
 
 
-class ColRootLanguage(Col):
+class CoblRootLanguageCol(Col):
     def format(self, item):
         if item.root_language:
             return item.root_language
