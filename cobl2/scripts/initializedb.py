@@ -58,7 +58,8 @@ def main(args):
     DBSession.add(dataset)
 
     editors = OrderedDict([('Heggarty', None), ('Anderson', None)])
-    for row in ds['authors.csv']:
+    for row in sorted(ds['authors.csv'], key=lambda x: [
+                x['Last_Name'].lower(), x['First_Name'].lower()] ):
         if row['Last_Name'] in editors:
             editors[row['Last_Name']] = row['ID']
         data.add(

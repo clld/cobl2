@@ -1,6 +1,7 @@
-from clld.web.datatables.base import DetailsRowLinkCol, IdCol, RefsCol, Col, LinkCol, LinkToMapCol
-from clld.web.datatables import value, Languages
-from clld.db.models.common import Language, Value, Parameter
+from clld.web.datatables.base import DetailsRowLinkCol, IdCol, RefsCol, Col, LinkCol, LinkToMapCol, ExternalLinkCol
+from clld.web.datatables import value, Languages, Contributors
+from clld.web.datatables.contributor import ExternalLinkCol, ContributionsCol, NameCol, UrlCol
+from clld.db.models.common import Language, Value, Parameter, Contributor
 from clld_cognacy_plugin.datatables import Meanings, Cognatesets, ConcepticonCol
 from clld_cognacy_plugin.models import Cognate, Cognateset
 from clld.web.util.glottolog import url
@@ -206,6 +207,19 @@ class Forms(value.Values):
         return value.Values.col_defs(self)
 
 
+class CoblContributors(Contributors):
+    def col_defs(self):
+        return [
+            CoblAuthorNameCol(self, 'name'),
+            ContributionsCol(self, 'Contributions'),
+            UrlCol(self, 'Homepage'),
+        ]
+
+
+class CoblAuthorNameCol(LinkCol):
+    def order(self):
+        return Contributor.pk
+
 def includeme(config):
     #
     # Note: We cannot register CognateClasses here, because this includeme is run when
@@ -217,3 +231,4 @@ def includeme(config):
     config.register_datatable('cognatesets', CognateClasses)
     config.register_datatable('parameters', CoblMeanings)
     config.register_datatable('languages', CoblLanguages)
+    config.register_datatable('contributors', CoblContributors)
