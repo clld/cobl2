@@ -1,6 +1,7 @@
-from clld.web.datatables.base import DetailsRowLinkCol, IdCol, RefsCol, Col, LinkCol, LinkToMapCol
-from clld.web.datatables import value, Languages
-from clld.db.models.common import Language, Value, Parameter
+from clld.web.datatables.base import DetailsRowLinkCol, IdCol, RefsCol, Col, LinkCol, LinkToMapCol, ExternalLinkCol
+from clld.web.datatables import value, Languages, Contributors
+from clld.web.datatables.contributor import ExternalLinkCol, ContributionsCol, NameCol, UrlCol
+from clld.db.models.common import Language, Value, Parameter, Contributor
 from clld_cognacy_plugin.datatables import Meanings, Cognatesets, ConcepticonCol
 from clld_cognacy_plugin.models import Cognate, Cognateset
 from clld.web.util.glottolog import url
@@ -91,15 +92,20 @@ class CognateClasses(Cognatesets):
     def base_query(self, query):
         return query.outerjoin(Meaning)
 
+    def get_default_options(self):
+        opts = super(Cognatesets, self).get_default_options()
+        opts['aaSorting'] = [[1, 'asc']]
+        return opts
+
     def col_defs(self):
         return [
-            IdCol(self, 'ID', model_col=Cognateset.id),
+            IdCol(self, 'ID', model_col=Cognateset.id, bSortable=False),
             LinkCol(self, 'name', model_col=Meaning.name,
                 get_object=lambda cc: cc.meaning_rel,
                 sTitle='Meaning'),
-            Col(self, 'Root_form', model_col=CognateClass.root_form),
+            CoblRootFormCol(self, 'Root_form', model_col=CognateClass.root_form),
             Col(self, 'Root_gloss', model_col=CognateClass.root_gloss),
-            Col(self, 'Root_language', model_col=CognateClass.root_language),
+            CoblRootLanguageCol(self, 'Root_language', model_col=CognateClass.root_language),
             Col(self, 'Loan_source', model_col=CognateClass.loan_source_languoid),
             LinkCol(
                 self,
@@ -121,6 +127,19 @@ class CognatesetCol(LinkCol):
         return item.cognates[0].cognateset
 
 
+class CoblRootFormCol(Col):
+    def format(self, item):
+        if item.root_form:
+            return item.root_form
+        return '<i>%s</i>' % (item.root_form_calc)
+
+
+class CoblRootLanguageCol(Col):
+    def format(self, item):
+        if item.root_language:
+            return item.root_language
+        return '<i>%s</i>' % (item.root_language_calc)
+
 class CognatesetColorCol(LinkCol):
     __kw__ = dict(bSearchable=False)
 
@@ -133,8 +152,12 @@ class CognatesetColorCol(LinkCol):
     def format(self, item):
         obj = super(CognatesetColorCol, self).format(item)
         if item.cognates[0].cognateset.color:
-            return '<div style="background-color:%s33;padding:0px 2px;">%s</div>' % (
-                item.cognates[0].cognateset.color, obj)
+            if item.cognates[0].cognateset.root_form_calc or item.cognates[0].cognateset.root_language_calc:
+                return '<div style="background-color:%s33;padding:0px 2px;"><i>%s</i></div>' % (
+                    item.cognates[0].cognateset.color, obj)
+            else:
+                return '<div style="background-color:%s33;padding:0px 2px;">%s</div>' % (
+                    item.cognates[0].cognateset.color, obj)
         return obj
 
 
@@ -184,6 +207,19 @@ class Forms(value.Values):
         return value.Values.col_defs(self)
 
 
+class CoblContributors(Contributors):
+    def col_defs(self):
+        return [
+            CoblAuthorNameCol(self, 'name'),
+            ContributionsCol(self, 'Contributions'),
+            UrlCol(self, 'Homepage'),
+        ]
+
+
+class CoblAuthorNameCol(LinkCol):
+    def order(self):
+        return Contributor.pk
+
 def includeme(config):
     #
     # Note: We cannot register CognateClasses here, because this includeme is run when
@@ -195,3 +231,4 @@ def includeme(config):
     config.register_datatable('cognatesets', CognateClasses)
     config.register_datatable('parameters', CoblMeanings)
     config.register_datatable('languages', CoblLanguages)
+    config.register_datatable('contributors', CoblContributors)

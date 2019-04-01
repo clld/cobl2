@@ -29,8 +29,10 @@ class Meaning(CustomModelMixin, Parameter, MeaningMixin):
 class CognateClass(CustomModelMixin, Cognateset):
     pk = sa.Column(sa.Integer, sa.ForeignKey('cognateset.pk'), primary_key=True)
     root_form = sa.Column(sa.Unicode)
+    root_form_calc = sa.Column(sa.Unicode)
     root_gloss = sa.Column(sa.Unicode)
     root_language = sa.Column(sa.Unicode)
+    root_language_calc = sa.Column(sa.Unicode)
     source = sa.Column(sa.Unicode, default=None)
     meaning_pk = sa.Column(sa.Integer, sa.ForeignKey('meaning.pk'))
     meaning = sa.orm.relationship(Meaning, backref='cognateclasses')
@@ -54,10 +56,13 @@ class CognateClass(CustomModelMixin, Cognateset):
     def __unicode__(self):
         if self.root_form:
             res = self.root_form
-            if self.root_gloss:
-                res += ' ({0})'.format(self.root_gloss)
-            if self.root_language:
-                res += ' [{0}]'.format(self.root_language)
+        elif self.root_form_calc:
+            res = self.root_form_calc
+        if self.root_language:
+            res += ' [{0}]'.format(self.root_language)
+        elif self.root_language_calc:
+            res += ' [{0}]'.format(self.root_language_calc)
+        if len(res) > 0:
             return res
         return Cognateset.__unicode__(self)
 
