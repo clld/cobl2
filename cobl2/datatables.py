@@ -30,9 +30,17 @@ class CoblMeanings(Meanings):
                 sTitle='# langs',
                 model_col=Meaning.count_languages),
             Col(self,
+                'count_lexemes',
+                sTitle='# lexemes',
+                model_col=Meaning.count_lexemes),
+            Col(self,
                 'count_cognateclasses',
                 sTitle='# cognate classes',
                 model_col=Meaning.count_cognateclasses),
+            Col(self,
+                'count_loan_cognateclasses',
+                sTitle='# cognate classes (loans)',
+                model_col=Meaning.count_loan_cognateclasses),
         ]
 
 

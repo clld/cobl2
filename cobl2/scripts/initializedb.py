@@ -6,6 +6,7 @@ from collections import OrderedDict
 from itertools import groupby
 
 from sqlalchemy.orm import joinedload, joinedload_all
+from sqlalchemy import func
 from clld.scripts.util import initializedb, Data
 from clld.db.meta import DBSession
 from clld.db.models import common
@@ -290,6 +291,15 @@ def prime_cache(args):
     ):
         meaning.count_cognateclasses = len(meaning.cognateclasses)
         meaning.count_languages = len([vs.language for vs in meaning.valuesets])
+        meaning.count_loan_cognateclasses = len([cc for cc in meaning.cognateclasses \
+                if cc.parallel_loan_event or cc.loan_source or \
+                    cc.loan_source_form or cc.loan_source_languoid or cc.loan_notes])
+
+    for meaning in DBSession.query(models.Meaning, func.count(common.Parameter.pk)) \
+            .join(common.ValueSet) \
+            .join(common.Value) \
+            .group_by(models.Meaning.pk, common.Parameter.pk):
+        meaning[0].count_lexemes = meaning[1]
 
     for language in DBSession.query(common.Language).options(
         joinedload_all(common.Language.valuesets, common.ValueSet.references)

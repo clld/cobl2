@@ -24,6 +24,8 @@ class Meaning(CustomModelMixin, Parameter, MeaningMixin):
     wiki = sa.Column(sa.Unicode)
     count_languages = sa.Column(sa.Integer)
     count_cognateclasses = sa.Column(sa.Integer)
+    count_loan_cognateclasses = sa.Column(sa.Integer)
+    count_lexemes = sa.Column(sa.Integer)
 
 
 class CognateClass(CustomModelMixin, Cognateset):
