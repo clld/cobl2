@@ -291,6 +291,9 @@ def prime_cache(args):
     ):
         meaning.count_cognateclasses = len(meaning.cognateclasses)
         meaning.count_languages = len([vs.language for vs in meaning.valuesets])
+        meaning.count_loan_cognateclasses = len([cc for cc in meaning.cognateclasses \
+                if cc.parallel_loan_event or cc.loan_source or \
+                    cc.loan_source_form or cc.loan_source_languoid or cc.loan_notes])
 
     for meaning in DBSession.query(models.Meaning, func.count(common.Parameter.pk)) \
             .join(common.ValueSet) \
