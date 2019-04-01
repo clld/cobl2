@@ -36,6 +36,10 @@
             <dt>${_('Phonemic')}</dt>
             <dd>${ctx.phonemic}</dd>
         % endif
+        % if ctx.url:
+            <dt>${_('URL')}</dt>
+            <dd>${h.external_link(ctx.url, label=ctx.url, target='_new')}</dd>
+        % endif
     </dl>
 </div>
 % if ctx.comment:

@@ -174,6 +174,7 @@ def main(args):
             phonetic=row['phon_form'],
             phonemic=row['Phonemic'],
             comment=re_links.sub(parse_links, row['Comment'] or ''),
+            url=row['url'],
             valueset=vs
         )
         for src in row['Source']:
