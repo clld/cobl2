@@ -7,6 +7,8 @@ from clld_cognacy_plugin.models import Cognate, Cognateset
 from clld.web.util.glottolog import url
 from clld.web.util.htmllib import HTML
 from clld.db.util import as_int
+from clldutils.misc import nfilter
+from clld.web.util.helpers import link
 
 from cobl2.models import CognateClass, Meaning, Variety, Lexeme
 
@@ -125,7 +127,7 @@ class CognateClasses(Cognatesets):
                 sClass='left',
                 model_col=CognateClass.loan_source_pk,
                 get_object=lambda cc: cc.loan_source),
-            RefsCol(self, 'Source'),
+            CoblRefsCol(self, 'Source'),
         ]
 
 
@@ -180,6 +182,21 @@ class CoblFormLanguageCol(LinkCol):
         return '<span style="border-left:12px solid %s;padding-left:5px" title="Clade: %s">&nbsp;</span>%s' % (
             item.valueset.language.color, item.valueset.language.clade, obj)
 
+class CoblValueRefsCol(value.RefsCol):
+    __kw__ = dict(bSearchable=False, bSortable=False)
+
+    def format(self, item):
+        vs = self.get_obj(item)
+        return ', '.join(
+            nfilter([getattr(vs, 'source', None), cobl_linked_references(self.dt.req, vs)]))
+
+class CoblRefsCol(RefsCol):
+    __kw__ = dict(bSearchable=False, bSortable=False)
+
+    def format(self, item):
+        vs = self.get_obj(item)
+        return ', '.join(
+            nfilter([getattr(vs, 'source', None), cobl_linked_references(self.dt.req, vs)]))
 
 class Forms(value.Values):
     def base_query(self, query):
@@ -203,7 +220,7 @@ class Forms(value.Values):
                     get_object=lambda i: i.valueset.language),
                 LinkCol(self, 'name', sTitle='Lexeme'),
                 CognatesetColorCol(self, 'cognate_class'),
-                value.RefsCol(self, 'source'),
+                CoblValueRefsCol(self, 'source'),
                 LinkToMapCol(self, 'm', get_object=lambda i: i.valueset.language),
             ]
         if self.language:
@@ -214,7 +231,7 @@ class Forms(value.Values):
                 LinkCol(self, 'name', sTitle='Lexeme'),
                 Col(self, 'native_script', model_col=Lexeme.native_script),
                 CognatesetCol(self, 'cognate_class'),
-                value.RefsCol(self, 'source'),
+                CoblValueRefsCol(self, 'source'),
             ]
         return value.Values.col_defs(self)
 
@@ -231,6 +248,26 @@ class CoblContributors(Contributors):
 class CoblAuthorNameCol(LinkCol):
     def order(self):
         return Contributor.pk
+
+
+def cobl_linked_references(req, obj):
+    chunks = []
+    for i, ref in enumerate(getattr(obj, 'references', [])):
+        if ref.source:
+            if i > 0:
+                chunks.append('; ')
+            d = ref.description.split('{')[0] if ref.description else None
+            chunks.append(HTML.span(
+                link(req, ref.source),
+                HTML.span(
+                    ': %s' % d if d else '',
+                    class_='pages'),
+                class_='citation',
+            ))
+    if chunks:
+        return HTML.span(*chunks)
+    return ''
+
 
 def includeme(config):
     #
