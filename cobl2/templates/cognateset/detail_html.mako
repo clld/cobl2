@@ -67,9 +67,14 @@
 % endif
 </div>
 
-
 % if ctx.description:
 <p>${ctx.description}</p>
+% endif
+
+% if map_ or request.map:
+<div style="margin-top:30px">
+${(map_ or request.map).render()}
+</div>
 % endif
 
 <%util:table args="item" items="${ctx.cognates}">
@@ -92,9 +97,10 @@
     <td>${item.counterpart.comment or '' | n}</td>
 </%util:table>
 
-% if map_ or request.map:
-<div style="margin-top:20px">
-${(map_ or request.map).render()}
-</div>
+% if ctx.references:
+    <dl style="margin-top:30px">
+        <dt>${_('References')}</dt>
+        <dd>${u.cobl_linked_references(request, ctx, True)|n}</dd>
+    </dl>
 % endif
 

@@ -174,11 +174,14 @@ def main(args):
             phonetic=row['phon_form'],
             phonemic=row['Phonemic'],
             comment=re_links.sub(parse_links, row['Comment'] or ''),
+            url=row['url'],
             valueset=vs
         )
         for src in row['Source']:
             sid, pages = ds.sources.parse(src)
             key = (vs.id, sid, pages)
+            if pages:
+                pages = pages.replace('|', ';')
             if key not in vsrs:
                 DBSession.add(common.ValueSetReference(
                     valueset=vs, source=data['Source'][sid], description=pages))
@@ -201,6 +204,8 @@ def main(args):
         )
         for src in row['Source']:
             sid, pages = ds.sources.parse(src)
+            if pages:
+                pages = pages.replace('|', ';')
             DBSession.add(clld_cognacy_plugin.models.CognatesetReference(
                 cognateset=cc, source=data['Source'][sid], description=pages))
 

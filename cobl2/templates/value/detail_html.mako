@@ -13,7 +13,7 @@
         <dd>${h.link(request, ctx.valueset.parameter)}</dd>
         % if ctx.valueset.references:
             <dt>${_('References')}</dt>
-            <dd>${h.linked_references(request, ctx.valueset)|n}</dd>
+            <dd>${u.cobl_linked_references(request, ctx.valueset, True)|n}</dd>
         % endif
         % for k, v in ctx.datadict().items():
             <dt>${k}</dt>
@@ -35,6 +35,10 @@
         % if ctx.phonemic:
             <dt>${_('Phonemic')}</dt>
             <dd>${ctx.phonemic}</dd>
+        % endif
+        % if ctx.url:
+            <dt>${_('URL')}</dt>
+            <dd>${h.external_link(ctx.url, label=ctx.url, target='_new')}</dd>
         % endif
     </dl>
 </div>
