@@ -6,11 +6,14 @@ from clld.web.util.helpers import get_referents
 from clld_phylogeny_plugin.models import Phylogeny
 from clld.web.util.htmllib import HTML
 from clld.web.util.helpers import link
+import re
 
 from cobl2.adapters import CognateClassTree
 
 assert markdown
 
+def markdown_remove_links(m):
+    return markdown(re.sub(r'\[(.+?)\]\(.+?\)', r'\1', m))
 
 def source_detail_html(context=None, request=None, **kw):
     return {'referents': get_referents(
@@ -26,7 +29,7 @@ def parameter_detail_html(request=None, context=None, **kw):
 def cobl_linked_references(req, obj, comments=False):
     chunks = []
     if comments:
-        for i, ref in enumerate(getattr(obj, 'references', [])):
+        for i, ref in enumerate(sorted(getattr(obj, 'references', []), key=lambda x: x.source.name)):
             if ref.source:
                 r = ''
                 r += HTML.span(link(req, ref.source), class_='citation')
@@ -43,7 +46,8 @@ def cobl_linked_references(req, obj, comments=False):
         if chunks:
             return HTML.span(*chunks)
     else:
-        for i, ref in enumerate(getattr(obj, 'references', [])):
+        for i, ref in enumerate(sorted(getattr(obj, 'references', []), key=lambda x: x.source.name)):
+            print(vars(ref.source))
             if ref.source:
                 if i > 0:
                     chunks.append('; ')

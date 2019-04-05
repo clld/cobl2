@@ -77,8 +77,9 @@ ${(map_ or request.map).render()}
 </div>
 % endif
 
-<%util:table args="item" items="${ctx.cognates}">
+<%util:table args="item" items="${ctx.cognates}" options="${dict(aaSorting=[[0, 'asc']])}">
     <%def name="head()">
+        <th></th>
         <th>Language</th>
         <th>Lexeme</th>
         <th>Native&nbsp;script</th>
@@ -86,8 +87,10 @@ ${(map_ or request.map).render()}
         <th>Phonemic</th>
         <th>Notes</th>
     </%def>
-    <td>
-        ${h.map_marker_img(req, item.counterpart.valueset.language)}
+    <td><span class="hide">${item.counterpart.valueset.language.sort_order}</span></td>
+    <td style="white-space: nowrap;">
+        <span style="border-left:12px solid ${item.counterpart.valueset.language.color};padding-left:5px" 
+            title="Clade: ${item.counterpart.valueset.language.clade}">&nbsp;</span>
         ${h.link(request, item.counterpart.valueset.language)}
     </td>
     <td>${h.link(request, item.counterpart)|n}</td>
