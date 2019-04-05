@@ -11,6 +11,10 @@
         <dd>${h.link(request, ctx.valueset.language)}</dd>
         <dt>${_('Meaning')}</dt>
         <dd>${h.link(request, ctx.valueset.parameter)}</dd>
+        % if ctx.gloss:
+        <dt>${_('Gloss')}</dt>
+        <dd>${ctx.gloss}</dd>
+        % endif
         % if ctx.valueset.references:
             <dt>${_('References')}</dt>
             <dd>${u.cobl_linked_references(request, ctx.valueset, True)|n}</dd>

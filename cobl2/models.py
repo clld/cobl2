@@ -15,6 +15,7 @@ class Lexeme(CustomModelMixin, Value):
     phonetic = sa.Column(sa.Unicode)
     phonemic = sa.Column(sa.Unicode)
     comment = sa.Column(sa.Unicode)
+    gloss = sa.Column(sa.Unicode)
     url = sa.Column(sa.Unicode)
 
 
