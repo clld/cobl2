@@ -26,7 +26,7 @@ def parameter_detail_html(request=None, context=None, **kw):
 def cobl_linked_references(req, obj, comments=False):
     chunks = []
     if comments:
-        for i, ref in enumerate(getattr(obj, 'references', [])):
+        for i, ref in enumerate(sorted(getattr(obj, 'references', []), key=lambda x: x.source.name)):
             if ref.source:
                 r = ''
                 r += HTML.span(link(req, ref.source), class_='citation')
@@ -43,7 +43,8 @@ def cobl_linked_references(req, obj, comments=False):
         if chunks:
             return HTML.span(*chunks)
     else:
-        for i, ref in enumerate(getattr(obj, 'references', [])):
+        for i, ref in enumerate(sorted(getattr(obj, 'references', []), key=lambda x: x.source.name)):
+            print(vars(ref.source))
             if ref.source:
                 if i > 0:
                     chunks.append('; ')

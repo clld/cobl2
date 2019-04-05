@@ -252,7 +252,8 @@ class CoblAuthorNameCol(LinkCol):
 
 def cobl_linked_references(req, obj):
     chunks = []
-    for i, ref in enumerate(getattr(obj, 'references', [])):
+    for i, ref in enumerate(sorted(getattr(obj, 'references', []),
+            key=lambda x: x.source.name if x and x.source and x.source.name else '')):
         if ref.source:
             if i > 0:
                 chunks.append('; ')
