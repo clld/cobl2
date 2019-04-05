@@ -2,5 +2,5 @@
     <b>Example context: </b>${ctx.example_context}
 % endif
 % if ctx.wiki:
-    ${u.markdown(ctx.wiki)|n}
+    ${u.markdown_remove_links(ctx.wiki)|n}
 % endif

@@ -6,11 +6,14 @@ from clld.web.util.helpers import get_referents
 from clld_phylogeny_plugin.models import Phylogeny
 from clld.web.util.htmllib import HTML
 from clld.web.util.helpers import link
+import re
 
 from cobl2.adapters import CognateClassTree
 
 assert markdown
 
+def markdown_remove_links(m):
+    return markdown(re.sub(r'\[(.+?)\]\(.+?\)', r'\1', m))
 
 def source_detail_html(context=None, request=None, **kw):
     return {'referents': get_referents(

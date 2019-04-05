@@ -33,18 +33,24 @@
 </ul>
 
 <h2>${_('Parameter')} ${ctx.name}</h2>
-
-% if ctx.description:
-    <p>${ctx.description}</p>
-% endif
-% if ctx.example_context:
-    <p><b>Example context:</b> <i>${ctx.example_context}</i></p>
-% endif
-
-
 <div class="alert alert-info">
     Represented in ${len([vs.language for vs in ctx.valuesets])} languages with ${len(ctx.cognateclasses)} cognate classes.
 </div>
+% if ctx.description:
+    <p>${u.markdown(ctx.description)|n}</p>
+% endif
+% if ctx.wiki or ctx.example_context:
+    <div id="meaning-more">
+    <%util:accordion_group eid="acc-a" parent="meaning-more" title="${_('More')}">
+        % if ctx.example_context:
+            <p><b>Example context: </b>${ctx.example_context}</p>
+        % endif
+        % if ctx.wiki:
+            <p>${u.markdown_remove_links(ctx.wiki)|n}</p>
+        % endif
+    </%util:accordion_group>
+    </div>
+% endif
 
 ${(map_ or request.map).render()}
 
