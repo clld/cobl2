@@ -101,7 +101,7 @@ class CognateClasses(Cognatesets):
 
     def get_default_options(self):
         opts = super(Cognatesets, self).get_default_options()
-        opts['aaSorting'] = [[1, 'asc']]
+        opts['aaSorting'] = [[1, 'asc'],[5, 'desc'],[6, 'desc']]
         return opts
 
     def col_defs(self):
@@ -113,6 +113,9 @@ class CognateClasses(Cognatesets):
             CoblRootFormCol(self, 'Root_form', model_col=CognateClass.root_form),
             Col(self, 'Root_gloss', model_col=CognateClass.root_gloss),
             CoblRootLanguageCol(self, 'Root_language', model_col=CognateClass.root_language),
+            Col(self, 'count_clades', model_col=CognateClass.count_clades, sTitle='# clades'),
+            Col(self, 'count_lexemes', model_col=CognateClass.count_lexemes, sTitle='# lexemes'),
+            Col(self, 'is_loan', model_col=CognateClass.is_loan, sTitle='loan?'),
             Col(self, 'Loan_source', model_col=CognateClass.loan_source_languoid),
             LinkCol(
                 self,

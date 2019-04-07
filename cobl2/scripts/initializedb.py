@@ -6,7 +6,7 @@ from collections import OrderedDict
 from itertools import groupby
 
 from sqlalchemy.orm import joinedload, joinedload_all
-from sqlalchemy import func
+from sqlalchemy import func, and_
 from clld.scripts.util import initializedb, Data
 from clld.db.meta import DBSession
 from clld.db.models import common
@@ -17,6 +17,7 @@ from clldutils.path import Path, read_text
 from clldutils.misc import slug
 from pycldf import Wordlist
 from clld_phylogeny_plugin.models import Phylogeny, TreeLabel, LanguageTreeLabel
+from clld_cognacy_plugin.models import Cognate, Cognateset
 from csvw.dsv import reader
 
 
@@ -142,6 +143,7 @@ def main(args):
             contribution=c,
             color=rgb_as_hex(row['Color']),
             clade=', '.join(filter(None, row['Clade'])),
+            clade_name=row['clade_name'],
             glottocode=row['Glottocode'],
             historical=row['historical'],
             ascii_name=row['ascii_name'],
@@ -283,6 +285,25 @@ def prime_cache(args):
     This procedure should be separate from the db initialization, because
     it will have to be run periodically whenever data has been updated.
     """
+    for _, cc in groupby(
+            DBSession.query(models.CognateClass, models.Variety.clade_name)\
+            .join(clld_cognacy_plugin.models.Cognate,
+                and_(models.CognateClass.pk==clld_cognacy_plugin.models.Cognate.cognateset_pk))\
+            .join(models.Value,
+                and_(clld_cognacy_plugin.models.Cognate.counterpart_pk==models.Value.pk))\
+            .join(common.ValueSet,
+                and_(models.Value.valueset_pk==common.ValueSet.pk))\
+            .join(models.Variety,
+                and_(common.ValueSet.language_pk==models.Variety.pk))\
+            .distinct().order_by(models.CognateClass.pk), lambda c: c[0].pk):
+        cc = list(cc)
+        cc[0][0].count_clades = len(cc)
+
+    for c in DBSession.query(models.CognateClass, func.count(models.CognateClass.id)) \
+            .join(clld_cognacy_plugin.models.Cognate) \
+            .group_by(models.CognateClass.pk, models.Cognateset.pk, models.CognateClass.id):
+        c[0].count_lexemes = c[1]
+
     for _, ccs in groupby(
         DBSession.query(models.CognateClass).order_by(models.CognateClass.meaning_pk),
         lambda c: c.meaning_pk
