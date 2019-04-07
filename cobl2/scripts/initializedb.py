@@ -223,6 +223,7 @@ def main(args):
             cc.loan_source_languoid = le['Source_languoid']
             cc.loan_source_form = le['Source_form']
             cc.parallel_loan_event = le['Parallel_loan_event']
+            cc.is_loan = True
 
     for row in ds['CognateTable']:
         cc = data['CognateClass'][row['Cognateset_ID']]
@@ -298,8 +299,7 @@ def prime_cache(args):
         meaning.count_cognateclasses = len(meaning.cognateclasses)
         meaning.count_languages = len([vs.language for vs in meaning.valuesets])
         meaning.count_loan_cognateclasses = len([cc for cc in meaning.cognateclasses \
-                if cc.parallel_loan_event or cc.loan_source or \
-                    cc.loan_source_form or cc.loan_source_languoid or cc.loan_notes])
+                if cc.is_loan])
 
     for meaning in DBSession.query(models.Meaning, func.count(common.Parameter.pk)) \
             .join(common.ValueSet) \

@@ -61,7 +61,8 @@ class CoblLanguages(Languages):
             CoblSortIntCol(self, 'sort_order',
                 model_col=Variety.sort_order, bSearchable=False),
             CoblCladeCol(self, 'Clade', model_col=Variety.clade),
-            CoblLgNameLinkCol(self, 'name'),
+            LinkCol(self, 'name'),
+            Col(self, 'historical', model_col=Variety.historical),
             CoblGlottologCol(self, 'Glottocode', model_col=Variety.glottocode),
             LinkToMapCol(self, 'm'),
             Col(self, 'latitude',
@@ -85,14 +86,6 @@ class CoblGlottologCol(Col):
         if item.glottocode:
             return HTML.a(item.glottocode, href=url(item.glottocode))
         return ''
-
-
-class CoblLgNameLinkCol(LinkCol):
-    def format(self, item):
-        # add to link the historical info as superscript dagger if given
-        hist = '<sup title="historical">†</sup>' if item.historical else ''
-        obj = super(CoblLgNameLinkCol, self).format(item)
-        return '%s%s' % (obj, hist) if obj else ''
 
 
 class CoblCladeCol(Col):
@@ -201,7 +194,7 @@ class CoblRefsCol(RefsCol):
 class Forms(value.Values):
     def base_query(self, query):
         query = value.Values.base_query(self, query)
-        return query.join(Value.cognates)
+        return query.join(Value.cognates).join(Cognate.cognateset)
 
     def get_default_options(self):
         opts = super(value.Values, self).get_default_options()
@@ -220,6 +213,10 @@ class Forms(value.Values):
                     get_object=lambda i: i.valueset.language),
                 LinkCol(self, 'name', sTitle='Lexeme'),
                 CognatesetColorCol(self, 'cognate_class'),
+                Col(self, 'is_loan', model_col=CognateClass.is_loan,
+                    get_object=lambda i: i.cognates[0].cognateset, sTitle='loan?'),
+                Col(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
+                    get_object=lambda i: i.cognates[0].cognateset, sTitle='pll loan?'),
                 CoblValueRefsCol(self, 'source'),
                 LinkToMapCol(self, 'm', get_object=lambda i: i.valueset.language),
             ]
@@ -231,6 +228,10 @@ class Forms(value.Values):
                 LinkCol(self, 'name', sTitle='Lexeme'),
                 Col(self, 'native_script', model_col=Lexeme.native_script),
                 CognatesetCol(self, 'cognate_class'),
+                Col(self, 'is_loan', model_col=CognateClass.is_loan,
+                    get_object=lambda i: i.cognates[0].cognateset, sTitle='loan?'),
+                Col(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
+                    get_object=lambda i: i.cognates[0].cognateset, sTitle='pll loan?'),
                 CoblValueRefsCol(self, 'source'),
             ]
         return value.Values.col_defs(self)
