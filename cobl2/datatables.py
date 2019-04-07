@@ -217,6 +217,8 @@ class Forms(value.Values):
                     get_object=lambda i: i.cognates[0].cognateset, sTitle='loan?'),
                 Col(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
                     get_object=lambda i: i.cognates[0].cognateset, sTitle='pll loan?'),
+                Col(self, 'loan_source_languoid', model_col=CognateClass.loan_source_languoid,
+                    get_object=lambda i: i.cognates[0].cognateset, sTitle='Source lang'),
                 CoblValueRefsCol(self, 'source'),
                 LinkToMapCol(self, 'm', get_object=lambda i: i.valueset.language),
             ]
