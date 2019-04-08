@@ -6,6 +6,8 @@ from clld.web.util.helpers import get_referents
 from clld_phylogeny_plugin.models import Phylogeny
 from clld.web.util.htmllib import HTML
 from clld.web.util.helpers import link
+from clld.db.models.common import Contributor
+from clld.db.meta import DBSession
 import re
 
 from cobl2.adapters import CognateClassTree
@@ -24,6 +26,33 @@ def parameter_detail_html(request=None, context=None, **kw):
     return {
         'tree1': CognateClassTree(request, context, Phylogeny.get('1')),
         'tree2': CognateClassTree(request, context, Phylogeny.get('2')),
+    }
+
+def dataset_detail_html(context=None, request=None, **kw):
+    contributor_names = [
+        'Cormac Anderson',
+        'Erik Anonby',
+        'Oleg Belyaev',
+        'Hans-Jörg Bibiko',
+        'Tonya Kim Dewey-Findell',
+        'Cassandra Freiberg',
+        'Paul Heggarty',
+        'Steve Hewitt',
+        'Britta Irslinger',
+        'Lechosław Jocz',
+        'Ronald Kim',
+        'Martin Kümmel',
+        'Nikos Liosis',
+        'Tijman Pronk',
+        'Jakob Runge',
+        'Matthew Scarborough',
+        'Kim Schulte',
+        'Richard Strand',
+        'Michiel de Vaan'
+    ]
+    return {
+        'main_contributors': DBSession.query(Contributor)\
+                    .filter(Contributor.name.in_(contributor_names))
     }
 
 def cobl_linked_references(req, obj, comments=False):

@@ -26,7 +26,7 @@ from cobl2 import models
 import clld_cognacy_plugin.models
 
 
-data_file_path = Path(cobl2.__file__).parent / '../..' / 'iecog'
+data_file_path = Path(cobl2.__file__).parent / '../..' / 'iecor'
 
 ds = Wordlist.from_metadata(data_file_path / 'cldf' / 'Wordlist-metadata.json')
 wiki = Path(cobl2.__file__).parent / '../..' / 'CoBL-public.wiki'
@@ -47,12 +47,12 @@ def main(args):
 
     dataset = common.Dataset(
         id=cobl2.__name__,
-        name="CoBL-IE",
+        name="IE-CoR",
         publisher_name="Max Planck Institute for the Science of Human History",
         publisher_place="Jena",
         publisher_url="http://www.shh.mpg.de",
         license="http://creativecommons.org/licenses/by/4.0/",
-        domain='cobl2.clld.org',
+        domain='iecor.clld.org',
         jsondata={
             'license_icon': 'cc-by.png',
             'license_name': 'Creative Commons Attribution 4.0 International License'})
