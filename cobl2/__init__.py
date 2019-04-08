@@ -2,6 +2,7 @@ from base64 import b64encode
 
 from clld.interfaces import IContribution, ILinkAttrs, IValueSet, ILanguage, IMapMarker, IValue
 from clld.web.icon import MapMarker
+from clld.web.app import register_menu
 from clld.lib import svg
 from pyramid.config import Configurator
 
@@ -17,6 +18,8 @@ _('Contributor')
 _('Contributors')
 _('Parameter')
 _('Parameters')
+_('Cognateset')
+_('Cognatesets')
 
 
 def link_attrs(req, obj, **kw):

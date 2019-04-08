@@ -24,7 +24,7 @@
         </dl>
     </div>
 
-% if ctx.parallel_loan_event or ctx.loan_source or ctx.loan_source_form or ctx.loan_source_languoid or ctx.loan_notes:
+% if ctx.is_loan:
     <div style="float: left;margin-right: 30px;">
         <dl>
             <dt>${_('Loan event')}</dt>

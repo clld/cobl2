@@ -61,7 +61,8 @@ class CoblLanguages(Languages):
             CoblSortIntCol(self, 'sort_order',
                 model_col=Variety.sort_order, bSearchable=False),
             CoblCladeCol(self, 'Clade', model_col=Variety.clade),
-            CoblLgNameLinkCol(self, 'name'),
+            LinkCol(self, 'name'),
+            Col(self, 'historical', model_col=Variety.historical),
             CoblGlottologCol(self, 'Glottocode', model_col=Variety.glottocode),
             LinkToMapCol(self, 'm'),
             Col(self, 'latitude',
@@ -87,14 +88,6 @@ class CoblGlottologCol(Col):
         return ''
 
 
-class CoblLgNameLinkCol(LinkCol):
-    def format(self, item):
-        # add to link the historical info as superscript dagger if given
-        hist = '<sup title="historical">†</sup>' if item.historical else ''
-        obj = super(CoblLgNameLinkCol, self).format(item)
-        return '%s%s' % (obj, hist) if obj else ''
-
-
 class CoblCladeCol(Col):
     def format(self, item):
         # add to clade name the color code as left border
@@ -108,7 +101,7 @@ class CognateClasses(Cognatesets):
 
     def get_default_options(self):
         opts = super(Cognatesets, self).get_default_options()
-        opts['aaSorting'] = [[1, 'asc']]
+        opts['aaSorting'] = [[1, 'asc'],[5, 'desc'],[6, 'desc']]
         return opts
 
     def col_defs(self):
@@ -120,6 +113,9 @@ class CognateClasses(Cognatesets):
             CoblRootFormCol(self, 'Root_form', model_col=CognateClass.root_form),
             Col(self, 'Root_gloss', model_col=CognateClass.root_gloss),
             CoblRootLanguageCol(self, 'Root_language', model_col=CognateClass.root_language),
+            Col(self, 'count_clades', model_col=CognateClass.count_clades, sTitle='# clades'),
+            Col(self, 'count_lexemes', model_col=CognateClass.count_lexemes, sTitle='# lexemes'),
+            Col(self, 'is_loan', model_col=CognateClass.is_loan, sTitle='loan?'),
             Col(self, 'Loan_source', model_col=CognateClass.loan_source_languoid),
             LinkCol(
                 self,
@@ -201,7 +197,7 @@ class CoblRefsCol(RefsCol):
 class Forms(value.Values):
     def base_query(self, query):
         query = value.Values.base_query(self, query)
-        return query.join(Value.cognates)
+        return query.join(Value.cognates).join(Cognate.cognateset)
 
     def get_default_options(self):
         opts = super(value.Values, self).get_default_options()
@@ -220,6 +216,12 @@ class Forms(value.Values):
                     get_object=lambda i: i.valueset.language),
                 LinkCol(self, 'name', sTitle='Lexeme'),
                 CognatesetColorCol(self, 'cognate_class'),
+                Col(self, 'is_loan', model_col=CognateClass.is_loan,
+                    get_object=lambda i: i.cognates[0].cognateset, sTitle='loan?'),
+                Col(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
+                    get_object=lambda i: i.cognates[0].cognateset, sTitle='pll loan?'),
+                Col(self, 'loan_source_languoid', model_col=CognateClass.loan_source_languoid,
+                    get_object=lambda i: i.cognates[0].cognateset, sTitle='Source lang'),
                 CoblValueRefsCol(self, 'source'),
                 LinkToMapCol(self, 'm', get_object=lambda i: i.valueset.language),
             ]
@@ -231,6 +233,10 @@ class Forms(value.Values):
                 LinkCol(self, 'name', sTitle='Lexeme'),
                 Col(self, 'native_script', model_col=Lexeme.native_script),
                 CognatesetCol(self, 'cognate_class'),
+                Col(self, 'is_loan', model_col=CognateClass.is_loan,
+                    get_object=lambda i: i.cognates[0].cognateset, sTitle='loan?'),
+                Col(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
+                    get_object=lambda i: i.cognates[0].cognateset, sTitle='pll loan?'),
                 CoblValueRefsCol(self, 'source'),
             ]
         return value.Values.col_defs(self)

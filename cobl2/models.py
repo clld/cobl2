@@ -15,6 +15,7 @@ class Lexeme(CustomModelMixin, Value):
     phonetic = sa.Column(sa.Unicode)
     phonemic = sa.Column(sa.Unicode)
     comment = sa.Column(sa.Unicode)
+    gloss = sa.Column(sa.Unicode)
     url = sa.Column(sa.Unicode)
 
 
@@ -44,10 +45,13 @@ class CognateClass(CustomModelMixin, Cognateset):
     loan_notes = sa.Column(sa.Unicode)
     loan_source_form = sa.Column(sa.Unicode)
     loan_source_languoid = sa.Column(sa.Unicode)
-    parallel_loan_event = sa.Column(sa.Boolean)
-    ideophonic = sa.Column(sa.Boolean)
+    parallel_loan_event = sa.Column(sa.Boolean, default=False)
+    ideophonic = sa.Column(sa.Boolean, default=False)
+    is_loan = sa.Column(sa.Boolean, default=False)
     comment = sa.Column(sa.Unicode)
     justification = sa.Column(sa.Unicode)
+    count_lexemes = sa.Column(sa.Integer)
+    count_clades = sa.Column(sa.Integer)
     loans = sa.orm.relationship(
         'CognateClass',
         foreign_keys=[loan_source_pk],
@@ -76,8 +80,9 @@ class Variety(CustomModelMixin, Language):
         Contribution, backref=sa.orm.backref('variety', uselist=False))
     color = sa.Column(sa.Unicode)
     clade = sa.Column(sa.Unicode)
-    fossil = sa.Column(sa.Boolean)
-    historical = sa.Column(sa.Boolean)
+    clade_name = sa.Column(sa.Unicode)
+    fossil = sa.Column(sa.Boolean, default=False)
+    historical = sa.Column(sa.Boolean, default=False)
     glottocode = sa.Column(sa.Unicode)
     ascii_name = sa.Column(sa.Unicode)
     iso = sa.Column(sa.Unicode)
