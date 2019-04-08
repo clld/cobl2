@@ -18,6 +18,8 @@ _('Contributor')
 _('Contributors')
 _('Parameter')
 _('Parameters')
+_('Cognateset')
+_('Cognatesets')
 
 
 def link_attrs(req, obj, **kw):
@@ -67,12 +69,4 @@ def main(global_config, **settings):
     config.add_route('test', '/test')
     config.registry.registerUtility(link_attrs, ILinkAttrs)
     config.registry.registerUtility(CoblMapMarker(), IMapMarker)
-    menuitems = [
-            'languages',
-            'parameters',
-            ('cognatesets', dict(label='Cognate Sets')),
-            'contributors',
-            'sources'
-        ]
-    config.register_menu(*menuitems)
     return config.make_wsgi_app()

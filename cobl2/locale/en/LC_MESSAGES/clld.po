@@ -42,3 +42,11 @@ msgstr "Meaning"
 msgid "Parameters"
 msgstr "Meanings"
 
+#: cobl2/__init__.py:21
+msgid "Cognateset"
+msgstr "Cognate Set"
+
+#: cobl2/__init__.py:22
+msgid "Cognatesets"
+msgstr "Cognate Sets"
+
