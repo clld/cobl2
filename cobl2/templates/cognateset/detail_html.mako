@@ -1,9 +1,9 @@
 <%inherit file="../${context.get('request').registry.settings.get('clld.app_template', 'app.mako')}"/>
 <%namespace name="util" file="../util.mako"/>
 <%! active_menu_item = "cognatesets" %>
-<%block name="title">${_('Cognateset')} ${ctx.name}</%block>
+<%block name="title">${_('Cognate Set')} ${ctx.name}</%block>
 
-<h2>${_('Cognateset')} ${ctx.name}<span style="font-weight: normal;"> – ${_('Meaning')}: ${h.link(req, ctx.meaning)}</span></h2>
+<h2>${_('Cognate Set')} ${ctx.name}<span style="font-weight: normal;"> – ${_('Meaning')}: ${h.link(req, ctx.meaning)}</span></h2>
 <div class="container-fluid">
     <div style="float: left;margin-right: 30px;">
         <dl>
