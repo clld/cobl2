@@ -76,7 +76,6 @@ def cobl_linked_references(req, obj, comments=False):
             return HTML.span(*chunks)
     else:
         for i, ref in enumerate(sorted(getattr(obj, 'references', []), key=lambda x: x.source.name)):
-            print(vars(ref.source))
             if ref.source:
                 if i > 0:
                     chunks.append('; ')
