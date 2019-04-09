@@ -232,7 +232,7 @@ class Forms(value.Values):
                     sTitle='Meaning'),
                 LinkCol(self, 'name', sTitle='Lexeme'),
                 Col(self, 'native_script', model_col=Lexeme.native_script),
-                CognatesetCol(self, 'cognate_class'),
+                CognatesetCol(self, 'cognate_class', sTitle='Cognate set'),
                 Col(self, 'is_loan', model_col=CognateClass.is_loan,
                     get_object=lambda i: i.cognates[0].cognateset, sTitle='loan?'),
                 Col(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
