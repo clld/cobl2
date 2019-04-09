@@ -244,7 +244,7 @@ class Forms(value.Values):
 class CoblSources(Sources):
     def get_default_options(self):
         opts = super(Sources, self).get_default_options()
-        opts['aaSorting'] = [[1, 'asc']]
+        opts['aaSorting'] = [[1, 'asc'], [3, 'asc']]
         return opts
 
 
