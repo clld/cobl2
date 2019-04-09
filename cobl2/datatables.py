@@ -111,7 +111,6 @@ class CognateClasses(Cognatesets):
                 get_object=lambda cc: cc.meaning_rel,
                 sTitle='Meaning'),
             CoblRootFormCol(self, 'Root_form', model_col=CognateClass.root_form),
-            Col(self, 'Root_gloss', model_col=CognateClass.root_gloss),
             CoblRootLanguageCol(self, 'Root_language', model_col=CognateClass.root_language),
             Col(self, 'count_clades', model_col=CognateClass.count_clades, sTitle='# clades'),
             Col(self, 'count_lexemes', model_col=CognateClass.count_lexemes, sTitle='# lexemes'),
@@ -123,7 +122,7 @@ class CognateClasses(Cognatesets):
                 sClass='left',
                 model_col=CognateClass.loan_source_pk,
                 get_object=lambda cc: cc.loan_source),
-            CoblRefsCol(self, 'Source'),
+            DetailsRowLinkCol(self, 'more'),
         ]
 
 
@@ -237,7 +236,7 @@ class Forms(value.Values):
                     get_object=lambda i: i.cognates[0].cognateset, sTitle='loan?'),
                 Col(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
                     get_object=lambda i: i.cognates[0].cognateset, sTitle='pll loan?'),
-                CoblValueRefsCol(self, 'source'),
+                DetailsRowLinkCol(self, 'more', sTitle='Details'),
             ]
         return value.Values.col_defs(self)
 
