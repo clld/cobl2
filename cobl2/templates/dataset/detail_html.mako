@@ -29,7 +29,7 @@
 
 <h4>IE-CoR:  for the <strong>I</strong>ndo-<strong>E</strong>uropean Language Family</h4>
 
-<p>CoR is a database structure model that can be extended to any language family.  It is applied first to the Indo-European language family, as IE-CoR, to replace and supersede the ${h.external_link('http://ielex.mpi.nl/', label='IELex')} database by ${h.external_link('http://katalog.uu.se/empinfo/?id=N14-1084', label='Michael Dunn')} &#8212; as used in high-profile articles by ${h.external_link('http://dx.doi.org/10.1126/science.1219669', label='Bouckaert et al. 2012')} in <em>Science</em> and ${h.external_link('http://dx.doi.org/10.1353/lan.2015.0005', label='Chang et al. 2015')} in <em>Language</em>, for example.  </p>
+<p>IE-CoR replaces and supersedes the ${h.external_link('http://ielex.mpi.nl/', label='IELex')} database by ${h.external_link('http://katalog.uu.se/empinfo/?id=N14-1084', label='Michael Dunn')} &#8212; as used in high-profile articles by ${h.external_link('http://dx.doi.org/10.1126/science.1219669', label='Bouckaert et al. 2012')} in <em>Science</em> and ${h.external_link('http://dx.doi.org/10.1353/lan.2015.0005', label='Chang et al. 2015')} in <em>Language</em>, for example.  </p>
 
 <p>Data are compiled through the CoR data-entry website, by a consortium of branch experts across Indo-European, working together with cross-family cognacy specialists to assign cognate sets and sub-sets.  As languages are revised and entered, all branch experts will be identified in the ‘Authors’ section of the IE-CoR website, both primary authors and cross-validators.</p>
 
