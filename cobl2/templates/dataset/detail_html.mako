@@ -29,7 +29,7 @@
 
 <h4>IE-CoR:  for the <strong>I</strong>ndo-<strong>E</strong>uropean Language Family</h4>
 
-<p>CoR is a database structure model that can be extended to any language family.  It is applied first to the Indo-European language family, as IE-CoR, to replace and supersede the <a href="http://ielex.mpi.nl/">IELex</a> database by <a href="http://katalog.uu.se/empinfo/?id=N14-1084">Michael Dunn</a> &#8212; as used in high-profile articles by <a href="http://dx.doi.org/10.1126/science.1219669">Bouckaert et al. 2012</a> in <em>Science</em> and <a href="http://dx.doi.org/10.1353/lan.2015.0005">Chang et al. 2015</a> in <em>Language</em>, for example.  </p>
+<p>CoR is a database structure model that can be extended to any language family.  It is applied first to the Indo-European language family, as IE-CoR, to replace and supersede the ${h.external_link('http://ielex.mpi.nl/', label='IELex')} database by ${h.external_link('http://katalog.uu.se/empinfo/?id=N14-1084', label='Michael Dunn')} &#8212; as used in high-profile articles by ${h.external_link('http://dx.doi.org/10.1126/science.1219669', label='Bouckaert et al. 2012')} in <em>Science</em> and ${h.external_link('http://dx.doi.org/10.1353/lan.2015.0005', label='Chang et al. 2015')} in <em>Language</em>, for example.  </p>
 
 <p>Data are compiled through the CoR data-entry website, by a consortium of branch experts across Indo-European, working together with cross-family cognacy specialists to assign cognate sets and sub-sets.  As languages are revised and entered, all branch experts will be identified in the ‘Authors’ section of the IE-CoR website, both primary authors and cross-validators.</p>
 
@@ -37,9 +37,9 @@
 
 <h4>Who We Are</h4>
 
-<p>The main co-ordinators of IE-CoR are <a href="https://shh-mpg.academia.edu/PaulHeggarty">Paul Heggarty</a> and <a href="https://www.shh.mpg.de/employees/44299/25522">Cormac Anderson</a>, at the <a href="https://www.shh.mpg.de/DLCE-research-overview">Dept of Linguistic and Cultural Evolution</a> at the <a href="https://www.shh.mpg.de/en">Max Planck Institute for the Science of Human History</a> in Jena, Germany.</p>
+<p>The main co-ordinators of IE-CoR are ${h.external_link('https://shh-mpg.academia.edu/PaulHeggarty', label='Paul Heggarty')} and ${h.external_link('https://www.shh.mpg.de/employees/44299/25522', label='Cormac Anderson')}, at the ${h.external_link('https://www.shh.mpg.de/DLCE-research-overview', label='Dept of Linguistic and Cultural Evolution')} at the ${h.external_link('https://www.shh.mpg.de/en', label='Max Planck Institute for the Science of Human History')} in Jena, Germany.</p>
 
-<p>The website and underlying database structure originated in those programmed by <a href="http://katalog.uu.se/empinfo/?id=N14-1084">Michael Dunn</a>, using his LEXdb system, but have been re-created, re-designed and very significantly expanded by <a href="https://github.com/runjak">Jakob Runge</a> and <a href="https://www.shh.mpg.de/person/42541/25500">Hans-Jörg Bibiko</a>. </p>
+<p>The website and underlying database structure originated in those programmed by ${h.external_link('http://katalog.uu.se/empinfo/?id=N14-1084', label='Michael Dunn')}, using his LEXdb system, but have been re-created, re-designed and very significantly expanded by ${h.external_link('https://github.com/runjak', label='Jakob Runge')} and <a href="https://www.shh.mpg.de/person/42541/25500">Hans-Jörg Bibiko</a>. </p>
 
 <p>See also the current list of <a href="${request.route_url('contributors')}">contributing authors</a>.  </p>
 
