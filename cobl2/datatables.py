@@ -1,5 +1,5 @@
 from clld.web.datatables.base import DetailsRowLinkCol, IdCol, RefsCol, Col, LinkCol, LinkToMapCol, ExternalLinkCol
-from clld.web.datatables import value, Languages, Contributors
+from clld.web.datatables import value, Languages, Contributors, Sources
 from clld.web.datatables.contributor import ExternalLinkCol, ContributionsCol, NameCol, UrlCol
 from clld.db.models.common import Language, Value, Parameter, Contributor
 from clld_cognacy_plugin.datatables import Meanings, Cognatesets, ConcepticonCol
@@ -241,6 +241,14 @@ class Forms(value.Values):
         return value.Values.col_defs(self)
 
 
+class CoblSources(Sources):
+    def get_default_options(self):
+        opts = super(Sources, self).get_default_options()
+        opts['aaSorting'] = [[1, 'asc']]
+        return opts
+
+
+
 class CoblContributors(Contributors):
     def col_defs(self):
         return [
@@ -287,3 +295,4 @@ def includeme(config):
     config.register_datatable('parameters', CoblMeanings)
     config.register_datatable('languages', CoblLanguages)
     config.register_datatable('contributors', CoblContributors)
+    config.register_datatable('sources', CoblSources)
