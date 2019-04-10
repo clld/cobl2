@@ -1,15 +1,16 @@
 from clld.web.datatables.base import DetailsRowLinkCol, IdCol, RefsCol, Col, LinkCol, LinkToMapCol, ExternalLinkCol
 from clld.web.datatables import value, Languages, Contributors, Sources
 from clld.web.datatables.contributor import ExternalLinkCol, ContributionsCol, NameCol, UrlCol
-from clld.db.models.common import Language, Value, Parameter, Contributor
+from clld.db.models.common import Language, Value, Parameter, Contributor, ValueSet, ValueSetReference
 from clld_cognacy_plugin.datatables import Meanings, Cognatesets, ConcepticonCol
 from clld_cognacy_plugin.models import Cognate, Cognateset
 from clld.web.util.glottolog import url
 from clld.web.util.htmllib import HTML
-from clld.db.util import as_int
+from clld.db.util import as_int, get_distinct_values
 from clldutils.misc import nfilter
 from clld.web.util.helpers import link
-
+from sqlalchemy import or_
+from sqlalchemy.orm import joinedload
 from cobl2.models import CognateClass, Meaning, Variety, Lexeme
 
 class CoblMeanings(Meanings):
@@ -177,6 +178,21 @@ class CoblFormLanguageCol(LinkCol):
         return '<span style="border-left:12px solid %s;padding-left:5px" title="Clade: %s">&nbsp;</span>%s' % (
             item.valueset.language.color, item.valueset.language.clade, obj)
 
+class CoblFormSelectCladeNameCol(Col):
+    def search(self, qs):
+        q = [self.model_col.__eq__(q) for q in qs.split(',')]
+        return or_(*q)
+
+class CoblFormSelectLanguageCol(CoblFormLanguageCol):
+    def search(self, qs):
+        q = [self.model_col.__eq__(q) for q in qs.split(',')]
+        return or_(*q)
+
+class CoblFormSelectMeaningCol(LinkCol):
+    def search(self, qs):
+        q = [self.model_col.__eq__(q) for q in qs.split(',')]
+        return or_(*q)
+
 class CoblValueRefsCol(value.RefsCol):
     __kw__ = dict(bSearchable=False, bSortable=False)
 
@@ -196,11 +212,24 @@ class CoblRefsCol(RefsCol):
 class Forms(value.Values):
     def base_query(self, query):
         query = value.Values.base_query(self, query)
-        return query.join(Value.cognates).join(Cognate.cognateset)
+        if not self.parameter and not self.language:
+            return query.join(Value.cognates).join(Cognate.cognateset)\
+                .join(ValueSet.parameter).join(ValueSet.language).options(
+                    joinedload(Value.cognates),
+                    joinedload(Value.cognates, Cognate.cognateset),
+                    joinedload(Value.valueset, ValueSet.parameter),
+                    joinedload(Value.valueset, ValueSet.language)
+                )
+        else:
+            return query.join(Value.cognates).join(Cognate.cognateset).options(
+                    joinedload(Value.cognates),
+                    joinedload(Value.cognates, Cognate.cognateset))
 
     def get_default_options(self):
         opts = super(value.Values, self).get_default_options()
         opts['iDisplayLength'] = 200,
+        if not self.parameter and not self.language:
+            opts['aaSorting'] = [[0, 'asc'], [2, 'asc'], [5, 'asc']]
         return opts
 
     def col_defs(self):
@@ -214,7 +243,7 @@ class Forms(value.Values):
                     model_col=Language.name,
                     get_object=lambda i: i.valueset.language),
                 LinkCol(self, 'name', sTitle='Lexeme'),
-                CognatesetColorCol(self, 'cognate_class'),
+                CognatesetColorCol(self, 'cognate_class', sTitle='Cognate set'),
                 Col(self, 'is_loan', model_col=CognateClass.is_loan,
                     get_object=lambda i: i.cognates[0].cognateset, sTitle='loan?'),
                 Col(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
@@ -238,7 +267,40 @@ class Forms(value.Values):
                     get_object=lambda i: i.cognates[0].cognateset, sTitle='pll loan?'),
                 DetailsRowLinkCol(self, 'more', sTitle='Details'),
             ]
-        return value.Values.col_defs(self)
+        return [
+                CoblFormSelectMeaningCol(self, 'name', model_col=Meaning.name,
+                    get_object=lambda i: i.valueset.parameter,
+                    select='multiple',
+                    input_size='large',
+                    choices=get_distinct_values(Meaning.name),
+                    sTitle='Meaning',
+                    sTooltip='Choose one or more meanings (CTRL/⌘ + click)'),
+                CoblFormSelectCladeNameCol(
+                    self,
+                    'clade_name',
+                    model_col=Variety.clade_name,
+                    get_object=lambda i: i.valueset.language,
+                    select='multiple',
+                    input_size='large',
+                    sTooltip='Choose one or more clade names (CTRL/⌘ + click)',
+                    choices=get_distinct_values(Variety.clade_name)),
+                CoblFormSelectLanguageCol(
+                    self,
+                    'language',
+                    model_col=Language.name,
+                    get_object=lambda i: i.valueset.language,
+                    select='multiple',
+                    input_size='large',
+                    sTooltip='Choose one or more languages (CTRL/⌘ + click)',
+                    choices=get_distinct_values(Language.name)),
+                LinkCol(self, 'name', sTitle='Lexeme'),
+                Col(self, 'native_script', model_col=Lexeme.native_script),
+                CognatesetColorCol(self, 'cognate_class', sTitle='Cognate set'),
+                Col(self, 'is_loan', model_col=CognateClass.is_loan,
+                    get_object=lambda i: i.cognates[0].cognateset, sTitle='loan?'),
+                Col(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
+                    get_object=lambda i: i.cognates[0].cognateset, sTitle='pll loan?'),
+        ]
 
 
 class CoblSources(Sources):
