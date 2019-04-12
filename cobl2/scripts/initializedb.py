@@ -115,7 +115,7 @@ def main(args):
         data.add(
             models.Meaning,
             param['ID'],
-            id=param['ID'],
+            id=slug(param['Name']),
             name=param['Name'],
             description=param['Description'],
             wiki=clean_md(read_text(wiki_page)) if wiki_page.exists() else None,
@@ -136,7 +136,7 @@ def main(args):
         data.add(
             models.Variety,
             row['ID'],
-            id=row['ID'],
+            id=slug(row['Name']),
             name=row['Name'],
             latitude=float(row['Latitude']) if row['Latitude'] is not None else None,
             longitude=float(row['Longitude']) if row['Longitude'] is not None else None,
