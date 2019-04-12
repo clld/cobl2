@@ -327,7 +327,7 @@ class CoblContributors(Contributors):
     def col_defs(self):
         return [
             CoblAuthorNameCol(self, 'name'),
-            ContributionsCol(self, 'Contributions'),
+            ContributionsCol(self, 'Contributions', sTitle='Data set'),
             UrlCol(self, 'Homepage'),
         ]
 

@@ -128,7 +128,7 @@ def main(args):
             common.Contribution,
             row['ID'],
             id=row['ID'],
-            name='{0} Dataset'.format(row['Name']),
+            name=row['Name'],
         )
         for i, cid in enumerate(row['Author_ID']):
             DBSession.add(common.ContributionContributor(
