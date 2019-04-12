@@ -63,7 +63,7 @@ class CoblLanguages(Languages):
                 model_col=Variety.sort_order, bSearchable=False),
             CoblCladeCol(self, 'Clade', model_col=Variety.clade),
             LinkCol(self, 'name'),
-            Col(self, 'historical', model_col=Variety.historical),
+            BoolCol(self, 'historical', model_col=Variety.historical),
             CoblGlottologCol(self, 'Glottocode', model_col=Variety.glottocode),
             LinkToMapCol(self, 'm'),
             Col(self, 'latitude',
@@ -119,7 +119,7 @@ class CognateClasses(Cognatesets):
             Col(self, 'count_lexemes', model_col=CognateClass.count_lexemes,
                 sTitle='# lexemes',
                 sTooltip='number of lexemes per cognate set',),
-            Col(self, 'is_loan', model_col=CognateClass.is_loan,
+            BoolCol(self, 'is_loan', model_col=CognateClass.is_loan,
                 sTitle='loan?',
                 sTooltip='is cognate set marked as loan event'),
             Col(self, 'Loan_source', model_col=CognateClass.loan_source_languoid),
@@ -250,16 +250,16 @@ class Forms(value.Values):
                     get_object=lambda i: i.valueset.language),
                 LinkCol(self, 'name', sTitle='Lexeme'),
                 CognatesetColorCol(self, 'cognate_class', sTitle='Cognate set'),
-                Col(self, 'is_loan', model_col=CognateClass.is_loan,
+                BoolCol(self, 'is_loan', model_col=CognateClass.is_loan,
                     get_object=lambda i: i.cognates[0].cognateset,
                     sTitle='loan?', sTooltip='is cognate set marked as loan event'),
-                Col(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
+                BoolCol(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
                     get_object=lambda i: i.cognates[0].cognateset,
                     sTitle='pll loan?', sTooltip='is cognate set marked as parallel loan event'),
                 Col(self, 'loan_source_languoid', model_col=CognateClass.loan_source_languoid,
                     get_object=lambda i: i.cognates[0].cognateset, sTitle='Source lang'),
-                CoblValueRefsCol(self, 'source'),
                 LinkToMapCol(self, 'm', get_object=lambda i: i.valueset.language),
+                DetailsRowLinkCol(self, 'source')
             ]
         if self.language:
             return [
@@ -269,10 +269,10 @@ class Forms(value.Values):
                 LinkCol(self, 'name', sTitle='Lexeme'),
                 Col(self, 'native_script', model_col=Lexeme.native_script),
                 CognatesetCol(self, 'cognate_class', sTitle='Cognate set'),
-                Col(self, 'is_loan', model_col=CognateClass.is_loan,
+                BoolCol(self, 'is_loan', model_col=CognateClass.is_loan,
                     get_object=lambda i: i.cognates[0].cognateset,
                     sTitle='loan?', sTooltip='is cognate set marked as loan event'),
-                Col(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
+                BoolCol(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
                     get_object=lambda i: i.cognates[0].cognateset,
                     sTitle='pll loan?', sTooltip='is cognate set marked as parallel loan event'),
                 DetailsRowLinkCol(self, 'more', sTitle='Details'),
@@ -281,7 +281,6 @@ class Forms(value.Values):
                 CoblFormSelectMeaningCol(self, 'name', model_col=Meaning.name,
                     get_object=lambda i: i.valueset.parameter,
                     select='multiple',
-                    input_size='large',
                     choices=get_distinct_values(Meaning.name),
                     sTitle='Meaning',
                     sTooltip='Choose one or more meanings (CTRL/⌘ + click)'),
@@ -291,7 +290,6 @@ class Forms(value.Values):
                     model_col=Variety.clade_name,
                     get_object=lambda i: i.valueset.language,
                     select='multiple',
-                    input_size='large',
                     sTooltip='Choose one or more clade names (CTRL/⌘ + click)',
                     choices=get_distinct_values(Variety.clade_name)),
                 CoblFormSelectLanguageCol(
@@ -306,13 +304,20 @@ class Forms(value.Values):
                 LinkCol(self, 'name', sTitle='Lexeme'),
                 Col(self, 'native_script', model_col=Lexeme.native_script),
                 CognatesetColorCol(self, 'cognate_class', sTitle='Cognate set'),
-                Col(self, 'is_loan', model_col=CognateClass.is_loan,
+                BoolCol(self, 'is_loan', model_col=CognateClass.is_loan,
                     get_object=lambda i: i.cognates[0].cognateset,
                     sTitle='loan?', sTooltip='is cognate set marked as loan event'),
-                Col(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
+                BoolCol(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
                     get_object=lambda i: i.cognates[0].cognateset,
                     sTitle='pll loan?', sTooltip='is cognate set marked as parallel loan event'),
         ]
+
+class BoolCol(Col):
+    def format(self, item):
+        v = str(self.get_value(item))
+        if v == 'True':
+            return '<span style="display:block; text-align:center; margin:0 auto;">✓</span>'
+        return ''
 
 
 class CoblSources(Sources):
