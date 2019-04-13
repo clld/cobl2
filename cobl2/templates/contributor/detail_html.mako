@@ -36,7 +36,7 @@
 </dl>
 
 % if ctx.contribution_assocs:
-    <h3 style="clear: left">${_('Contributions')}</h3>
+    <h3 style="clear: left">${_('Data set')}</h3>
     <ul>
         % for c in ctx.contribution_assocs:
             <li>${h.link(request, c.contribution)}</li>
