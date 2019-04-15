@@ -45,6 +45,9 @@
         % if ctx.example_context:
             <p><b>Example context: </b>${ctx.example_context}</p>
         % endif
+        % if ctx.description:
+            <b>Disambiguation: </b>${ctx.description}
+        % endif
         % if ctx.wiki:
             <p>${u.markdown_remove_links(ctx.wiki)|n}</p>
         % endif

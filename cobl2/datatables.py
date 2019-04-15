@@ -79,7 +79,6 @@ class CoblMeanings(Meanings):
                 model_col=getattr(meaning_cls, 'concepticon_id'),
                 bSortable=False),
             LinkCol(self, 'name'),
-            Col(self, 'description', sTitle="Specification"),
             Col(self,
                 'count_languages',
                 sTitle='# langs',
