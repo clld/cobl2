@@ -1,7 +1,13 @@
-from clld.web.datatables.base import DetailsRowLinkCol, IdCol, RefsCol, Col, LinkCol, LinkToMapCol, ExternalLinkCol
+from clld.web.datatables.base import (
+    DataTable, DetailsRowLinkCol,
+    IdCol, RefsCol, Col, LinkCol,
+    LinkToMapCol, ExternalLinkCol)
 from clld.web.datatables import value, Languages, Contributors, Sources
-from clld.web.datatables.contributor import ExternalLinkCol, ContributionsCol, NameCol, UrlCol
-from clld.db.models.common import Language, Value, Parameter, Contributor, ValueSet, ValueSetReference
+from clld.web.datatables.contributor import (
+    ExternalLinkCol, ContributionsCol, NameCol, UrlCol)
+from clld.db.models.common import (
+    Language, Value, Parameter,
+    Contributor, ValueSet, ValueSetReference)
 from clld_cognacy_plugin.datatables import Meanings, Cognatesets, ConcepticonCol
 from clld_cognacy_plugin.models import Cognate, Cognateset
 from clld.web.util.glottolog import url
@@ -11,7 +17,36 @@ from clldutils.misc import nfilter
 from clld.web.util.helpers import link
 from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
-from cobl2.models import CognateClass, Meaning, Variety, Lexeme
+from cobl2.models import CognateClass, Meaning, Variety, Lexeme, Clade
+
+
+class CoblClades(DataTable):
+    def get_options(self):
+        opts = super(DataTable, self).get_options()
+        opts['aaSorting'] = [[0, 'asc']]
+        return opts
+
+    def col_defs(self):
+        return [
+            CoblSortIntCol(self, 'pk', bSearchable=False),
+            Col(self, 'level0_name', sTitle='Clade 0 name'),
+            Col(self, 'level1_name', sTitle='Clade 1 name'),
+            Col(self, 'level2_name', sTitle='Clade 2 name'),
+            Col(self, 'level3_name', sTitle='Clade 3 name'),
+            CoblCladeNameCol(self, 'clade_name'),
+            Col(self, 'at_most', sTitle='At most?',
+                sTooltip='Latest plausible date at which divergence had not yet begun'),
+            Col(self, 'at_least', sTitle='At least?',
+                sTooltip='Earliest plausible date divergence could have begun by'),
+        ]
+
+
+class CoblCladeNameCol(Col):
+    def format(self, item):
+        # add to clade name the color code as left border
+        return '<span style="border-left:12px solid %s;padding-left:5px">%s</span>' % (
+            item.color, item.clade_name)
+
 
 class CoblMeanings(Meanings):
     def get_options(self):
@@ -375,3 +410,4 @@ def includeme(config):
     config.register_datatable('languages', CoblLanguages)
     config.register_datatable('contributors', CoblContributors)
     config.register_datatable('sources', CoblSources)
+    config.register_datatable('clades', CoblClades)

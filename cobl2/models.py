@@ -4,9 +4,29 @@ import sqlalchemy as sa
 import sqlalchemy.orm
 
 from clld.db.meta import CustomModelMixin, Base
-from clld.db.models.common import Parameter, Language, Contribution, Contributor, Value, Identifier, IdentifierType
+from clld.db.models.common import (
+    Parameter, Language, Contribution,
+    Contributor, Value, Identifier,
+    IdentifierType, IdNameDescriptionMixin)
 from clld.lib.color import is_bright
 from clld_cognacy_plugin.models import MeaningMixin, Cognateset
+from zope.interface import implementer
+from cobl2 import interfaces as cobl2_interfaces
+
+
+@implementer(cobl2_interfaces.IClade)
+class Clade(Base, IdNameDescriptionMixin):
+    pk = sa.Column(sa.Integer, primary_key=True)
+    level0_name = sa.Column(sa.Unicode)
+    level1_name = sa.Column(sa.Unicode)
+    level2_name = sa.Column(sa.Unicode)
+    level3_name = sa.Column(sa.Unicode)
+    clade_name = sa.Column(sa.Unicode)
+    color = sa.Column(sa.Unicode)
+    short_name = sa.Column(sa.Unicode)
+    at_most = sa.Column(sa.Integer)
+    at_least = sa.Column(sa.Integer)
+    distribution = sa.Column(sa.Unicode)
 
 
 class Lexeme(CustomModelMixin, Value):

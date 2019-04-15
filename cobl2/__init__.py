@@ -7,8 +7,7 @@ from clld.lib import svg
 from pyramid.config import Configurator
 
 # we must make sure custom models are known at database initialization!
-from cobl2 import models
-from cobl2 import datatables
+from cobl2 import models, datatables, interfaces
 
 
 _ = lambda s: s
@@ -69,4 +68,5 @@ def main(global_config, **settings):
     config.add_route('test', '/test')
     config.registry.registerUtility(link_attrs, ILinkAttrs)
     config.registry.registerUtility(CoblMapMarker(), IMapMarker)
+    config.register_resource('clade', models.Clade, interfaces.IClade, True)
     return config.make_wsgi_app()
