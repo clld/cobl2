@@ -123,6 +123,23 @@ def main(args):
             concepticon_id=int(param['Concepticon_ID']) if param['Concepticon_ID'] != '0' else None,
         )
 
+    for row in ds['clades.csv']:
+        data.add(
+            models.Clade,
+            row['ID'],
+            id=row['ID'],
+            level0_name=row['level0_name'],
+            level1_name=row['level1_name'],
+            level2_name=row['level2_name'],
+            level3_name=row['level3_name'],
+            clade_name=row['clade_name'],
+            short_name=row['short_name'],
+            color=row['color'],
+            at_most=row['at_most'],
+            at_least=row['at_least'],
+            distribution=row['distribution']
+        )
+
     for row in ds['LanguageTable']:
         c = data.add(
             common.Contribution,
