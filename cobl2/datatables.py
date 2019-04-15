@@ -29,16 +29,33 @@ class CoblClades(DataTable):
     def col_defs(self):
         return [
             CoblSortIntCol(self, 'pk', bSearchable=False),
+            Col(self, 'clade_level0', sTitle='Cl 0', sTooltip='clade level 0',
+                bSearchable=False),
             Col(self, 'level0_name', sTitle='Clade 0 name'),
+            Col(self, 'clade_level1', sTitle='Cl 1', sTooltip='clade level 1',
+                bSearchable=False),
             Col(self, 'level1_name', sTitle='Clade 1 name'),
+            Col(self, 'clade_level2', sTitle='Cl 2', sTooltip='clade level 2',
+                bSearchable=False),
             Col(self, 'level2_name', sTitle='Clade 2 name'),
+            Col(self, 'clade_level3', sTitle='Cl 3', sTooltip='clade level 3',
+                bSearchable=False),
             Col(self, 'level3_name', sTitle='Clade 3 name'),
-            CoblCladeNameCol(self, 'clade_name'),
+            CoblCladeNameCol(self, 'short_name'),
+            CoblFilterCladeNameCol(self, 'short_name', sTitle='Clade'),
             Col(self, 'at_most', sTitle='At most?',
                 sTooltip='Latest plausible date at which divergence had not yet begun'),
             Col(self, 'at_least', sTitle='At least?',
                 sTooltip='Earliest plausible date divergence could have begun by'),
         ]
+
+
+class CoblFilterCladeNameCol(Col):
+    __kw__ = dict(bSearchable=False, bSortable=False)
+    def format(self, item):
+        if item.short_name:
+            return item.clade_name
+        return ''
 
 
 class CoblCladeNameCol(Col):
@@ -325,6 +342,7 @@ class Forms(value.Values):
                     model_col=Variety.clade_name,
                     get_object=lambda i: i.valueset.language,
                     select='multiple',
+                    sTitle='Clade',
                     sTooltip='Choose one or more clade names (CTRL/⌘ + click)',
                     choices=get_distinct_values(Variety.clade_name)),
                 CoblFormSelectLanguageCol(
