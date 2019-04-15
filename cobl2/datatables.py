@@ -41,7 +41,7 @@ class CoblClades(DataTable):
             Col(self, 'clade_level3', sTitle='Cl 3', sTooltip='clade level 3',
                 bSearchable=False),
             Col(self, 'level3_name', sTitle='Clade 3 name'),
-            CoblCladeNameCol(self, 'short_name'),
+            CoblCladeNameCol(self, 'clade_name'),
             CoblFilterCladeNameCol(self, 'short_name', sTitle='Clade'),
             Col(self, 'at_most', sTitle='At most?',
                 sTooltip='Latest plausible date at which divergence had not yet begun'),
