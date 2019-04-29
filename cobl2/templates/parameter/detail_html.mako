@@ -34,7 +34,7 @@
 
 <h2>${_('Parameter')} ${ctx.name}</h2>
 <div class="alert alert-info">
-    Represented in ${len([vs.language for vs in ctx.valuesets])} languages with ${len(ctx.cognateclasses)} cognate classes.
+    Represented in ${len([vs.language for vs in ctx.valuesets])} languages with ${len(ctx.cognateclasses)} cognate sets.
 </div>
 % if ctx.description:
     <p>${u.markdown(ctx.description)|n}</p>
