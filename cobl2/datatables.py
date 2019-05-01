@@ -12,10 +12,10 @@ from clld_cognacy_plugin.datatables import Meanings, Cognatesets, ConcepticonCol
 from clld_cognacy_plugin.models import Cognate, Cognateset
 from clld.web.util.glottolog import url
 from clld.web.util.htmllib import HTML
-from clld.db.util import as_int, get_distinct_values
+from clld.db.util import as_int, get_distinct_values, icontains
 from clldutils.misc import nfilter
 from clld.web.util.helpers import link
-from sqlalchemy import or_
+from sqlalchemy import or_, and_
 from sqlalchemy.orm import joinedload
 from cobl2.models import CognateClass, Meaning, Variety, Lexeme, Clade
 
@@ -148,8 +148,18 @@ class CoblCladeCol(Col):
 
 
 class CognateClasses(Cognatesets):
+    def __init__(self, req, *args, **kw):
+        Cognatesets.__init__(self, req, *args, **kw)
+        self.cladefilter = None
+        if 'cladefilter' in req.params:
+            self.cladefilter = req.params['cladefilter'].split(',')
+
     def base_query(self, query):
-        return query.outerjoin(Meaning)
+        query = query.outerjoin(Meaning)
+        if self.cladefilter:
+            q = [icontains(CognateClass.clades, q) for q in self.cladefilter]
+            query = query.filter(and_(*q))
+        return query.distinct()
 
     def get_default_options(self):
         opts = super(Cognatesets, self).get_default_options()

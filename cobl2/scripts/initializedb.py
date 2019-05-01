@@ -225,6 +225,7 @@ def main(args):
             comment=re_links.sub(parse_links, row['Comment'] or ''),
             justification=re_links.sub(parse_links, row['Justification'] or ''),
             ideophonic=row['Ideophonic'] or None,
+            clades=', '.join(row['Clades']) or None,
         )
         for src in row['Source']:
             sid, pages = ds.sources.parse(src)

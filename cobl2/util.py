@@ -6,8 +6,10 @@ from clld.web.util.helpers import get_referents
 from clld_phylogeny_plugin.models import Phylogeny
 from clld.web.util.htmllib import HTML
 from clld.web.util.helpers import link
+from clld.web.util.multiselect import MultiSelect
 from clld.db.models.common import Contributor
 from clld.db.meta import DBSession
+from cobl2.models import Variety
 import re
 
 from cobl2.adapters import CognateClassTree
@@ -21,6 +23,30 @@ def source_detail_html(context=None, request=None, **kw):
     return {'referents': get_referents(
         context, exclude=['valueset', 'sentence', 'contribution'])}
 
+
+class CladeMultiSelect(MultiSelect):
+    def __init__(self, ctx, req, name='cladefilter', eid='ms-cladefilter', **kw):
+        if ctx.cladefilter and len(ctx.cladefilter[0]):
+            kw['selected'] = ctx.cladefilter
+        else:
+            kw['selected'] = None
+        MultiSelect.__init__(self, req, name, eid, **kw)
+
+    def format_result(self, obj):
+        o = '%s' % (getattr(obj, 'label', obj))
+        return {'id': o, 'text': o}
+
+    @classmethod
+    def query(cls):
+        return DBSession.query(Variety.clade_name).distinct().order_by(Variety.clade_name)
+
+    def get_options(self):
+        return {
+            'data': [self.format_result(p) for p in self.query()],
+            'multiple': True}
+
+def cognateset_index_html(context=None, request=None, **kw):
+    return dict(select=CladeMultiSelect(context, request))
 
 def parameter_detail_html(request=None, context=None, **kw):
     return {
