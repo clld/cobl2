@@ -62,6 +62,10 @@
             <dt>${_('Justification')}</dt>
             <dd>${ctx.justification | n}</dd>
           % endif
+          % if ctx.clades:
+            <dt>${_('Involved general clades')}</dt>
+            <dd>${ctx.clades}</dd>
+          % endif
         </dl>
     </div>
 % endif

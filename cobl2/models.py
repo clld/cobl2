@@ -64,6 +64,7 @@ class CognateClass(CustomModelMixin, Cognateset):
     meaning_pk = sa.Column(sa.Integer, sa.ForeignKey('meaning.pk'))
     meaning = sa.orm.relationship(Meaning, backref='cognateclasses')
     color = sa.Column(sa.Unicode)
+    clades = sa.Column(sa.Unicode)
 
     loan_source_pk = sa.Column(sa.Integer, sa.ForeignKey('cognateclass.pk'))
     loan_notes = sa.Column(sa.Unicode)
