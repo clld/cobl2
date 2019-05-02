@@ -225,7 +225,6 @@ def main(args):
             comment=re_links.sub(parse_links, row['Comment'] or ''),
             justification=re_links.sub(parse_links, row['Justification'] or ''),
             ideophonic=row['Ideophonic'] or None,
-            clades=', '.join(row['Clades']) or None,
         )
         for src in row['Source']:
             sid, pages = ds.sources.parse(src)
@@ -318,8 +317,9 @@ def prime_cache(args):
             .join(models.Variety,
                 and_(common.ValueSet.language_pk==models.Variety.pk))\
             .distinct().order_by(models.CognateClass.pk), lambda c: c[0].pk):
-        cc = list(cc)
+        cc = sorted(list(cc))
         cc[0][0].count_clades = len(cc)
+        cc[0][0].clades = ', '.join([c[1] for c in cc])
 
     for c in DBSession.query(models.CognateClass, func.count(models.CognateClass.id)) \
             .join(clld_cognacy_plugin.models.Cognate) \
