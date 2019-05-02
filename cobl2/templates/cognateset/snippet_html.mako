@@ -9,3 +9,7 @@
     <h5>${_('Cognate Set Source')}</h5>
     <p style="margin-top:-4px;">${u.cobl_linked_references(request, ctx)}</p>
 % endif
+% if ctx.clades:
+    <h5>${_('Involved general clades')}</h5>
+    <p style="margin-top:-4px;">${ctx.clades}</p>
+% endif
