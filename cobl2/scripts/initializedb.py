@@ -53,6 +53,7 @@ def main(args):
         publisher_url="http://www.shh.mpg.de",
         license="http://creativecommons.org/licenses/by/4.0/",
         domain='iecor.clld.org',
+        contact='iecorproject@gmail.com',
         jsondata={
             'license_icon': 'cc-by.png',
             'license_name': 'Creative Commons Attribution 4.0 International License'})
