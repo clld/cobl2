@@ -3,6 +3,7 @@
 ##
 ## define app-level blocks:
 ##
+<%block name="title">${_('Home')}</%block>
 <%block name="brand">
     <a class="brand" href="${request.route_url('dataset')}"
        style="padding-top: 7px; padding-bottom: 2px;">
