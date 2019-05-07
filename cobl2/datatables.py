@@ -14,7 +14,7 @@ from clld.web.util.glottolog import url
 from clld.web.util.htmllib import HTML
 from clld.db.util import as_int, get_distinct_values, icontains
 from clldutils.misc import nfilter
-from clld.web.util.helpers import link
+from clld.web.util.helpers import link, button
 from sqlalchemy import or_, and_
 from sqlalchemy.orm import joinedload
 from cobl2.models import CognateClass, Meaning, Variety, Lexeme, Clade
@@ -320,7 +320,7 @@ class Forms(value.Values):
                 Col(self, 'loan_source_languoid', model_col=CognateClass.loan_source_languoid,
                     get_object=lambda i: i.cognates[0].cognateset, sTitle='Source lang'),
                 LinkToMapCol(self, 'm', get_object=lambda i: i.valueset.language),
-                DetailsRowLinkCol(self, 'source')
+                DetailsSourceRowLinkCol(self, 'source', button_text='source', sTitle='Source')
             ]
         if self.language:
             return [
@@ -373,6 +373,19 @@ class Forms(value.Values):
                     get_object=lambda i: i.cognates[0].cognateset,
                     sTitle='pll loan?', sTooltip='is cognate set marked as parallel loan event'),
         ]
+
+
+class DetailsSourceRowLinkCol(DetailsRowLinkCol):
+
+    def format(self, item):
+        if item.valueset.references:
+            return button(
+                self.button_text,
+                href=self.dt.req.resource_url(self.get_obj(item), ext='snippet.html'),
+                title="show source",
+                class_="btn-info details",
+                tag=HTML.button)
+        return ''
 
 class BoolCol(Col):
     def format(self, item):
