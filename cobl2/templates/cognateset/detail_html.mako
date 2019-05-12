@@ -66,6 +66,10 @@
             <dt>${_('Involved general clades')}</dt>
             <dd>${ctx.clades}</dd>
           % endif
+          % if revisors:
+            <dt>${_('Revised by')}</dt>
+            <dd>${revisors|n}</dd>
+          % endif
         </dl>
     </div>
 % endif
