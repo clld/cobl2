@@ -163,7 +163,7 @@ class CognateClasses(Cognatesets):
 
     def get_default_options(self):
         opts = super(Cognatesets, self).get_default_options()
-        opts['aaSorting'] = [[1, 'asc'],[5, 'desc'],[6, 'desc']]
+        opts['aaSorting'] = [[1, 'asc'],[4, 'desc'],[5, 'desc']]
         return opts
 
     def col_defs(self):
