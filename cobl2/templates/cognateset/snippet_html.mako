@@ -13,3 +13,7 @@
     <h5>${_('Involved general clades')}</h5>
     <p style="margin-top:-4px;">${ctx.clades}</p>
 % endif
+% if revisors:
+    <h5>${_('Revised by')}</h5>
+    <p style="margin-top:-4px;">${revisors|n}</p>
+% endif

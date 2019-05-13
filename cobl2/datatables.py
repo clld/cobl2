@@ -163,7 +163,7 @@ class CognateClasses(Cognatesets):
 
     def get_default_options(self):
         opts = super(Cognatesets, self).get_default_options()
-        opts['aaSorting'] = [[1, 'asc'],[5, 'desc'],[6, 'desc']]
+        opts['aaSorting'] = [[1, 'asc'],[4, 'desc'],[5, 'desc']]
         return opts
 
     def col_defs(self):
@@ -173,7 +173,9 @@ class CognateClasses(Cognatesets):
                 get_object=lambda cc: cc.meaning_rel,
                 sTitle='Meaning'),
             CoblRootFormCol(self, 'Root_form', model_col=CognateClass.root_form),
-            CoblRootLanguageCol(self, 'Root_language', model_col=CognateClass.root_language),
+            CoblRootLanguageCol(self, 'Root_language', model_col=CognateClass.root_language,
+                sTitle='Root ref. language',
+                sTooltip='Root reference language'),
             Col(self, 'count_clades', model_col=CognateClass.count_clades,
                 sTitle='# clades',
                 sTooltip='number of general clades found in cogante set',),
@@ -183,6 +185,9 @@ class CognateClasses(Cognatesets):
             BoolCol(self, 'is_loan', model_col=CognateClass.is_loan,
                 sTitle='loan?',
                 sTooltip='is cognate set marked as loan event'),
+            BoolCol(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
+                sTitle='pll loan?',
+                sTooltip='is cognate set marked as parallel loan event'),
             Col(self, 'Loan_source', model_col=CognateClass.loan_source_languoid),
             LinkCol(
                 self,

@@ -75,6 +75,7 @@ class CognateClass(CustomModelMixin, Cognateset):
     is_loan = sa.Column(sa.Boolean, default=False)
     comment = sa.Column(sa.Unicode)
     justification = sa.Column(sa.Unicode)
+    revised_by = sa.Column(sa.Unicode)
     count_lexemes = sa.Column(sa.Integer)
     count_clades = sa.Column(sa.Integer)
     loans = sa.orm.relationship(

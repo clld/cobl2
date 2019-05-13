@@ -9,7 +9,7 @@ from clld.web.util.helpers import link
 from clld.web.util.multiselect import MultiSelect
 from clld.db.models.common import Contributor
 from clld.db.meta import DBSession
-from cobl2.models import Variety
+from cobl2.models import Variety, Author
 import re
 
 from cobl2.adapters import CognateClassTree
@@ -47,6 +47,19 @@ class CladeMultiSelect(MultiSelect):
 
 def cognateset_index_html(context=None, request=None, **kw):
     return dict(select=CladeMultiSelect(context, request))
+
+def cognateset_snippet_html(context=None, request=None, **kw):
+    return {'revisors': get_revisors(context, request)}
+
+def cognateset_detail_html(context=None, request=None, **kw):
+    return {'revisors': get_revisors(context, request)}
+
+def get_revisors(context=None, request=None, **kw):
+    res = []
+    for r in context.revised_by.split(','):
+        for f in DBSession.query(Author).filter(Author.id == r):
+            res.append(HTML.a(f.name, href='%s/%s' % (request.route_url('contributors'), r)))
+    return ', '.join(res)
 
 def parameter_detail_html(request=None, context=None, **kw):
     return {
