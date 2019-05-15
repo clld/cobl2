@@ -56,6 +56,8 @@ def cognateset_detail_html(context=None, request=None, **kw):
 
 def get_revisors(context=None, request=None, **kw):
     res = []
+    if not context.revised_by:
+        return None
     for r in context.revised_by.split(','):
         for f in DBSession.query(Author).filter(Author.id == r):
             res.append(HTML.a(f.name, href='%s/%s' % (request.route_url('contributors'), r)))
