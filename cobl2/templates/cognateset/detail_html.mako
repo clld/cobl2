@@ -21,6 +21,10 @@
           % endif
             <dt>${_('Ideophonic')}</dt>
             <dd>${_('yes') if ctx.ideophonic else _('no')}</dd>
+          % if ctx.proposedAsCognateTo_pk and ctx.proposedAsCognateTo:
+            <dt>${_('Proposed as cognate to')}</dt>
+            <dd><a href="${request.route_url('cognatesets')}/${ctx.proposedAsCognateTo.id}">${ctx.proposedAsCognateTo}</a> <i>scale:</i> ${ctx.proposedAsCognateToScale}</dd>
+          % endif
         </dl>
     </div>
 

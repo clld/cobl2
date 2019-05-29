@@ -76,6 +76,12 @@ class CognateClass(CustomModelMixin, Cognateset):
     comment = sa.Column(sa.Unicode)
     justification = sa.Column(sa.Unicode)
     revised_by = sa.Column(sa.Unicode)
+    proposedAsCognateTo_pk = sa.Column(sa.Integer, sa.ForeignKey('cognateclass.pk'))
+    proposedAsCognateTo_rel = sa.orm.relationship(
+        'CognateClass',
+        foreign_keys=[proposedAsCognateTo_pk],
+        backref=sa.orm.backref('proposedAsCognateTo', remote_side=[pk]))
+    proposedAsCognateToScale = sa.Column(sa.Integer)
     count_lexemes = sa.Column(sa.Integer)
     count_clades = sa.Column(sa.Integer)
     loans = sa.orm.relationship(
@@ -117,6 +123,7 @@ class Variety(CustomModelMixin, Language):
     lang_description = sa.Column(sa.Unicode)
     variety = sa.Column(sa.Unicode)
     sort_order = sa.Column(sa.Integer)
+    loc_justification = sa.Column(sa.Unicode)
 
     @property
     def fontcolor(self):

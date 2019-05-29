@@ -112,7 +112,10 @@ def main(args):
             return '[%s](%s-%s)' % (m.group('label'), m.group('type'), m.group('id'))
 
     for param in ds['ParameterTable']:
-        wiki_page = wiki / '{0}.md'.format(param['Name'])
+
+        wiki_page = wiki / 'Meaning:-{0}.md'.format(param['Name'])
+        if not wiki_page.exists():
+            wiki_page = wiki / '{0}.md'.format(param['Name'])
         data.add(
             models.Meaning,
             param['ID'],
@@ -174,6 +177,7 @@ def main(args):
             variety=row['Variety'],
             earliest_time_depth_bound=row['Earliest_Time_Depth_Bound'],
             latest_time_depth_bound=row['Latest_Time_Depth_Bound'],
+            loc_justification=row['loc_justification'] or None,
             sort_order=row['sort_order']
         )
 
@@ -236,6 +240,13 @@ def main(args):
                 cognateset=cc, source=data['Source'][sid], description=pages))
 
     DBSession.flush()
+
+    cc_id_pk_map = {str(ccid): cc.pk for ccid, cc in data['CognateClass'].items()}
+    for row in ds['CognatesetTable']:
+        if row['proposedAsCognateTo_pk']:
+            data['CognateClass'][row['ID']].proposedAsCognateTo_pk = cc_id_pk_map[str(row['proposedAsCognateTo_pk'])]
+            data['CognateClass'][row['ID']].proposedAsCognateToScale = row['proposedAsCognateToScale']
+
     loans = {l['Cognateset_ID']: l for l in ds['loans.csv']}
     for ccid, cc in data['CognateClass'].items():
         if ccid in loans:
