@@ -53,6 +53,16 @@ class Meaning(CustomModelMixin, Parameter, MeaningMixin):
     count_lexemes = sa.Column(sa.Integer)
 
 
+class ProposedCognates(Base):
+    cc1_pk = sa.Column(sa.Integer, sa.ForeignKey('cognateclass.pk'))
+    cc2_pk = sa.Column(sa.Integer, sa.ForeignKey('cognateclass.pk'))
+    scale = sa.Column(sa.Integer)
+    proposedAsCognateTo_rel = sa.orm.relationship(
+        'CognateClass',
+        foreign_keys=[cc1_pk],
+        backref=sa.orm.backref('proposedAsCognateTo'))
+
+
 class CognateClass(CustomModelMixin, Cognateset):
     pk = sa.Column(sa.Integer, sa.ForeignKey('cognateset.pk'), primary_key=True)
     root_form = sa.Column(sa.Unicode)
@@ -65,6 +75,12 @@ class CognateClass(CustomModelMixin, Cognateset):
     meaning = sa.orm.relationship(Meaning, backref='cognateclasses')
     color = sa.Column(sa.Unicode)
     clades = sa.Column(sa.Unicode)
+
+    proposedAsCognateTo_rel = sa.orm.relationship(
+        'ProposedCognates',
+        foreign_keys=[pk],
+        primaryjoin=pk==ProposedCognates.cc2_pk,
+        backref=sa.orm.backref('cognateclass'))
 
     loan_source_pk = sa.Column(sa.Integer, sa.ForeignKey('cognateclass.pk'))
     loan_notes = sa.Column(sa.Unicode)
@@ -117,6 +133,7 @@ class Variety(CustomModelMixin, Language):
     lang_description = sa.Column(sa.Unicode)
     variety = sa.Column(sa.Unicode)
     sort_order = sa.Column(sa.Integer)
+    loc_justification = sa.Column(sa.Unicode)
 
     @property
     def fontcolor(self):
