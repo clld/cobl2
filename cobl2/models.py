@@ -53,6 +53,16 @@ class Meaning(CustomModelMixin, Parameter, MeaningMixin):
     count_lexemes = sa.Column(sa.Integer)
 
 
+class ProposedCognates(Base):
+    cc1_pk = sa.Column(sa.Integer, sa.ForeignKey('cognateclass.pk'))
+    cc2_pk = sa.Column(sa.Integer, sa.ForeignKey('cognateclass.pk'))
+    scale = sa.Column(sa.Integer)
+    proposedAsCognateTo_rel = sa.orm.relationship(
+        'CognateClass',
+        foreign_keys=[cc1_pk],
+        backref=sa.orm.backref('proposedAsCognateTo'))
+
+
 class CognateClass(CustomModelMixin, Cognateset):
     pk = sa.Column(sa.Integer, sa.ForeignKey('cognateset.pk'), primary_key=True)
     root_form = sa.Column(sa.Unicode)
@@ -66,6 +76,12 @@ class CognateClass(CustomModelMixin, Cognateset):
     color = sa.Column(sa.Unicode)
     clades = sa.Column(sa.Unicode)
 
+    proposedAsCognateTo_rel = sa.orm.relationship(
+        'ProposedCognates',
+        foreign_keys=[pk],
+        primaryjoin=pk==ProposedCognates.cc2_pk,
+        backref=sa.orm.backref('cognateclass'))
+
     loan_source_pk = sa.Column(sa.Integer, sa.ForeignKey('cognateclass.pk'))
     loan_notes = sa.Column(sa.Unicode)
     loan_source_form = sa.Column(sa.Unicode)
@@ -76,12 +92,6 @@ class CognateClass(CustomModelMixin, Cognateset):
     comment = sa.Column(sa.Unicode)
     justification = sa.Column(sa.Unicode)
     revised_by = sa.Column(sa.Unicode)
-    proposedAsCognateTo_pk = sa.Column(sa.Integer, sa.ForeignKey('cognateclass.pk'))
-    proposedAsCognateTo_rel = sa.orm.relationship(
-        'CognateClass',
-        foreign_keys=[proposedAsCognateTo_pk],
-        backref=sa.orm.backref('proposedAsCognateTo', remote_side=[pk]))
-    proposedAsCognateToScale = sa.Column(sa.Integer)
     count_lexemes = sa.Column(sa.Integer)
     count_clades = sa.Column(sa.Integer)
     loans = sa.orm.relationship(

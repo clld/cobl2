@@ -244,8 +244,12 @@ def main(args):
     cc_id_pk_map = {str(ccid): cc.pk for ccid, cc in data['CognateClass'].items()}
     for row in ds['CognatesetTable']:
         if row['proposedAsCognateTo_pk']:
-            data['CognateClass'][row['ID']].proposedAsCognateTo_pk = cc_id_pk_map[str(row['proposedAsCognateTo_pk'])]
-            data['CognateClass'][row['ID']].proposedAsCognateToScale = row['proposedAsCognateToScale']
+            DBSession.add(models.ProposedCognates(
+                cc1_pk = data['CognateClass'][row['ID']].pk,
+                cc2_pk = cc_id_pk_map[str(row['proposedAsCognateTo_pk'])],
+                scale = row['proposedAsCognateToScale']
+            ))
+    DBSession.flush()
 
     loans = {l['Cognateset_ID']: l for l in ds['loans.csv']}
     for ccid, cc in data['CognateClass'].items():
