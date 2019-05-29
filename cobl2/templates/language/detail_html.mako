@@ -30,6 +30,10 @@ ${request.get_datatable('values', h.models.Value, language=ctx).render()}
         <dt>Description</dt>
         <dd>${ctx.lang_description}</dd>
       % endif
+      % if ctx.loc_justification:
+        <dt>Note on geographical location</dt>
+        <dd>${ctx.loc_justification}</dd>
+      % endif
       % if ctx.earliest_time_depth_bound:
         <dt>Earliest time depth bound</dt>
         <dd>${ctx.earliest_time_depth_bound}</dd>
