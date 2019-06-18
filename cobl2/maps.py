@@ -6,6 +6,7 @@ class MeaningMap(ParameterMap):
         return {
             'base_layer': 'Esri.WorldPhysical',
             'icon_size': 15,
+            'max_zoom': 9,
         }
 
 
@@ -14,6 +15,7 @@ class LanguagesMap(Map):
         return {
             'base_layer': 'Esri.WorldPhysical',
             'icon_size': 15,
+            'max_zoom': 9,
         }
 
 
