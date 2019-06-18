@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 import sys
 import re
+import os
 from collections import OrderedDict
 from itertools import groupby
 
@@ -29,7 +30,11 @@ import clld_cognacy_plugin.models
 data_file_path = Path(cobl2.__file__).parent / '../..' / 'iecor'
 
 ds = Wordlist.from_metadata(data_file_path / 'cldf' / 'Wordlist-metadata.json')
-wiki = Path(cobl2.__file__).parent / '../..' / 'CoBL-public.wiki'
+wiki = Path(cobl2.__file__).parent / '../..' / 'CoBL.wiki'
+if not os.path.exists(wiki):
+    print(wiki)
+    print(' -> path to wiki not found')
+    exit()
 photos = {
     p.stem: p.as_posix() for p in
     (Path(cobl2.__file__).parent / '../..' / 'CoBL-public' / 'cobl' / 'static' / 'contributors').iterdir()
@@ -115,17 +120,18 @@ def main(args):
 
         wiki_page = wiki / 'Meaning:-{0}.md'.format(param['Name'])
         if not wiki_page.exists():
-            wiki_page = wiki / '{0}.md'.format(param['Name'])
-        data.add(
-            models.Meaning,
-            param['ID'],
-            id=slug(param['Name']),
-            name=param['Name'],
-            description=param['Description'],
-            wiki=clean_md(read_text(wiki_page)) if wiki_page.exists() else None,
-            example_context=param['Example_Context'],
-            concepticon_id=int(param['Concepticon_ID']) if param['Concepticon_ID'] != '0' else None,
-        )
+            print('no wiki page for "%s" found' % (param['Name']))
+        else:
+            data.add(
+                models.Meaning,
+                param['ID'],
+                id=slug(param['Name']),
+                name=param['Name'],
+                description=param['Description'],
+                wiki=clean_md(read_text(wiki_page)) if wiki_page.exists() else None,
+                example_context=param['Example_Context'],
+                concepticon_id=int(param['Concepticon_ID']) if param['Concepticon_ID'] != '0' else None,
+            )
 
     for row in ds['clades.csv']:
         data.add(
