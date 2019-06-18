@@ -1,12 +1,12 @@
 <%inherit file="../${context.get('request').registry.settings.get('clld.app_template', 'app.mako')}"/>
 <%namespace name="util" file="../util.mako"/>
 <%! active_menu_item = "parameters" %>
-<%block name="title">${_('Parameter')} ${ctx.name}</%block>
+<%block name="title">${_('Parameter')}: ${ctx.name}</%block>
 
-<h2>${_('Parameter')} ${ctx.name}</h2>
+<h2>${_('Parameter')}: ${ctx.name}</h2>
 % if ctx.wiki or ctx.description:
     <div id="meaning-more">
-    <%util:accordion_group eid="acc-a" parent="meaning-more" title="${_('Description')}" open="True">
+    <%util:accordion_group eid="acc-a" parent="meaning-more" title="${_('Definition')}" open="True">
         % if ctx.wiki:
             <p>${u.markdown_remove_links(ctx.wiki)|n}</p>
         % endif
