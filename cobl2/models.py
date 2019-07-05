@@ -94,6 +94,7 @@ class CognateClass(CustomModelMixin, Cognateset):
     revised_by = sa.Column(sa.Unicode)
     count_lexemes = sa.Column(sa.Integer)
     count_clades = sa.Column(sa.Integer)
+    involved_clade_colors = sa.Column(sa.Unicode)
     loans = sa.orm.relationship(
         'CognateClass',
         foreign_keys=[loan_source_pk],

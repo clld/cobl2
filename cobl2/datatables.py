@@ -176,7 +176,7 @@ class CognateClasses(Cognatesets):
             CoblRootLanguageCol(self, 'Root_language', model_col=CognateClass.root_language,
                 sTitle='Root ref. language',
                 sTooltip='Root reference language'),
-            Col(self, 'count_clades', model_col=CognateClass.count_clades,
+            CoblCladesCol(self, 'count_clades', model_col=CognateClass.count_clades,
                 sTitle='# clades',
                 sTooltip='number of general clades found in cogante set',),
             Col(self, 'count_lexemes', model_col=CognateClass.count_lexemes,
@@ -197,6 +197,21 @@ class CognateClasses(Cognatesets):
                 get_object=lambda cc: cc.loan_source),
             DetailsRowLinkCol(self, 'more'),
         ]
+
+
+class CoblCladesCol(Col):
+    def format(self, item):
+        colors = []
+        for c in item.involved_clade_colors.split(' '):
+            if c == '0':
+                colors.append('<div class="clade-col-block-item-white"></div>')
+            else:
+                colors.append('<div class="clade-col-block-item" style="background-color:%s;"></div>' % (c))
+        return('<div style="display:block;">%i<span class="clade-col-block" title="Involved general clades:\n%s">%s</span></div>' % (
+                item.count_clades,
+                item.clades,
+                ''.join(colors)
+            ))
 
 
 class CognatesetCol(LinkCol):
