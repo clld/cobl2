@@ -10,4 +10,22 @@
   opacity: 0.8;
 }
 .clld-map-icon {opacity: 0.8;}
+.clade-col-block
+{
+  display: inline-block;
+  margin-left: 2px;
+}
+.clade-col-block-item
+{
+  width: 7px;
+  height: 10px;
+  display: inline-block;
+}
+.clade-col-block-item-white
+{
+  width: 7px;
+  height: 10px;
+  display: inline-block;
+  background-color: #ffffff00;
+}
 

@@ -13,7 +13,7 @@ from clld.db.meta import DBSession
 from clld.db.models import common
 from clld.lib.bibtex import EntryType
 from clld.web.util.helpers import data_uri
-from clld.lib.color import qualitative_colors, rgb_as_hex
+from clldutils.color import qualitative_colors, rgb_as_hex
 from clldutils.path import Path, read_text
 from clldutils.misc import slug
 from pycldf import Wordlist
@@ -329,6 +329,9 @@ def prime_cache(args):
     This procedure should be separate from the db initialization, because
     it will have to be run periodically whenever data has been updated.
     """
+    ordered_clade_colors = {k: v for k,v in DBSession.query(models.Clade.clade_name, models.Clade.color)\
+                                .filter(models.Clade.short_name != '')\
+                                .order_by(models.Clade.clade_level0).all()}
     for _, cc in groupby(
             DBSession.query(models.CognateClass, models.Variety.clade_name)\
             .join(clld_cognacy_plugin.models.Cognate,
@@ -342,7 +345,15 @@ def prime_cache(args):
             .distinct().order_by(models.CognateClass.pk), lambda c: c[0].pk):
         cc = sorted(list(cc))
         cc[0][0].count_clades = len(cc)
-        cc[0][0].clades = ', '.join([c[1] for c in cc])
+        involved_clades = [c[1] for c in cc]
+        r = []
+        for cl,col in ordered_clade_colors.items():
+            if cl in involved_clades:
+                r.append(col)
+            else:
+                r.append('0')
+        cc[0][0].involved_clade_colors = ' '.join(r)
+        cc[0][0].clades = ', '.join(involved_clades)
 
     for c in DBSession.query(models.CognateClass, func.count(models.CognateClass.id)) \
             .join(clld_cognacy_plugin.models.Cognate) \

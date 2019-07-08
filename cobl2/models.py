@@ -8,7 +8,7 @@ from clld.db.models.common import (
     Parameter, Language, Contribution,
     Contributor, Value, Identifier,
     IdentifierType, IdNameDescriptionMixin)
-from clld.lib.color import is_bright
+from clldutils.color import is_bright
 from clld_cognacy_plugin.models import MeaningMixin, Cognateset
 from zope.interface import implementer
 from cobl2 import interfaces as cobl2_interfaces
@@ -94,6 +94,7 @@ class CognateClass(CustomModelMixin, Cognateset):
     revised_by = sa.Column(sa.Unicode)
     count_lexemes = sa.Column(sa.Integer)
     count_clades = sa.Column(sa.Integer)
+    involved_clade_colors = sa.Column(sa.Unicode)
     loans = sa.orm.relationship(
         'CognateClass',
         foreign_keys=[loan_source_pk],

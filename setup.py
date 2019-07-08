@@ -20,6 +20,7 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
+        'clldutils>=2.8',
         'clld>=4.6',
         'clldmpg~=3.1',
         'clld-cognacy-plugin>=0.1',
