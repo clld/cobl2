@@ -178,7 +178,7 @@ class CognateClasses(Cognatesets):
                 sTooltip='Root reference language'),
             CoblCladesCol(self, 'count_clades', model_col=CognateClass.count_clades,
                 sTitle='# clades',
-                sTooltip='number of general clades found in cogante set',),
+                sTooltip='number of general clades found in cognate set',),
             Col(self, 'count_lexemes', model_col=CognateClass.count_lexemes,
                 sTitle='# lexemes',
                 sTooltip='number of lexemes per cognate set',),
