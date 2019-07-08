@@ -4,11 +4,11 @@
 <%block name="title">${_('Parameter')}: ${ctx.name}</%block>
 
 <h2>${_('Parameter')}: ${ctx.name}</h2>
-% if ctx.wiki or ctx.description:
+% if ctx.description_md or ctx.description:
     <div id="meaning-more">
     <%util:accordion_group eid="acc-a" parent="meaning-more" title="${_('Definition')}" open="True">
-        % if ctx.wiki:
-            <p>${u.markdown_remove_links(ctx.wiki)|n}</p>
+        % if ctx.description_md:
+            <p>${u.markdown_remove_links(ctx.description_md)|n}</p>
         % endif
         % if ctx.description:
             <h4>Disambiguation</h4>${ctx.description}

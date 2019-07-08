@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cobl2 0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2019-04-08 09:47+0200\n"
+"POT-Creation-Date: 2019-07-08 14:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,35 +17,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.6.0\n"
 
-#: cobl2/__init__.py:15
+#: cobl2/__init__.py:14
 msgid "Value"
 msgstr ""
 
-#: cobl2/__init__.py:16
+#: cobl2/__init__.py:15
 msgid "Values"
 msgstr ""
 
-#: cobl2/__init__.py:17
+#: cobl2/__init__.py:16
 msgid "Contributor"
 msgstr ""
 
-#: cobl2/__init__.py:18
+#: cobl2/__init__.py:17
 msgid "Contributors"
 msgstr ""
 
-#: cobl2/__init__.py:19
+#: cobl2/__init__.py:18
 msgid "Parameter"
 msgstr ""
 
-#: cobl2/__init__.py:20
+#: cobl2/__init__.py:19
 msgid "Parameters"
 msgstr ""
 
-#: cobl2/__init__.py:21
+#: cobl2/__init__.py:20
 msgid "Cognateset"
 msgstr ""
 
-#: cobl2/__init__.py:22
+#: cobl2/__init__.py:21
 msgid "Cognatesets"
 msgstr ""
 

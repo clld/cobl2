@@ -9,7 +9,7 @@ from clld.web.util.helpers import link
 from clld.web.util.multiselect import MultiSelect
 from clld.db.models.common import Contributor
 from clld.db.meta import DBSession
-from cobl2.models import Variety, Author
+from cobl2.models import Variety, Author, Policie
 import re
 
 from cobl2.adapters import CognateClassTree
@@ -17,7 +17,25 @@ from cobl2.adapters import CognateClassTree
 assert markdown
 
 def markdown_remove_links(m):
-    return markdown(re.sub(r'\[(.+?)\]\(.+?\)', r'\1', m))
+    return markdown(re.sub(r'\[(.+?)\]\(.+?\)', r'\1', m.replace('\\n', '\n')))
+
+def markdown_policies(m):
+    return markdown(m.replace('\\n', '\n'))
+
+def table_of_policies(request):
+    q = DBSession.query(Policie.name, Policie.id).order_by(Policie.pk).all()
+    r = []
+    r.append(HTML.h4('Table of Policies:'))
+    for name, id in q:
+        r.append(HTML.a(name, href='%s/%s' % (request.route_url('policies'), id)))
+        r.append(HTML.br())
+    return ''.join(r)
+
+def policie_index_html(context=None, request=None, **kw):
+    return {'table_of_policies': table_of_policies(request)}
+
+def policie_detail_html(context=None, request=None, **kw):
+    return {'table_of_policies': table_of_policies(request)}
 
 def source_detail_html(context=None, request=None, **kw):
     return {'referents': get_referents(

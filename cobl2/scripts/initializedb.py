@@ -30,11 +30,7 @@ import clld_cognacy_plugin.models
 data_file_path = Path(cobl2.__file__).parent / '../..' / 'iecor'
 
 ds = Wordlist.from_metadata(data_file_path / 'cldf' / 'Wordlist-metadata.json')
-wiki = Path(cobl2.__file__).parent / '../..' / 'CoBL.wiki'
-if not os.path.exists(wiki):
-    print(wiki)
-    print(' -> path to wiki not found')
-    exit()
+
 photos = {
     p.stem: p.as_posix() for p in
     (Path(cobl2.__file__).parent / '../..' / 'CoBL-public' / 'cobl' / 'static' / 'contributors').iterdir()
@@ -94,14 +90,6 @@ def main(args):
             bibtex_type=getattr(EntryType, src.genre, EntryType.misc),
             **src)
 
-    def clean_md(t):
-        lines = []
-        for line in t.splitlines():
-            if line.startswith('#'):
-                line = '##' + line
-            lines.append(line)
-        return '\n'.join(lines)
-
     re_links = re.compile(r'\[(?P<label>[^\]]+?)\]\((?P<type>.+?)-(?P<id>\d+)\)')
     link_map = {
         'cog': '/cognatesets/',
@@ -117,21 +105,24 @@ def main(args):
             return '[%s](%s-%s)' % (m.group('label'), m.group('type'), m.group('id'))
 
     for param in ds['ParameterTable']:
+        data.add(
+            models.Meaning,
+            param['ID'],
+            id=slug(param['Name']),
+            name=param['Name'],
+            description=param['Description'],
+            description_md=param['Description_md'],
+            concepticon_id=int(param['Concepticon_ID']) if param['Concepticon_ID'] != '0' else None,
+        )
 
-        wiki_page = wiki / 'Meaning:-{0}.md'.format(param['Name'])
-        if not wiki_page.exists():
-            print('no wiki page for "%s" found' % (param['Name']))
-        else:
-            data.add(
-                models.Meaning,
-                param['ID'],
-                id=slug(param['Name']),
-                name=param['Name'],
-                description=param['Description'],
-                wiki=clean_md(read_text(wiki_page)) if wiki_page.exists() else None,
-                example_context=param['Example_Context'],
-                concepticon_id=int(param['Concepticon_ID']) if param['Concepticon_ID'] != '0' else None,
-            )
+    for row in ds['policies.csv']:
+        data.add(
+            models.Policie,
+            row['id'],
+            id=row['id'],
+            name=row['name'],
+            markup_description=row['markup_description'],
+        )
 
     for row in ds['clades.csv']:
         data.add(
