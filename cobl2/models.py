@@ -14,6 +14,10 @@ from zope.interface import implementer
 from cobl2 import interfaces as cobl2_interfaces
 
 
+@implementer(cobl2_interfaces.IPolicie)
+class Policie(Base, IdNameDescriptionMixin):
+    pass
+
 @implementer(cobl2_interfaces.IClade)
 class Clade(Base, IdNameDescriptionMixin):
     pk = sa.Column(sa.Integer, primary_key=True)
@@ -45,8 +49,7 @@ class Lexeme(CustomModelMixin, Value):
 
 class Meaning(CustomModelMixin, Parameter, MeaningMixin):
     pk = sa.Column(sa.Integer, sa.ForeignKey('parameter.pk'), primary_key=True)
-    example_context = sa.Column(sa.Unicode)
-    wiki = sa.Column(sa.Unicode)
+    description_md = sa.Column(sa.Unicode)
     count_languages = sa.Column(sa.Integer)
     count_cognateclasses = sa.Column(sa.Integer)
     count_loan_cognateclasses = sa.Column(sa.Integer)
