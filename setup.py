@@ -22,6 +22,7 @@ setup(
     install_requires=[
         'clld>=4.6',
         'clldmpg~=3.1',
+        'clldutils>=2.8',
         'clld-cognacy-plugin>=0.1',
         'clld-phylogeny-plugin',
         'markdown',
