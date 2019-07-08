@@ -3,7 +3,7 @@ from base64 import b64encode
 from clld.interfaces import IContribution, ILinkAttrs, IValueSet, ILanguage, IMapMarker, IValue
 from clld.web.icon import MapMarker
 from clld.web.app import register_menu
-from clld.lib import svg
+from clldutils import svg
 from pyramid.config import Configurator
 
 # we must make sure custom models are known at database initialization!

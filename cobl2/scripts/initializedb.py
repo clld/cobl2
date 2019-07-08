@@ -13,7 +13,7 @@ from clld.db.meta import DBSession
 from clld.db.models import common
 from clld.lib.bibtex import EntryType
 from clld.web.util.helpers import data_uri
-from clld.lib.color import qualitative_colors, rgb_as_hex
+from clldutils.color import qualitative_colors, rgb_as_hex
 from clldutils.path import Path, read_text
 from clldutils.misc import slug
 from pycldf import Wordlist

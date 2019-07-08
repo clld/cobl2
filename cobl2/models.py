@@ -8,7 +8,7 @@ from clld.db.models.common import (
     Parameter, Language, Contribution,
     Contributor, Value, Identifier,
     IdentifierType, IdNameDescriptionMixin)
-from clld.lib.color import is_bright
+from clldutils.color import is_bright
 from clld_cognacy_plugin.models import MeaningMixin, Cognateset
 from zope.interface import implementer
 from cobl2 import interfaces as cobl2_interfaces
