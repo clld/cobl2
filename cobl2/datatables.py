@@ -121,6 +121,14 @@ class CoblLanguages(Languages):
                 sDescription='<small>The geographic latitude</small>'),
             Col(self, 'longitude',
                 sDescription='<small>The geographic longitude</small>'),
+            Col(self, 'count_meanings',
+                model_col=Variety.count_meanings,
+                sTooltip='number of meanings per language',
+                sTitle='# meanings'),
+            Col(self, 'count_lexemes',
+                model_col=Variety.count_lexemes,
+                sTooltip='number of lexemes per language',
+                sTitle='# lexemes'),
         ]
 
 
