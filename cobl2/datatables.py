@@ -308,7 +308,7 @@ class Forms(value.Values):
     def base_query(self, query):
         query = value.Values.base_query(self, query)
         if not self.parameter and not self.language:
-            return query.join(Value.cognates).join(Cognate.cognateset)\
+            return query.join(Value.cognates, Cognate.cognateset).distinct()\
                 .join(ValueSet.parameter).join(ValueSet.language).options(
                     joinedload(Value.cognates),
                     joinedload(Value.cognates, Cognate.cognateset),
@@ -316,7 +316,8 @@ class Forms(value.Values):
                     joinedload(Value.valueset, ValueSet.language)
                 )
         else:
-            return query.join(Value.cognates).join(Cognate.cognateset).options(
+            return query.join(Value.cognates, Cognate.cognateset).distinct()\
+                .options(
                     joinedload(Value.cognates),
                     joinedload(Value.cognates, Cognate.cognateset))
 
