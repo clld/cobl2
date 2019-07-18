@@ -378,6 +378,11 @@ def prime_cache(args):
     for language in DBSession.query(common.Language).options(
         joinedload_all(common.Language.valuesets, common.ValueSet.references)
     ):
+        language.count_meanings = len(language.valuesets)
+        language.count_lexemes = len(DBSession.query(common.Value.id) \
+            .filter(common.ValueSet.language_pk == language.pk) \
+            .join(common.ValueSet).all()
+            )
         spks = set()
         for vs in language.valuesets:
             for ref in vs.references:

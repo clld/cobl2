@@ -121,6 +121,14 @@ class CoblLanguages(Languages):
                 sDescription='<small>The geographic latitude</small>'),
             Col(self, 'longitude',
                 sDescription='<small>The geographic longitude</small>'),
+            Col(self, 'count_meanings',
+                model_col=Variety.count_meanings,
+                sTooltip='number of meanings per language',
+                sTitle='# meanings'),
+            Col(self, 'count_lexemes',
+                model_col=Variety.count_lexemes,
+                sTooltip='number of lexemes per language',
+                sTitle='# lexemes'),
         ]
 
 
@@ -300,7 +308,7 @@ class Forms(value.Values):
     def base_query(self, query):
         query = value.Values.base_query(self, query)
         if not self.parameter and not self.language:
-            return query.join(Value.cognates).join(Cognate.cognateset)\
+            return query.join(Value.cognates, Cognate.cognateset).distinct()\
                 .join(ValueSet.parameter).join(ValueSet.language).options(
                     joinedload(Value.cognates),
                     joinedload(Value.cognates, Cognate.cognateset),
@@ -308,7 +316,8 @@ class Forms(value.Values):
                     joinedload(Value.valueset, ValueSet.language)
                 )
         else:
-            return query.join(Value.cognates).join(Cognate.cognateset).options(
+            return query.join(Value.cognates, Cognate.cognateset).distinct()\
+                .options(
                     joinedload(Value.cognates),
                     joinedload(Value.cognates, Cognate.cognateset))
 

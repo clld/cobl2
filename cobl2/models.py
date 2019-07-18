@@ -138,6 +138,8 @@ class Variety(CustomModelMixin, Language):
     variety = sa.Column(sa.Unicode)
     sort_order = sa.Column(sa.Integer)
     loc_justification = sa.Column(sa.Unicode)
+    count_meanings = sa.Column(sa.Integer)
+    count_lexemes = sa.Column(sa.Integer)
 
     @property
     def fontcolor(self):
