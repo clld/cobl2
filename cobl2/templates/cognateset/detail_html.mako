@@ -69,7 +69,7 @@
             <dd>${ctx.justification | n}</dd>
           % endif
           % if ctx.clades:
-            <dt>${_('Involved general clades')}</dt>
+            <dt>${_('Found in clades')}</dt>
             <dd>${ctx.clades}</dd>
           % endif
           % if revisors:

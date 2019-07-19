@@ -215,7 +215,7 @@ class CoblCladesCol(Col):
                 colors.append('<div class="clade-col-block-item-white"></div>')
             else:
                 colors.append('<div class="clade-col-block-item" style="background-color:%s;"></div>' % (c))
-        return('<div style="display:block;">%i<span class="clade-col-block" title="Involved general clades:\n%s">%s</span></div>' % (
+        return('<div style="display:block;">%i<span class="clade-col-block" title="Found in clades:\n%s">%s</span></div>' % (
                 item.count_clades,
                 item.clades,
                 ''.join(colors)
