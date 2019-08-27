@@ -45,5 +45,26 @@ ${request.get_datatable('values', h.models.Value, language=ctx).render()}
     </dl>
     </div>
 
-    ${util.language_meta()}
+    <div class="accordion" id="sidebar-accordion">
+        % if getattr(request, 'map', False):
+        <%util:accordion_group eid="acc-map" parent="sidebar-accordion" title="Map" open="${True}">
+            ${request.map.render()}
+            ${h.format_coordinates(ctx)}
+        </%util:accordion_group>
+        % endif
+    % if ctx.identifiers:
+        <%util:accordion_group eid="acc-names" parent="sidebar-accordion" title="${_('Alternative names')}">
+            <dl>
+            % for type_, identifiers in h.groupby(sorted(ctx.identifiers, key=lambda i: i.type), lambda j: j.type):
+                <dt>${type_}:</dt>
+                % for identifier in identifiers:
+                <dd>${h.language_identifier(request, identifier)}</dd>
+                % endfor
+            % endfor
+            </dl>
+        </%util:accordion_group>
+    % endif
+    </div>
+
+##    ${util.language_meta()}
 </%def>

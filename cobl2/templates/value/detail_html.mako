@@ -15,10 +15,10 @@
         <dt>${_('Gloss')}</dt>
         <dd>${ctx.gloss}</dd>
         % endif
-        % if ctx.valueset.references:
-            <dt>${_('References')}</dt>
-            <dd>${u.cobl_linked_references(request, ctx.valueset, True)|n}</dd>
-        % endif
+##        % if ctx.valueset.references:
+##            <dt>${_('References')}</dt>
+##            <dd>${u.cobl_linked_references(request, ctx.valueset, True)|n}</dd>
+##        % endif
         % for k, v in ctx.datadict().items():
             <dt>${k}</dt>
             <dd>${v}</dd>
