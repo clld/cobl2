@@ -349,7 +349,7 @@ class Forms(value.Values):
                 Col(self, 'loan_source_languoid', model_col=CognateClass.loan_source_languoid,
                     get_object=lambda i: i.cognates[0].cognateset, sTitle='Source lang'),
                 LinkToMapCol(self, 'm', get_object=lambda i: i.valueset.language),
-                DetailsSourceRowLinkCol(self, 'source', button_text='source', sTitle='Source')
+                # DetailsSourceRowLinkCol(self, 'source', button_text='source', sTitle='Source')
             ]
         if self.language:
             return [
