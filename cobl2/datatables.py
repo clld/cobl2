@@ -365,7 +365,7 @@ class Forms(value.Values):
                 BoolCol(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
                     get_object=lambda i: i.cognates[0].cognateset,
                     sTitle='pll loan?', sTooltip='is cognate set marked as parallel loan event'),
-                DetailsSourceRowLinkCol(self, 'source', button_text='source', sTitle='Source')
+                # DetailsSourceRowLinkCol(self, 'source', button_text='source', sTitle='Source')
             ]
         return [
                 CoblFormSelectMeaningCol(self, 'name', model_col=Meaning.name,
