@@ -132,8 +132,6 @@ class Variety(CustomModelMixin, Language):
     glottocode = sa.Column(sa.Unicode)
     ascii_name = sa.Column(sa.Unicode)
     iso = sa.Column(sa.Unicode)
-    earliest_time_depth_bound = sa.Column(sa.Integer)
-    latest_time_depth_bound = sa.Column(sa.Integer)
     lang_description = sa.Column(sa.Unicode)
     variety = sa.Column(sa.Unicode)
     sort_order = sa.Column(sa.Integer)
