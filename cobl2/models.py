@@ -73,7 +73,6 @@ class CognateClass(CustomModelMixin, Cognateset):
     root_gloss = sa.Column(sa.Unicode)
     root_language = sa.Column(sa.Unicode)
     root_language_calc = sa.Column(sa.Unicode)
-    source = sa.Column(sa.Unicode, default=None)
     meaning_pk = sa.Column(sa.Integer, sa.ForeignKey('meaning.pk'))
     meaning = sa.orm.relationship(Meaning, backref='cognateclasses')
     color = sa.Column(sa.Unicode)
