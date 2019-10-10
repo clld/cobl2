@@ -116,6 +116,7 @@ class CoblLanguages(Languages):
             LinkCol(self, 'name'),
             BoolCol(self, 'historical', model_col=Variety.historical),
             CoblGlottologCol(self, 'Glottocode', model_col=Variety.glottocode),
+            Col(self, 'iso', model_col=Variety.iso, sTitle="ISO 639-3"),
             LinkToMapCol(self, 'm'),
             Col(self, 'latitude',
                 sDescription='<small>The geographic latitude</small>'),

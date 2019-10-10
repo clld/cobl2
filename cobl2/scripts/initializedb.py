@@ -172,8 +172,6 @@ def main(args):
             iso=row['ISO639P3code'],
             lang_description=row['Description'],
             variety=row['Variety'],
-            earliest_time_depth_bound=row['Earliest_Time_Depth_Bound'],
-            latest_time_depth_bound=row['Latest_Time_Depth_Bound'],
             loc_justification=row['loc_justification'] or None,
             sort_order=row['sort_order']
         )
