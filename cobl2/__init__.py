@@ -36,12 +36,15 @@ class CoblMapMarker(MapMarker):
                 color = ctx.cognates[0].cognateset.color
             else:
                 color = '#fff'
+
         if IValueSet.providedBy(ctx):
             v = ctx.values[0]
             if v.cognates:
                 color = v.cognates[0].cognateset.color
             else:
                 color = '#fff'
+            if ctx.language.historical:
+                shape = 'd'
 
         if ILanguage.providedBy(ctx):
             color = ctx.color
