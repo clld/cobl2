@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import sqlalchemy as sa
 import sqlalchemy.orm
 
@@ -104,7 +102,7 @@ class CognateClass(CustomModelMixin, Cognateset):
 
     meaning_rel = sa.orm.relationship('Meaning', viewonly=True)
 
-    def __unicode__(self):
+    def __str__(self):
         if self.root_form:
             res = self.root_form
         elif self.root_form_calc:

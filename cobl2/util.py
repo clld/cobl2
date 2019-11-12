@@ -1,6 +1,3 @@
-# coding: utf8
-from __future__ import unicode_literals, print_function, division
-
 from markdown import markdown
 from clld.web.util.helpers import get_referents
 from clld_phylogeny_plugin.models import Phylogeny
