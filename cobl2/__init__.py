@@ -64,6 +64,7 @@ def main(global_config, **settings):
     """
     config = Configurator(settings=settings)
     config.include('clldmpg')
+    config.include('clld_phylogeny_plugin')
     config.include('clld_cognacy_plugin')
     config.register_datatable('cognatesets', datatables.CognateClasses)
     config.add_route('test', '/test')
