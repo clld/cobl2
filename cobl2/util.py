@@ -6,7 +6,7 @@ from clld.web.util.helpers import link
 from clld.web.util.multiselect import MultiSelect
 from clld.db.models.common import Contributor
 from clld.db.meta import DBSession
-from cobl2.models import Variety, Author, Policie
+from cobl2.models import Variety, Author, Policie, CognateClass
 import re
 
 from cobl2.adapters import CognateClassTree

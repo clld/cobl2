@@ -156,7 +156,23 @@ class CoblCladeCol(Col):
             item.color, item.clade)
 
 
+class CoblCognateSetId(IdCol):
+    def format(self, item):
+        obj = super(CoblCognateSetId, self).format(item)
+        if item.color:
+            if item.root_form_calc or item.root_language_calc:
+                return '<span style="padding:0px 2px;"><i>%s</i></span><span style="border-left:12px solid %sEE;padding-left:5px"></span>' % (
+                    obj, item.color)
+            else:
+                return '<span style="padding:0px 2px;">%s</span><span style="border-left:12px solid %sEE;padding-left:5px"></span>' % (
+                    obj, item.color)
+        return obj
+
+
 class CognateClasses(Cognatesets):
+
+    __constraints__ = [Parameter]
+
     def __init__(self, req, *args, **kw):
         Cognatesets.__init__(self, req, *args, **kw)
         self.cladefilter = None
@@ -168,22 +184,28 @@ class CognateClasses(Cognatesets):
         if self.cladefilter:
             q = [icontains(CognateClass.clades, q) for q in self.cladefilter]
             query = query.filter(and_(*q))
+        if self.parameter:
+            query = query.filter(Meaning.id == self.parameter.id)
         return query.distinct()
 
     def get_default_options(self):
         opts = super(Cognatesets, self).get_default_options()
-        opts['aaSorting'] = [[1, 'asc'],[4, 'desc'],[5, 'desc']]
+        if self.parameter:
+            opts['aaSorting'] = [[4, 'desc'],[5, 'desc']]
+        else:
+            opts['aaSorting'] = [[1, 'asc'],[4, 'desc'],[5, 'desc']]
         return opts
 
     def col_defs(self):
-        return [
-            IdCol(self, 'ID', model_col=Cognateset.id, bSortable=False),
-            LinkCol(self, 'name', model_col=Meaning.name,
+        cols = [CoblCognateSetId(self, 'ID', model_col=Cognateset.id, bSortable=False)]
+        if not self.parameter:
+            cols.append(LinkCol(self, 'name', model_col=Meaning.name,
                 get_object=lambda cc: cc.meaning_rel,
-                sTitle='Meaning'),
+                sTitle='Meaning'))
+        return cols + [
             CoblRootFormCol(self, 'Root_form', model_col=CognateClass.root_form),
             CoblRootLanguageCol(self, 'Root_language', model_col=CognateClass.root_language,
-                sTitle='Root ref. language',
+                sTitle='Root re f. language',
                 sTooltip='Root reference language'),
             CoblCladesCol(self, 'count_clades', model_col=CognateClass.count_clades,
                 sTitle='# clades',
@@ -481,7 +503,6 @@ def includeme(config):
     # "manually", i.e. in cobl2.main.
     #
     config.register_datatable('values', Forms)
-    config.register_datatable('cognatesets', CognateClasses)
     config.register_datatable('parameters', CoblMeanings)
     config.register_datatable('languages', CoblLanguages)
     config.register_datatable('contributors', CoblContributors)
