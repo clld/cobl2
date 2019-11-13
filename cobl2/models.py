@@ -113,7 +113,7 @@ class CognateClass(CustomModelMixin, Cognateset):
             res += ' [{0}]'.format(self.root_language_calc)
         if len(res) > 0:
             return res
-        return Cognateset.__unicode__(self)
+        return Cognateset.__str__(self)
 
 
 class Variety(CustomModelMixin, Language):

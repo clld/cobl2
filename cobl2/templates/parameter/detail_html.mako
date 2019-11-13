@@ -22,6 +22,14 @@
 
 ${(map_ or request.map).render()}
 
+<%util:accordion_group eid="acc-b" parent="cc-more" title="${_('Involved cognate sets')}">
+  <%util:section title="${'Cognate sets for meaning: %s' % (ctx.name)}" id="table-container" prefix="pm">
+  <div style="font-size:90% !important">
+      ${request.get_datatable('cognatesets', u.CognateClass, parameter=ctx).render()}
+  </div>
+  </%util:section>
+</%util:accordion_group>
+
 <%util:section title="Lexemes" id="table-container" prefix="">
     ${request.get_datatable('values', h.models.Value, parameter=ctx).render()}
 </%util:section>
