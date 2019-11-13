@@ -24,7 +24,6 @@ setup(
         'clld>=5.0',
         'clldmpg>=3.1',
         'clld-cognacy-plugin>=0.2',
-        'clld-phylogeny-plugin',
         'markdown',
     ],
     extras_require={
