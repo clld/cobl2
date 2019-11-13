@@ -205,7 +205,7 @@ class CognateClasses(Cognatesets):
         return cols + [
             CoblRootFormCol(self, 'Root_form', model_col=CognateClass.root_form),
             CoblRootLanguageCol(self, 'Root_language', model_col=CognateClass.root_language,
-                sTitle='Root re f. language',
+                sTitle='Root ref. language',
                 sTooltip='Root reference language'),
             CoblCladesCol(self, 'count_clades', model_col=CognateClass.count_clades,
                 sTitle='# clades',
