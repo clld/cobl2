@@ -111,6 +111,11 @@ def dataset_detail_html(context=None, request=None, **kw):
                     .filter(Contributor.name.in_(contributor_names))
     }
 
+def cobl_linked_cognateclass(req, obj):
+    if obj.root_form_calc:
+        return "<span style='background-color:%s33'><i>%s</i></span>" % (obj.color, link(req, obj))
+    return "<span style='background-color:%s33'>%s</span>" % (obj.color, link(req, obj))
+
 def cobl_linked_references(req, obj, comments=False):
     chunks = []
     if comments:

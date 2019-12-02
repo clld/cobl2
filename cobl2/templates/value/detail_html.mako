@@ -3,7 +3,7 @@
 <%! active_menu_item = "lexemes" %>
 <%block name="title">${_('Lexeme')} ${ctx.name}</%block>
 
-<h2>${_('Lexeme')} ${ctx.name}</h2>
+<h2>${_('Lexeme')}: ${ctx.name}</h2>
 
 <div style='float:left'>
     <dl>
@@ -11,6 +11,8 @@
         <dd>${h.link(request, ctx.valueset.language)}</dd>
         <dt>${_('Meaning')}</dt>
         <dd>${h.link(request, ctx.valueset.parameter)}</dd>
+        <dt>${_('Cognate Set')}</dt>
+        <dd>${u.cobl_linked_cognateclass(request, ctx.cognates[0].cognateset)|n}</dd>
         % if ctx.gloss:
         <dt>${_('Gloss')}</dt>
         <dd>${ctx.gloss}</dd>
@@ -28,17 +30,29 @@
 
 <div style='float:left;margin-left:30px'>
     <dl>
-        % if ctx.native_script:
+        <dt>${_('Romanised orthography')}</dt>
+        % if ctx.name:
+          <dd>${ctx.name}</dd>
+        % else:
+          <dd>&nbsp;</dd>
+        % endif
         <dt>${_('Native script')}</dt>
-        <dd>${ctx.native_script}</dd>
+        % if ctx.native_script:
+          <dd>${ctx.native_script}</dd>
+        % else:
+          <dd>&nbsp;</dd>
         % endif
+        <dt>${_('Phonetic')}</dt>
         % if ctx.phonetic:
-            <dt>${_('Phonetic')}</dt>
-            <dd>${ctx.phonetic}</dd>
+          <dd>${ctx.phonetic}</dd>
+        % else:
+          <dd>&nbsp;</dd>
         % endif
+        <dt>${_('Phonemic')}</dt>
         % if ctx.phonemic:
-            <dt>${_('Phonemic')}</dt>
-            <dd>${ctx.phonemic}</dd>
+          <dd>${ctx.phonemic}</dd>
+        % else:
+          <dd>&nbsp;</dd>
         % endif
         % if ctx.url:
             <dt>${_('URL')}</dt>

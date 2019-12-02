@@ -8,15 +8,15 @@
     <div style="float: left;margin-right: 30px;">
         <dl>
           % if ctx.root_form:
-            <dt>${_('Root form')}</dt>
+            <dt>${_('Root reference form')}</dt>
             <dd><i>${ctx.root_form}</i></dd>
           % endif
           % if ctx.root_gloss:
-            <dt>${_('Root gloss')}</dt>
+            <dt>${_('Gloss in root language')}</dt>
             <dd>${ctx.root_gloss}</dd>
           % endif
           % if ctx.root_language:
-            <dt>${_('Root languoid')}</dt>
+            <dt>${_('Root language')}</dt>
             <dd>${ctx.root_language}</dd>
           % endif
             <dt>${_('Ideophonic')}</dt>
@@ -46,7 +46,7 @@
             <dd>${ctx.loan_source_languoid}</dd>
           % endif
           % if ctx.loan_source_form:
-            <dt>${_('Loan source form')}</dt>
+            <dt>${_('Source form in loan language')}</dt>
             <dd>${ctx.loan_source_form}</dd>
           % endif
           % if ctx.loan_notes:
