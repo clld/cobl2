@@ -203,10 +203,12 @@ class CognateClasses(Cognatesets):
                 get_object=lambda cc: cc.meaning_rel,
                 sTitle='Meaning'))
         return cols + [
-            CoblRootFormCol(self, 'Root_form', model_col=CognateClass.root_form),
+            CoblRootFormCol(self, 'Root_form', model_col=CognateClass.root_form,
+                sTitle='IECoR ref. form',
+                sTooltip='IECoR reference form'),
             CoblRootLanguageCol(self, 'Root_language', model_col=CognateClass.root_language,
-                sTitle='Root ref. language',
-                sTooltip='Root reference language'),
+                sTitle='IECoR ref. lang.',
+                sTooltip='IECoR reference language'),
             CoblCladesCol(self, 'count_clades', model_col=CognateClass.count_clades,
                 sTitle='# clades',
                 sTooltip='number of general clades found in cognate set',),

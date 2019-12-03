@@ -8,16 +8,16 @@
     <div style="float: left;margin-right: 30px;">
         <dl>
           % if ctx.root_form:
-            <dt>${_('Root reference form')}</dt>
+            <dt>${_('IECoR reference form')}</dt>
             <dd><i>${ctx.root_form}</i></dd>
           % endif
-          % if ctx.root_gloss:
-            <dt>${_('Gloss in root language')}</dt>
-            <dd>${ctx.root_gloss}</dd>
-          % endif
           % if ctx.root_language:
-            <dt>${_('Root language')}</dt>
+            <dt>${_('IECoR reference language')}</dt>
             <dd>${ctx.root_language}</dd>
+          % endif
+          % if ctx.root_gloss:
+            <dt>${_('Gloss in IECoR reference language')}</dt>
+            <dd>${ctx.root_gloss}</dd>
           % endif
             <dt>${_('Ideophonic')}</dt>
             <dd>${_('yes') if ctx.ideophonic else _('no')}</dd>

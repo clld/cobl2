@@ -13,10 +13,6 @@
         <dd>${h.link(request, ctx.valueset.parameter)}</dd>
         <dt>${_('Cognate Set')}</dt>
         <dd>${u.cobl_linked_cognateclass(request, ctx.cognates[0].cognateset)|n}</dd>
-        % if ctx.gloss:
-        <dt>${_('Gloss')}</dt>
-        <dd>${ctx.gloss}</dd>
-        % endif
 ##        % if ctx.valueset.references:
 ##            <dt>${_('References')}</dt>
 ##            <dd>${u.cobl_linked_references(request, ctx.valueset, True)|n}</dd>
