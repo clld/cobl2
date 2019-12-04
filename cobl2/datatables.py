@@ -221,6 +221,9 @@ class CognateClasses(Cognatesets):
             BoolCol(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
                 sTitle='pll loan?',
                 sTooltip='is cognate set marked as parallel loan event'),
+            BoolCol(self, 'parallel_derivation', model_col=CognateClass.parallel_derivation,
+                sTitle='pll deriv.?',
+                sTooltip='is cognate set marked as parallel derivation'),
             Col(self, 'Loan_source', model_col=CognateClass.loan_source_languoid),
             LinkCol(
                 self,

@@ -21,6 +21,12 @@
           % endif
             <dt>${_('Ideophonic')}</dt>
             <dd>${_('yes') if ctx.ideophonic else _('no')}</dd>
+            <dt>${_('Parallel derivation')}</dt>
+            <dd>${_('yes') if ctx.parallel_derivation else _('no')}</dd>
+          % if ctx.cognates[0].doubt:
+            <dt>${_('Dubious set')}</dt>
+            <dd>yes</dd>
+          % endif
           % if ctx.proposedAsCognateTo:
             <dt>${_('Proposed as cognate to')}</dt>
             <dd><a href="${request.route_url('cognatesets')}/${ctx.proposedAsCognateTo[0].cognateclass[0].id}">

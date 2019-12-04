@@ -12,7 +12,7 @@ from clld.db.models import common
 from clld.lib.bibtex import EntryType
 from clld.web.util.helpers import data_uri
 from clldutils.color import qualitative_colors, rgb_as_hex
-from clldutils.path import Path, read_text
+from clldutils.path import Path
 from clldutils.misc import slug
 from pycldf import Wordlist
 from clld_phylogeny_plugin.models import Phylogeny, TreeLabel, LanguageTreeLabel
@@ -27,7 +27,7 @@ import clld_cognacy_plugin.models
 
 data_file_path = Path(cobl2.__file__).parent / '../..' / 'iecor'
 
-ds = Wordlist.from_metadata(data_file_path / 'cldf' / 'Wordlist-metadata.json')
+ds = Wordlist.from_metadata(data_file_path / 'cldf' / 'cldf-metadata.json')
 
 photos = {
     p.stem: p.as_posix() for p in
@@ -108,7 +108,6 @@ def main(args):
             param['ID'],
             id=slug(param['Name']),
             name=param['Name'],
-            description=param['Description'],
             description_md=param['Description_md'],
             concepticon_id=int(param['Concepticon_ID']) if param['Concepticon_ID'] != '0' else None,
         )
@@ -223,6 +222,7 @@ def main(args):
             comment=re_links.sub(parse_links, row['Comment'] or ''),
             justification=re_links.sub(parse_links, row['Justification'] or ''),
             ideophonic=row['Ideophonic'] or None,
+            parallel_derivation=row['parallelDerivation'] or None,
             revised_by=','.join(row['revised_by']) or None,
         )
         for src in row['Source']:
@@ -269,6 +269,7 @@ def main(args):
             row['ID'],
             cognateset=data['CognateClass'][row['Cognateset_ID']],
             counterpart=data['Lexeme'][row['Form_ID']],
+            doubt=row['Doubt'],
         )
 
     l_by_gc = {}
@@ -279,7 +280,7 @@ def main(args):
         id='1',
         name='Bouckaert et al.',
         description='',
-        newick=read_text(data_file_path / 'raw' / 'bouckaert_et_al2012' / 'newick.txt'),
+        newick=Path.read_text(data_file_path / 'raw' / 'bouckaert_et_al2012' / 'newick.txt'),
     )
     for k, taxon in enumerate(reader(data_file_path / 'raw' / 'bouckaert_et_al2012' / 'taxa.csv', namedtuples=True)):
         label = TreeLabel(
@@ -299,7 +300,7 @@ def main(args):
         id='2',
         name='CoBL consensu',
         description='',
-        newick=read_text(data_file_path / 'raw' / 'ie122' / 'newick.txt'),
+        newick=Path.read_text(data_file_path / 'raw' / 'ie122' / 'newick.txt'),
     )
     for k, taxon in enumerate(reader(data_file_path / 'raw' / 'ie122' / 'taxa.csv', namedtuples=True)):
         label = TreeLabel(
