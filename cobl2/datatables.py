@@ -203,10 +203,12 @@ class CognateClasses(Cognatesets):
                 get_object=lambda cc: cc.meaning_rel,
                 sTitle='Meaning'))
         return cols + [
-            CoblRootFormCol(self, 'Root_form', model_col=CognateClass.root_form),
+            CoblRootFormCol(self, 'Root_form', model_col=CognateClass.root_form,
+                sTitle='IECoR ref. form',
+                sTooltip='IECoR reference form'),
             CoblRootLanguageCol(self, 'Root_language', model_col=CognateClass.root_language,
-                sTitle='Root ref. language',
-                sTooltip='Root reference language'),
+                sTitle='IECoR ref. lang.',
+                sTooltip='IECoR reference language'),
             CoblCladesCol(self, 'count_clades', model_col=CognateClass.count_clades,
                 sTitle='# clades',
                 sTooltip='number of general clades found in cognate set',),
@@ -219,6 +221,9 @@ class CognateClasses(Cognatesets):
             BoolCol(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
                 sTitle='pll loan?',
                 sTooltip='is cognate set marked as parallel loan event'),
+            BoolCol(self, 'parallel_derivation', model_col=CognateClass.parallel_derivation,
+                sTitle='pll deriv.?',
+                sTooltip='is cognate set marked as parallel derivation'),
             Col(self, 'Loan_source', model_col=CognateClass.loan_source_languoid),
             LinkCol(
                 self,

@@ -87,6 +87,7 @@ class CognateClass(CustomModelMixin, Cognateset):
     loan_source_form = sa.Column(sa.Unicode)
     loan_source_languoid = sa.Column(sa.Unicode)
     parallel_loan_event = sa.Column(sa.Boolean, default=False)
+    parallel_derivation = sa.Column(sa.Boolean, default=False)
     ideophonic = sa.Column(sa.Boolean, default=False)
     is_loan = sa.Column(sa.Boolean, default=False)
     comment = sa.Column(sa.Unicode)
