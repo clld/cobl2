@@ -22,7 +22,7 @@
 
 ${(map_ or request.map).render()}
 
-<%util:accordion_group eid="acc-b" parent="cc-more" title="${_('Involved cognate sets')}">
+<%util:accordion_group eid="acc-b" parent="cc-more" title="${_('Cognate Sets')}">
   <%util:section title="${'Cognate sets for meaning: %s' % (ctx.name)}" id="table-container" prefix="pm">
   <div style="font-size:90% !important">
       ${request.get_datatable('cognatesets', u.CognateClass, parameter=ctx).render()}
