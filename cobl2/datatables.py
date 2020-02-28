@@ -42,11 +42,6 @@ class CoblClades(DataTable):
                 bSearchable=False),
             Col(self, 'level3_name', sTitle='Clade 3 name'),
             CoblCladeNameCol(self, 'clade_name'),
-            CoblFilterCladeNameCol(self, 'short_name', sTitle='Clade'),
-            Col(self, 'at_most', sTitle='At most?',
-                sTooltip='Latest plausible date at which divergence had not yet begun'),
-            Col(self, 'at_least', sTitle='At least?',
-                sTooltip='Earliest plausible date divergence could have begun by'),
         ]
 
 
