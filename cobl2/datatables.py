@@ -186,7 +186,7 @@ class CognateClasses(Cognatesets):
     def get_default_options(self):
         opts = super(Cognatesets, self).get_default_options()
         if self.parameter:
-            opts['aaSorting'] = [[4, 'desc'],[5, 'desc']]
+            opts['aaSorting'] = [[3, 'desc'],[4, 'desc']]
         else:
             opts['aaSorting'] = [[1, 'asc'],[4, 'desc'],[5, 'desc']]
         return opts
