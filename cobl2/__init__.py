@@ -62,6 +62,17 @@ class CoblMapMarker(MapMarker):
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
+    settings['route_patterns'] = {
+            'parameters': '/meanings',
+            'parameter': '/meaning/{id:[^/\.]+}',
+            'values': '/lexemes',
+            'value': '/lexeme/{id:[^/\.]+}',
+            'language': '/language/{id:[^/\.]+}',
+            'cognateset': '/cognateset/{id:[^/\.]+}',
+            'source': '/source/{id:[^/\.]+}',
+            'contributors': '/authors',
+            'contributor': '/author/{id:[^/\.]+}',
+        }
     config = Configurator(settings=settings)
     config.include('clldmpg')
     config.include('clld_phylogeny_plugin')
