@@ -13,8 +13,15 @@ from cobl2.adapters import CognateClassTree
 
 assert markdown
 
-def markdown_remove_links(m):
-    return markdown(re.sub(r'\[(.+?)\]\(.+?\)', r'\1', m.replace('\\n', '\n')))
+def markdown_handle_links(req, m):
+    for lnk in re.findall(r'(\[(.+?)\]\(.+?\))', m):
+        # create links to parameters/...
+        if 'wiki/Meaning:-' in lnk[0]:
+            m = m.replace(lnk[0], link(req, lnk[1], rsc='parameter', label=lnk[1]))
+        # delete links
+        else:
+            m = m.replace(lnk[0], lnk[1])
+    return markdown(m.replace('\\n', '\n'))
 
 def markdown_policies(m):
     return markdown(m.replace('\\n', '\n'))
