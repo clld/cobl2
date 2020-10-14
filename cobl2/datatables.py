@@ -47,6 +47,7 @@ class CoblClades(DataTable):
 
 class CoblFilterCladeNameCol(Col):
     __kw__ = dict(bSearchable=False, bSortable=False)
+
     def format(self, item):
         if item.short_name:
             return item.clade_name
@@ -71,8 +72,8 @@ class CoblMeanings(Meanings):
         return [
             DetailsRowLinkCol(self, 'more'),
             ConcepticonCol(self, '',
-                model_col=getattr(meaning_cls, 'concepticon_id'),
-                bSortable=False),
+                           model_col=getattr(meaning_cls, 'concepticon_id'),
+                           bSortable=False),
             LinkCol(self, 'name'),
             Col(self,
                 'count_languages',
@@ -106,7 +107,7 @@ class CoblLanguages(Languages):
     def col_defs(self):
         return [
             CoblSortIntCol(self, 'sort_order',
-                model_col=Variety.sort_order, bSearchable=False),
+                           model_col=Variety.sort_order, bSearchable=False),
             CoblCladeCol(self, 'Clade', model_col=Variety.clade),
             LinkCol(self, 'name'),
             BoolCol(self, 'historical', model_col=Variety.historical),
@@ -137,6 +138,7 @@ class CoblSortIntCol(Col):
     def format(self, item):
         return ''
 
+
 class CoblGlottologCol(Col):
     def format(self, item):
         if item.glottocode:
@@ -156,7 +158,7 @@ class CoblCognateSetId(IdCol):
         obj = super(CoblCognateSetId, self).format(item)
         if item.color:
             return '<span style="padding:0px 2px;">%s</span><span style="border-left:12px solid %sEE;padding-left:5px"></span>' % (
-                    obj, item.color)
+                obj, item.color)
         return obj
 
 
@@ -182,39 +184,39 @@ class CognateClasses(Cognatesets):
     def get_default_options(self):
         opts = super(Cognatesets, self).get_default_options()
         if self.parameter:
-            opts['aaSorting'] = [[3, 'desc'],[4, 'desc']]
+            opts['aaSorting'] = [[3, 'desc'], [4, 'desc']]
         else:
-            opts['aaSorting'] = [[1, 'asc'],[4, 'desc'],[5, 'desc']]
+            opts['aaSorting'] = [[1, 'asc'], [4, 'desc'], [5, 'desc']]
         return opts
 
     def col_defs(self):
         cols = [CoblCognateSetId(self, 'ID', model_col=Cognateset.id, bSortable=False)]
         if not self.parameter:
             cols.append(LinkCol(self, 'name', model_col=Meaning.name,
-                get_object=lambda cc: cc.meaning_rel,
-                sTitle='Meaning'))
+                                get_object=lambda cc: cc.meaning_rel,
+                                sTitle='Meaning'))
         return cols + [
             CoblRootFormCol(self, 'Root_form', model_col=CognateClass.root_form,
-                sTitle='IECoR ref. form',
-                sTooltip='IECoR reference form'),
+                            sTitle='IECoR ref. form',
+                            sTooltip='IECoR reference form'),
             CoblRootLanguageCol(self, 'Root_language', model_col=CognateClass.root_language,
-                sTitle='IECoR ref. lang.',
-                sTooltip='IECoR reference language'),
+                                sTitle='IECoR ref. lang.',
+                                sTooltip='IECoR reference language'),
             CoblCladesCol(self, 'count_clades', model_col=CognateClass.count_clades,
-                sTitle='# clades',
-                sTooltip='number of general clades found in cognate set',),
+                          sTitle='# clades',
+                          sTooltip='number of general clades found in cognate set',),
             Col(self, 'count_lexemes', model_col=CognateClass.count_lexemes,
                 sTitle='# lexemes',
                 sTooltip='number of lexemes per cognate set',),
             BoolCol(self, 'is_loan', model_col=CognateClass.is_loan,
-                sTitle='loan?',
-                sTooltip='is cognate set marked as loan event'),
+                    sTitle='loan?',
+                    sTooltip='is cognate set marked as loan event'),
             BoolCol(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
-                sTitle='pll loan?',
-                sTooltip='is cognate set marked as parallel loan event'),
+                    sTitle='pll loan?',
+                    sTooltip='is cognate set marked as parallel loan event'),
             BoolCol(self, 'parallel_derivation', model_col=CognateClass.parallel_derivation,
-                sTitle='pll deriv.?',
-                sTooltip='is cognate set marked as parallel derivation'),
+                    sTitle='pll deriv.?',
+                    sTooltip='is cognate set marked as parallel derivation'),
             Col(self, 'Loan_source', model_col=CognateClass.loan_source_languoid),
             LinkCol(
                 self,
@@ -235,10 +237,10 @@ class CoblCladesCol(Col):
             else:
                 colors.append('<div class="clade-col-block-item" style="background-color:%s;"></div>' % (c))
         return('<div style="display:block;">%i<span class="clade-col-block" title="Found in clades:\n%s">%s</span></div>' % (
-                item.count_clades,
-                item.clades,
-                ''.join(colors)
-            ))
+            item.count_clades,
+            item.clades,
+            ''.join(colors)
+        ))
 
 
 class CognatesetCol(LinkCol):
@@ -264,6 +266,7 @@ class CoblRootLanguageCol(Col):
             return item.root_language
         return item.root_language_calc
 
+
 class CognatesetColorCol(LinkCol):
     __kw__ = dict(bSearchable=False)
 
@@ -277,7 +280,7 @@ class CognatesetColorCol(LinkCol):
         obj = super(CognatesetColorCol, self).format(item)
         if item.cognates[0].cognateset.color:
             return '<div style="background-color:%s33;padding:0px 2px;">%s</div>' % (
-                    item.cognates[0].cognateset.color, obj)
+                item.cognates[0].cognateset.color, obj)
         return obj
 
 
@@ -288,20 +291,24 @@ class CoblFormLanguageCol(LinkCol):
         return '<span style="border-left:12px solid %s;padding-left:5px" title="Clade: %s">&nbsp;</span>%s' % (
             item.valueset.language.color, item.valueset.language.clade, obj)
 
+
 class CoblFormSelectCladeNameCol(Col):
     def search(self, qs):
         q = [self.model_col.__eq__(q) for q in qs.split(',')]
         return or_(*q)
+
 
 class CoblFormSelectLanguageCol(CoblFormLanguageCol):
     def search(self, qs):
         q = [self.model_col.__eq__(q) for q in qs.split(',')]
         return or_(*q)
 
+
 class CoblFormSelectMeaningCol(LinkCol):
     def search(self, qs):
         q = [self.model_col.__eq__(q) for q in qs.split(',')]
         return or_(*q)
+
 
 class CoblValueRefsCol(value.RefsCol):
     __kw__ = dict(bSearchable=False, bSortable=False)
@@ -311,6 +318,7 @@ class CoblValueRefsCol(value.RefsCol):
         return ', '.join(
             nfilter([getattr(vs, 'source', None), cobl_linked_references(self.dt.req, vs)]))
 
+
 class CoblRefsCol(RefsCol):
     __kw__ = dict(bSearchable=False, bSortable=False)
 
@@ -318,6 +326,7 @@ class CoblRefsCol(RefsCol):
         vs = self.get_obj(item)
         return ', '.join(
             nfilter([getattr(vs, 'source', None), cobl_linked_references(self.dt.req, vs)]))
+
 
 class Forms(value.Values):
     def base_query(self, query):
@@ -328,8 +337,7 @@ class Forms(value.Values):
                     joinedload(Value.cognates),
                     joinedload(Value.cognates, Cognate.cognateset),
                     joinedload(Value.valueset, ValueSet.parameter),
-                    joinedload(Value.valueset, ValueSet.language)
-                )
+                    joinedload(Value.valueset, ValueSet.language))
         else:
             return query.join(Value.cognates, Cognate.cognateset).distinct()\
                 .options(
@@ -347,7 +355,7 @@ class Forms(value.Values):
         if self.parameter:
             return [
                 CoblSortIntCol(self, 'sort_order',
-                    model_col=Variety.sort_order, bSearchable=False),
+                               model_col=Variety.sort_order, bSearchable=False),
                 CoblFormLanguageCol(
                     self,
                     'language',
@@ -358,11 +366,11 @@ class Forms(value.Values):
                 Col(self, 'phonemic', model_col=Lexeme.phonemic),
                 CognatesetColorCol(self, 'cognate_class', sTitle='Cognate set'),
                 BoolCol(self, 'is_loan', model_col=CognateClass.is_loan,
-                    get_object=lambda i: i.cognates[0].cognateset,
-                    sTitle='loan?', sTooltip='is cognate set marked as loan event'),
+                        get_object=lambda i: i.cognates[0].cognateset,
+                        sTitle='loan?', sTooltip='is cognate set marked as loan event'),
                 BoolCol(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
-                    get_object=lambda i: i.cognates[0].cognateset,
-                    sTitle='pll loan?', sTooltip='is cognate set marked as parallel loan event'),
+                        get_object=lambda i: i.cognates[0].cognateset,
+                        sTitle='pll loan?', sTooltip='is cognate set marked as parallel loan event'),
                 Col(self, 'loan_source_languoid', model_col=CognateClass.loan_source_languoid,
                     get_object=lambda i: i.cognates[0].cognateset, sTitle='Source lang'),
                 LinkToMapCol(self, 'm', get_object=lambda i: i.valueset.language),
@@ -371,55 +379,58 @@ class Forms(value.Values):
         if self.language:
             return [
                 LinkCol(self, 'name', model_col=Meaning.name,
-                    get_object=lambda i: i.valueset.parameter,
-                    sTitle='Meaning'),
+                        get_object=lambda i: i.valueset.parameter,
+                        sTitle='Meaning'),
                 LinkCol(self, 'name', sTitle='Lexeme'),
                 Col(self, 'phonetic', model_col=Lexeme.phonetic),
                 Col(self, 'phonemic', model_col=Lexeme.phonemic),
                 Col(self, 'native_script', model_col=Lexeme.native_script),
                 CognatesetCol(self, 'cognate_class', sTitle='Cognate set'),
                 BoolCol(self, 'is_loan', model_col=CognateClass.is_loan,
-                    get_object=lambda i: i.cognates[0].cognateset,
-                    sTitle='loan?', sTooltip='is cognate set marked as loan event'),
+                        get_object=lambda i: i.cognates[0].cognateset,
+                        sTitle='loan?', sTooltip='is cognate set marked as loan event'),
                 BoolCol(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
-                    get_object=lambda i: i.cognates[0].cognateset,
-                    sTitle='pll loan?', sTooltip='is cognate set marked as parallel loan event'),
+                        get_object=lambda i: i.cognates[0].cognateset,
+                        sTitle='pll loan?', sTooltip='is cognate set marked as parallel loan event'),
                 # DetailsSourceRowLinkCol(self, 'source', button_text='source', sTitle='Source')
             ]
         return [
-                CoblFormSelectMeaningCol(self, 'name', model_col=Meaning.name,
-                    get_object=lambda i: i.valueset.parameter,
-                    select='multiple',
-                    choices=get_distinct_values(Meaning.name),
-                    sTitle='Meaning',
-                    sTooltip='Choose one or more meanings (CTRL/⌘ + click)'),
-                CoblFormSelectCladeNameCol(
-                    self,
-                    'clade_name',
-                    model_col=Variety.clade_name,
-                    get_object=lambda i: i.valueset.language,
-                    select='multiple',
-                    sTitle='Clade',
-                    sTooltip='Choose one or more clade names (CTRL/⌘ + click)',
-                    choices=get_distinct_values(Variety.clade_name)),
-                CoblFormSelectLanguageCol(
-                    self,
-                    'language',
-                    model_col=Language.name,
-                    get_object=lambda i: i.valueset.language,
-                    select='multiple',
-                    input_size='large',
-                    sTooltip='Choose one or more languages (CTRL/⌘ + click)',
-                    choices=get_distinct_values(Language.name)),
-                LinkCol(self, 'name', sTitle='Lexeme'),
-                Col(self, 'phonetic', model_col=Lexeme.phonetic),
-                Col(self, 'phonemic', model_col=Lexeme.phonemic),
-                Col(self, 'native_script', model_col=Lexeme.native_script),
-                CognatesetColorCol(self, 'cognate_class', sTitle='Cognate set'),
-                BoolCol(self, 'is_loan', model_col=CognateClass.is_loan,
+            CoblFormSelectMeaningCol(
+                self,
+                'name',
+                model_col=Meaning.name,
+                get_object=lambda i: i.valueset.parameter,
+                select='multiple',
+                choices=get_distinct_values(Meaning.name),
+                sTitle='Meaning',
+                sTooltip='Choose one or more meanings (CTRL/⌘ + click)'),
+            CoblFormSelectCladeNameCol(
+                self,
+                'clade_name',
+                model_col=Variety.clade_name,
+                get_object=lambda i: i.valueset.language,
+                select='multiple',
+                sTitle='Clade',
+                sTooltip='Choose one or more clade names (CTRL/⌘ + click)',
+                choices=get_distinct_values(Variety.clade_name)),
+            CoblFormSelectLanguageCol(
+                self,
+                'language',
+                model_col=Language.name,
+                get_object=lambda i: i.valueset.language,
+                select='multiple',
+                input_size='large',
+                sTooltip='Choose one or more languages (CTRL/⌘ + click)',
+                choices=get_distinct_values(Language.name)),
+            LinkCol(self, 'name', sTitle='Lexeme'),
+            Col(self, 'phonetic', model_col=Lexeme.phonetic),
+            Col(self, 'phonemic', model_col=Lexeme.phonemic),
+            Col(self, 'native_script', model_col=Lexeme.native_script),
+            CognatesetColorCol(self, 'cognate_class', sTitle='Cognate set'),
+            BoolCol(self, 'is_loan', model_col=CognateClass.is_loan,
                     get_object=lambda i: i.cognates[0].cognateset,
                     sTitle='loan?', sTooltip='is cognate set marked as loan event'),
-                BoolCol(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
+            BoolCol(self, 'parallel_loan_event', model_col=CognateClass.parallel_loan_event,
                     get_object=lambda i: i.cognates[0].cognateset,
                     sTitle='pll loan?', sTooltip='is cognate set marked as parallel loan event'),
         ]
@@ -437,6 +448,7 @@ class DetailsSourceRowLinkCol(DetailsRowLinkCol):
                 tag=HTML.button)
         return ''
 
+
 class BoolCol(Col):
     def format(self, item):
         v = str(self.get_value(item))
@@ -450,7 +462,6 @@ class CoblSources(Sources):
         opts = super(Sources, self).get_default_options()
         opts['aaSorting'] = [[1, 'asc'], [3, 'asc']]
         return opts
-
 
 
 class CoblContributors(Contributors):
@@ -470,7 +481,8 @@ class CoblAuthorNameCol(LinkCol):
 def cobl_linked_references(req, obj):
     chunks = []
     for i, ref in enumerate(sorted(getattr(obj, 'references', []),
-            key=lambda x: x.source.name if x and x.source and x.source.name else '')):
+                            key=lambda x: x.source.name
+                            if x and x.source and x.source.name else '')):
         if ref.source:
             if i > 0:
                 chunks.append('; ')

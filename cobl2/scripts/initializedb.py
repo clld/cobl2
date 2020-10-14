@@ -61,7 +61,7 @@ def main(args):
 
     editors = OrderedDict([('Heggarty', None), ('Anderson', None), ('Scarborough', None)])
     for row in sorted(ds['authors.csv'], key=lambda x: [
-                x['Last_Name'].lower(), x['First_Name'].lower()] ):
+            x['Last_Name'].lower(), x['First_Name'].lower()]):
         if row['Last_Name'] in editors:
             editors[row['Last_Name']] = row['ID']
         data.add(
@@ -94,6 +94,7 @@ def main(args):
         'lex': '/values/',
         'src': '/sources/',
     }
+
     def parse_links(m):
         try:
             return '<a href="%s%s">%s</a>' % (
@@ -238,13 +239,13 @@ def main(args):
     for row in ds['CognatesetTable']:
         if row['proposedAsCognateTo_pk']:
             DBSession.add(models.ProposedCognates(
-                cc1_pk = data['CognateClass'][row['ID']].pk,
-                cc2_pk = cc_id_pk_map[str(row['proposedAsCognateTo_pk'])],
-                scale = row['proposedAsCognateToScale']
+                cc1_pk=data['CognateClass'][row['ID']].pk,
+                cc2_pk=cc_id_pk_map[str(row['proposedAsCognateTo_pk'])],
+                scale=row['proposedAsCognateToScale']
             ))
     DBSession.flush()
 
-    loans = {l['Cognateset_ID']: l for l in ds['loans.csv']}
+    loans = {ln['Cognateset_ID']: ln for ln in ds['loans.csv']}
     for ccid, cc in data['CognateClass'].items():
         if ccid in loans:
             le = loans[ccid]
@@ -317,25 +318,25 @@ def prime_cache(args):
     This procedure should be separate from the db initialization, because
     it will have to be run periodically whenever data has been updated.
     """
-    ordered_clade_colors = {k: v for k,v in DBSession.query(models.Clade.clade_name, models.Clade.color)\
-                                .filter(models.Clade.short_name != '')\
-                                .order_by(models.Clade.clade_level0).all()}
+    ordered_clade_colors = {k: v for k, v in DBSession.query(models.Clade.clade_name, models.Clade.color)
+                            .filter(models.Clade.short_name != '')
+                            .order_by(models.Clade.clade_level0).all()}
     for _, cc in groupby(
-            DBSession.query(models.CognateClass, models.Variety.clade_name)\
+            DBSession.query(models.CognateClass, models.Variety.clade_name)
             .join(clld_cognacy_plugin.models.Cognate,
-                and_(models.CognateClass.pk==clld_cognacy_plugin.models.Cognate.cognateset_pk))\
+                  and_(models.CognateClass.pk == clld_cognacy_plugin.models.Cognate.cognateset_pk))
             .join(models.Value,
-                and_(clld_cognacy_plugin.models.Cognate.counterpart_pk==models.Value.pk))\
+                  and_(clld_cognacy_plugin.models.Cognate.counterpart_pk == models.Value.pk))
             .join(common.ValueSet,
-                and_(models.Value.valueset_pk==common.ValueSet.pk))\
+                  and_(models.Value.valueset_pk == common.ValueSet.pk))
             .join(models.Variety,
-                and_(common.ValueSet.language_pk==models.Variety.pk))\
+                  and_(common.ValueSet.language_pk == models.Variety.pk))
             .distinct().order_by(models.CognateClass.pk), lambda c: c[0].pk):
         cc = sorted(list(cc))
         cc[0][0].count_clades = len(cc)
         involved_clades = [c[1] for c in cc]
         r = []
-        for cl,col in ordered_clade_colors.items():
+        for cl, col in ordered_clade_colors.items():
             if cl in involved_clades:
                 r.append(col)
             else:
@@ -363,24 +364,22 @@ def prime_cache(args):
     ):
         meaning.count_cognateclasses = len(meaning.cognateclasses)
         meaning.count_languages = len([vs.language for vs in meaning.valuesets])
-        meaning.count_loan_cognateclasses = len([cc for cc in meaning.cognateclasses \
-                if cc.is_loan])
+        meaning.count_loan_cognateclasses = len([cc for cc in meaning.cognateclasses
+                                                 if cc.is_loan])
 
-    for meaning in DBSession.query(models.Meaning, func.count(common.Parameter.pk)) \
-            .join(common.Parameter) \
-            .join(common.ValueSet) \
-            .join(common.Value) \
-            .group_by(models.Meaning.pk, common.Parameter.pk):
+    for meaning in DBSession.query(
+        models.Meaning, func.count(common.Parameter.pk))\
+            .join(common.Parameter).join(common.ValueSet).join(common.Value).group_by(
+                models.Meaning.pk, common.Parameter.pk):
         meaning[0].count_lexemes = meaning[1]
 
     for language in DBSession.query(common.Language).options(
         joinedload(common.Language.valuesets, common.ValueSet.references)
     ):
         language.count_meanings = len(language.valuesets)
-        language.count_lexemes = len(DBSession.query(common.Value.id) \
-            .filter(common.ValueSet.language_pk == language.pk) \
-            .join(common.ValueSet).all()
-            )
+        language.count_lexemes = len(DBSession.query(common.Value.id)
+                                     .filter(common.ValueSet.language_pk == language.pk)
+                                     .join(common.ValueSet).all())
         spks = set()
         for vs in language.valuesets:
             for ref in vs.references:

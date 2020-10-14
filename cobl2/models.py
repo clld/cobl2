@@ -16,6 +16,7 @@ from cobl2 import interfaces as cobl2_interfaces
 class Policie(Base, IdNameDescriptionMixin):
     pass
 
+
 @implementer(cobl2_interfaces.IClade)
 class Clade(Base, IdNameDescriptionMixin):
     pk = sa.Column(sa.Integer, primary_key=True)
@@ -79,7 +80,7 @@ class CognateClass(CustomModelMixin, Cognateset):
     proposedAsCognateTo_rel = sa.orm.relationship(
         'ProposedCognates',
         foreign_keys=[pk],
-        primaryjoin=pk==ProposedCognates.cc2_pk,
+        primaryjoin=pk == ProposedCognates.cc2_pk,
         backref=sa.orm.backref('cognateclass'))
 
     loan_source_pk = sa.Column(sa.Integer, sa.ForeignKey('cognateclass.pk'))
@@ -144,12 +145,14 @@ class Variety(CustomModelMixin, Language):
     def get_identifier_objs(self, type_):
         o = Identifier()
         if getattr(type_, 'value', type_) == str(IdentifierType.glottolog):
-            if not self.glottocode: return []
+            if not self.glottocode:
+                return []
             o.name = self.glottocode
             o.type = str(IdentifierType.glottolog)
             return [o]
         if getattr(type_, 'value', type_) == str(IdentifierType.iso):
-            if not self.iso: return []
+            if not self.iso:
+                return []
             o.name = self.iso
             o.type = str(IdentifierType.iso)
             return [o]
