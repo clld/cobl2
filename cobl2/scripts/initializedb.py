@@ -4,9 +4,9 @@ import os
 from collections import OrderedDict
 from itertools import groupby
 
-from sqlalchemy.orm import joinedload, joinedload_all
+from sqlalchemy.orm import joinedload
 from sqlalchemy import func, and_
-from clld.scripts.util import initializedb, Data
+from clld.cliutil import Data
 from clld.db.meta import DBSession
 from clld.db.models import common
 from clld.lib.bibtex import EntryType
@@ -49,8 +49,8 @@ def main(args):
         name="IE-CoR",
         publisher_name="Max Planck Institute for the Science of Human History",
         publisher_place="Jena",
-        publisher_url="http://www.shh.mpg.de",
-        license="http://creativecommons.org/licenses/by/4.0/",
+        publisher_url="https://www.shh.mpg.de",
+        license="https://creativecommons.org/licenses/by/4.0/",
         domain='iecor.clld.org',
         contact='iecorproject@gmail.com',
         jsondata={
@@ -359,7 +359,7 @@ def prime_cache(args):
 
     for meaning in DBSession.query(models.Meaning).options(
         joinedload(models.Meaning.cognateclasses),
-        joinedload_all(common.Parameter.valuesets, common.ValueSet.language)
+        joinedload(common.Parameter.valuesets, common.ValueSet.language)
     ):
         meaning.count_cognateclasses = len(meaning.cognateclasses)
         meaning.count_languages = len([vs.language for vs in meaning.valuesets])
@@ -367,13 +367,14 @@ def prime_cache(args):
                 if cc.is_loan])
 
     for meaning in DBSession.query(models.Meaning, func.count(common.Parameter.pk)) \
+            .join(common.Parameter) \
             .join(common.ValueSet) \
             .join(common.Value) \
             .group_by(models.Meaning.pk, common.Parameter.pk):
         meaning[0].count_lexemes = meaning[1]
 
     for language in DBSession.query(common.Language).options(
-        joinedload_all(common.Language.valuesets, common.ValueSet.references)
+        joinedload(common.Language.valuesets, common.ValueSet.references)
     ):
         language.count_meanings = len(language.valuesets)
         language.count_lexemes = len(DBSession.query(common.Value.id) \

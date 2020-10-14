@@ -20,9 +20,9 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'clldutils>=3.0',
-        'clld>=5.0',
-        'clldmpg>=3.1',
+        'clldutils>=3.5.0',
+        'clld>=6.0',
+        'clldmpg>=3.4.0',
         'clld-cognacy-plugin>=0.2',
         'clld-phylogeny-plugin>=1.4.0',
         'markdown',
