@@ -155,11 +155,7 @@ class CoblCognateSetId(IdCol):
     def format(self, item):
         obj = super(CoblCognateSetId, self).format(item)
         if item.color:
-            if item.root_form_calc or item.root_language_calc:
-                return '<span style="padding:0px 2px;"><i>%s</i></span><span style="border-left:12px solid %sEE;padding-left:5px"></span>' % (
-                    obj, item.color)
-            else:
-                return '<span style="padding:0px 2px;">%s</span><span style="border-left:12px solid %sEE;padding-left:5px"></span>' % (
+            return '<span style="padding:0px 2px;">%s</span><span style="border-left:12px solid %sEE;padding-left:5px"></span>' % (
                     obj, item.color)
         return obj
 
@@ -259,14 +255,14 @@ class CoblRootFormCol(Col):
     def format(self, item):
         if item.root_form:
             return item.root_form
-        return '<i>%s</i>' % (item.root_form_calc)
+        return item.root_form_calc
 
 
 class CoblRootLanguageCol(Col):
     def format(self, item):
         if item.root_language:
             return item.root_language
-        return '<i>%s</i>' % (item.root_language_calc)
+        return item.root_language_calc
 
 class CognatesetColorCol(LinkCol):
     __kw__ = dict(bSearchable=False)
@@ -280,11 +276,7 @@ class CognatesetColorCol(LinkCol):
     def format(self, item):
         obj = super(CognatesetColorCol, self).format(item)
         if item.cognates[0].cognateset.color:
-            if item.cognates[0].cognateset.root_form_calc or item.cognates[0].cognateset.root_language_calc:
-                return '<div style="background-color:%s33;padding:0px 2px;"><i>%s</i></div>' % (
-                    item.cognates[0].cognateset.color, obj)
-            else:
-                return '<div style="background-color:%s33;padding:0px 2px;">%s</div>' % (
+            return '<div style="background-color:%s33;padding:0px 2px;">%s</div>' % (
                     item.cognates[0].cognateset.color, obj)
         return obj
 
