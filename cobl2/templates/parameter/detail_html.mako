@@ -6,9 +6,9 @@
 <h2>${_('Parameter')}: ${ctx.name}</h2>
 % if ctx.description_md or ctx.description:
     <div id="meaning-more">
-    <%util:accordion_group eid="acc-a" parent="meaning-more" title="${_('Definition')}" open="True">
+    <%util:accordion_group eid="acc-a" parent="meaning-more" title="${_('IE-CoR Definition')}" open="True">
         % if ctx.description_md:
-            <p>${u.markdown_remove_links(ctx.description_md)|n}</p>
+            <p>${u.markdown_handle_links(request, ctx.description_md)|n}</p>
         % endif
         % if ctx.description:
             <h4>Disambiguation</h4>${ctx.description}

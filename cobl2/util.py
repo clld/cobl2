@@ -13,11 +13,21 @@ from cobl2.adapters import CognateClassTree
 
 assert markdown
 
-def markdown_remove_links(m):
-    return markdown(re.sub(r'\[(.+?)\]\(.+?\)', r'\1', m.replace('\\n', '\n')))
+
+def markdown_handle_links(req, m):
+    for lnk in re.findall(r'(\[(.+?)\]\(.+?\))', m):
+        # create links to parameters/...
+        if 'wiki/Meaning:-' in lnk[0]:
+            m = m.replace(lnk[0], link(req, lnk[1], rsc='parameter', label=lnk[1]))
+        # delete links
+        else:
+            m = m.replace(lnk[0], lnk[1])
+    return markdown(m.replace('\\n', '\n'))
+
 
 def markdown_policies(m):
     return markdown(m.replace('\\n', '\n'))
+
 
 def table_of_policies(request):
     q = DBSession.query(Policie.name, Policie.id).order_by(Policie.pk).all()
@@ -28,11 +38,14 @@ def table_of_policies(request):
         r.append(HTML.br())
     return ''.join(r)
 
+
 def policie_index_html(context=None, request=None, **kw):
     return {'table_of_policies': table_of_policies(request)}
 
+
 def policie_detail_html(context=None, request=None, **kw):
     return {'table_of_policies': table_of_policies(request)}
+
 
 def source_detail_html(context=None, request=None, **kw):
     return {'referents': get_referents(
@@ -60,14 +73,18 @@ class CladeMultiSelect(MultiSelect):
             'data': [self.format_result(p) for p in self.query()],
             'multiple': True}
 
+
 def cognateset_index_html(context=None, request=None, **kw):
     return dict(select=CladeMultiSelect(context, request))
+
 
 def cognateset_snippet_html(context=None, request=None, **kw):
     return {'revisors': get_revisors(context, request)}
 
+
 def cognateset_detail_html(context=None, request=None, **kw):
     return {'revisors': get_revisors(context, request)}
+
 
 def get_revisors(context=None, request=None, **kw):
     res = []
@@ -78,11 +95,13 @@ def get_revisors(context=None, request=None, **kw):
             res.append(HTML.a(f.name, href='%s/%s' % (request.route_url('contributors'), r)))
     return ', '.join(res)
 
+
 def parameter_detail_html(request=None, context=None, **kw):
     return {
         'tree1': CognateClassTree(request, context, Phylogeny.get('1')),
         'tree2': CognateClassTree(request, context, Phylogeny.get('2')),
     }
+
 
 def dataset_detail_html(context=None, request=None, **kw):
     contributor_names = [
@@ -107,13 +126,15 @@ def dataset_detail_html(context=None, request=None, **kw):
         'Michiel de Vaan'
     ]
     return {
-        'main_contributors': DBSession.query(Contributor)\
-                    .filter(Contributor.name.in_(contributor_names))
+        'main_contributors': DBSession.query(Contributor).filter(
+            Contributor.name.in_(contributor_names))
     }
 
+
 def cobl_linked_cognateclass(req, obj):
-    return HTML.span((HTML.i if obj.root_form_calc else HTML.span)\
-        (link(req, obj)), style="background-color:{0}33".format(obj.color))
+    return HTML.span((HTML.i if obj.root_form_calc else HTML.span)
+                     (link(req, obj)), style="background-color:{0}33".format(obj.color))
+
 
 def cobl_linked_references(req, obj, comments=False):
     chunks = []
@@ -150,4 +171,3 @@ def cobl_linked_references(req, obj, comments=False):
         if chunks:
             return HTML.span(*chunks)
     return ''
-
