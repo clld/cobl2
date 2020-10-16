@@ -225,6 +225,7 @@ def main(args):
             ideophonic=row['Ideophonic'] or None,
             parallel_derivation=row['parallelDerivation'] or None,
             revised_by=','.join(row['revised_by']) or None,
+            superset_id=int(row['supersetid']) if row['supersetid'] else None,
         )
         for src in row['Source']:
             sid, pages = ds.sources.parse(src)

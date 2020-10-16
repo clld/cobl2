@@ -255,9 +255,14 @@ class CognatesetCol(LinkCol):
 
 class CoblRootFormCol(Col):
     def format(self, item):
+        if item.superset_id:
+            cp = '<span title="Same cognate set used in different meanings. [IE-CoR \'super-set\' ID {1}]" style="border-left:6px solid {0};padding-left:5px"></span>'.format(
+                item.get_superset_color(), item.superset_id)
+        else:
+            cp = '<span style="border-left:6px solid #ffffff00;padding-left:5px"></span>'
         if item.root_form:
-            return item.root_form
-        return item.root_form_calc
+            return '{0}{1}'.format(cp, item.root_form)
+        return '{0}{1}'.format(cp, item.root_form_calc)
 
 
 class CoblRootLanguageCol(Col):
