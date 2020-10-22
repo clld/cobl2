@@ -63,8 +63,7 @@
     </div>
 % endif
 
-% if ctx.comment or ctx.justification:
-    <div style="float: left">
+    <div style="float: left;width:70%">
         <dl>
           % if ctx.comment:
             <dt>${_('Notes')}</dt>
@@ -84,7 +83,6 @@
           % endif
         </dl>
     </div>
-% endif
 </div>
 
 % if ctx.description:
