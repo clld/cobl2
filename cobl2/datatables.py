@@ -390,7 +390,7 @@ class Forms(value.Values):
                 Col(self, 'phonetic', model_col=Lexeme.phonetic),
                 Col(self, 'phonemic', model_col=Lexeme.phonemic),
                 Col(self, 'native_script', model_col=Lexeme.native_script),
-                CognatesetCol(self, 'cognate_class', sTitle='Cognate set'),
+                CognatesetColorCol(self, 'cognate_class', sTitle='Cognate&nbsp;set&nbsp;&nbsp;&nbsp;&nbsp;'),
                 BoolCol(self, 'is_loan', model_col=CognateClass.is_loan,
                         get_object=lambda i: i.cognates[0].cognateset,
                         sTitle='loan?', sTooltip='is cognate set marked as loan event'),

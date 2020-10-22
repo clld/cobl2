@@ -8,7 +8,7 @@
 ${request.get_datatable('values', h.models.Value, language=ctx).render()}
 
 <%def name="sidebar()">
-  <div style="margin-left: 5px">
+  <div style="float: right;width: 90%">
     ${util.codes()}
     <div style="clear: right;"> </div>
     <div class="well well-small">
