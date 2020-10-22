@@ -26,33 +26,25 @@
 
 <div style='float:left;margin-left:30px'>
     <dl>
-        <dt>${_('Romanised orthography')}</dt>
         % if ctx.name:
+          <dt>${_('Romanised orthography')}</dt>
           <dd>${ctx.name}</dd>
-        % else:
-          <dd>&nbsp;</dd>
         % endif
-        <dt>${_('Native script')}</dt>
         % if ctx.native_script:
+          <dt>${_('Native script')}</dt>
           <dd>${ctx.native_script}</dd>
-        % else:
-          <dd>&nbsp;</dd>
         % endif
-        <dt>${_('Phonetic')}</dt>
         % if ctx.phonetic:
+          <dt>${_('Phonetic')}</dt>
           <dd>${ctx.phonetic}</dd>
-        % else:
-          <dd>&nbsp;</dd>
         % endif
-        <dt>${_('Phonemic')}</dt>
         % if ctx.phonemic:
+          <dt>${_('Phonemic')}</dt>
           <dd>${ctx.phonemic}</dd>
-        % else:
-          <dd>&nbsp;</dd>
         % endif
         % if ctx.url:
-            <dt>${_('URL')}</dt>
-            <dd>${h.external_link(ctx.url, label=ctx.url, target='_new')}</dd>
+          <dt>${_('URL')}</dt>
+          <dd>${h.external_link(ctx.url, label=ctx.url, target='_new')}</dd>
         % endif
     </dl>
 </div>
