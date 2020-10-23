@@ -65,10 +65,6 @@
 
     <div style="float: left;width:70%">
         <dl>
-          % if ctx.comment:
-            <dt>${_('Notes')}</dt>
-            <dd>${ctx.comment | n}</dd>
-          % endif
           % if ctx.justification:
             <dt>${_('Justification')}</dt>
             <dd>${ctx.justification | n}</dd>
