@@ -8,6 +8,7 @@
 ${request.get_datatable('values', h.models.Value, language=ctx).render()}
 
 <%def name="sidebar()">
+  <div style="float: right;width: 90%">
     ${util.codes()}
     <div style="clear: right;"> </div>
     <div class="well well-small">
@@ -57,6 +58,6 @@ ${request.get_datatable('values', h.models.Value, language=ctx).render()}
         </%util:accordion_group>
     % endif
     </div>
-
+  </div
 ##    ${util.language_meta()}
 </%def>

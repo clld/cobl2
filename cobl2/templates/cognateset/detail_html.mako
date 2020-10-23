@@ -8,15 +8,15 @@
     <div style="float: left;margin-right: 30px;">
         <dl>
           % if ctx.root_form:
-            <dt>${_('IECoR reference form')}</dt>
+            <dt>${_('IE-CoR reference form')}</dt>
             <dd><i>${ctx.root_form}</i></dd>
           % endif
           % if ctx.root_language:
-            <dt>${_('IECoR reference language')}</dt>
+            <dt>${_('IE-CoR reference language')}</dt>
             <dd>${ctx.root_language}</dd>
           % endif
           % if ctx.root_gloss:
-            <dt>${_('Gloss in IECoR reference language')}</dt>
+            <dt>${_('Gloss in IE-CoR reference language')}</dt>
             <dd>${ctx.root_gloss}</dd>
           % endif
             <dt>${_('Ideophonic')}</dt>
@@ -63,13 +63,8 @@
     </div>
 % endif
 
-% if ctx.comment or ctx.justification:
-    <div style="float: left">
+    <div style="float: left;width:70%">
         <dl>
-          % if ctx.comment:
-            <dt>${_('Notes')}</dt>
-            <dd>${ctx.comment | n}</dd>
-          % endif
           % if ctx.justification:
             <dt>${_('Justification')}</dt>
             <dd>${ctx.justification | n}</dd>
@@ -84,7 +79,6 @@
           % endif
         </dl>
     </div>
-% endif
 </div>
 
 % if ctx.description:
