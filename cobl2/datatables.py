@@ -197,10 +197,10 @@ class CognateClasses(Cognatesets):
                                 sTitle='Meaning'))
         return cols + [
             CoblRootFormCol(self, 'Root_form', model_col=CognateClass.root_form,
-                            sTitle='IE-CoR ref. form',
+                            sTitle='<span style="white-space:nowrap;">IE-CoR ref. form&nbsp;</span>',
                             sTooltip='IE-CoR reference form'),
             CoblRootLanguageCol(self, 'Root_language', model_col=CognateClass.root_language,
-                                sTitle='IE-CoR ref. lang.',
+                                sTitle='<span style="white-space:nowrap;">IE-CoR ref. lang.&nbsp;</span>',
                                 sTooltip='IE-CoR reference language'),
             CoblCladesCol(self, 'count_clades', model_col=CognateClass.count_clades,
                           sTitle='# clades',
