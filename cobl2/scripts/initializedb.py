@@ -113,15 +113,6 @@ def main(args):
             concepticon_id=int(param['Concepticon_ID']) if param['Concepticon_ID'] != '0' else None,
         )
 
-    for row in ds['policies.csv']:
-        data.add(
-            models.Policie,
-            row['id'],
-            id=row['id'],
-            name=row['name'],
-            markup_description=row['markup_description'],
-        )
-
     for row in ds['clades.csv']:
         data.add(
             models.Clade,
@@ -138,8 +129,6 @@ def main(args):
             clade_name=row['clade_name'],
             short_name=row['short_name'],
             color=row['color'],
-            at_most=row['at_most'],
-            at_least=row['at_least'],
             distribution=row['distribution']
         )
 
@@ -166,6 +155,8 @@ def main(args):
             clade_name=row['clade_name'],
             glottocode=row['Glottocode'],
             historical=row['historical'],
+            earliest_timedepthbound=row['earliestTimeDepthBound'],
+            latest_timedepthbound=row['latestTimeDepthBound'],
             ascii_name=row['ascii_name'],
             iso=row['ISO639P3code'],
             lang_description=row['Description'],

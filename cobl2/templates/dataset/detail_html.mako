@@ -20,7 +20,7 @@
 
 <p>Data are compiled through the ‘CoR online database creation system’, by a consortium of language and branch experts across the Indo-European family, working together with cross-family cognacy specialists to determine cognate status.  </p>
 
-<p>All contributors have worked to a new and very explicit set of ${h.external_link('https://github.com/lingdb/CoBL/wiki/01--Policy-on-Selecting-Lexemes', label='protocols')} for lexeme determination in each language, and for cognacy determination, for the optimised IE-CoR set of 170 precisely (re)defined reference meanings.  The language data have effectively been entered entirely anew, and do not continue from previous databases (which had high rates of data errors and inconsistency).  IE-CoR also includes many new languages not covered by previous cognate databases for Indo-European.</p>
+<p>All contributors have worked to a new and very explicit set of protocols for lexeme determination in each language, and for cognacy determination, for the optimised IE-CoR set of 170 precisely (re)defined reference meanings.  The language data have effectively been entered entirely anew, and do not continue from previous databases (which had high rates of data errors and inconsistency).  IE-CoR also includes many new languages not covered by previous cognate databases for Indo-European.</p>
 
 <h4>Who We Are</h4>
 

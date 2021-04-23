@@ -22,6 +22,12 @@ ${request.get_datatable('values', h.models.Value, language=ctx).render()}
       % if ctx.historical:
         <dt>Historical</dt>
         <dd>yes</dd>
+        % if ctx.earliest_timedepthbound:
+          <dt>Earliest time depth bound</dt>
+          <dd>${ctx.earliest_timedepthbound}</dd>
+          <dt>Latest time depth bound</dt>
+          <dd>${ctx.latest_timedepthbound}</dd>
+        % endif
       % endif
       % if ctx.variety:
         <dt>Variety</dt>

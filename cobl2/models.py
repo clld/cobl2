@@ -17,11 +17,6 @@ SUPERSET_COLORS = ['#e6194b', '#3cb44b', '#ffe119', '#4363d8',
                    '#bcf60c', '#fabebe']
 
 
-@implementer(cobl2_interfaces.IPolicie)
-class Policie(Base, IdNameDescriptionMixin):
-    pass
-
-
 @implementer(cobl2_interfaces.IClade)
 class Clade(Base, IdNameDescriptionMixin):
     pk = sa.Column(sa.Integer, primary_key=True)
@@ -36,8 +31,6 @@ class Clade(Base, IdNameDescriptionMixin):
     clade_level2 = sa.Column(sa.Integer)
     clade_level3 = sa.Column(sa.Integer)
     short_name = sa.Column(sa.Unicode)
-    at_most = sa.Column(sa.Integer)
-    at_least = sa.Column(sa.Integer)
     distribution = sa.Column(sa.Unicode)
 
 
@@ -137,6 +130,8 @@ class Variety(CustomModelMixin, Language):
     clade_name = sa.Column(sa.Unicode)
     fossil = sa.Column(sa.Boolean, default=False)
     historical = sa.Column(sa.Boolean, default=False)
+    earliest_timedepthbound = sa.Column(sa.Unicode)
+    latest_timedepthbound = sa.Column(sa.Unicode)
     glottocode = sa.Column(sa.Unicode)
     ascii_name = sa.Column(sa.Unicode)
     iso = sa.Column(sa.Unicode)
