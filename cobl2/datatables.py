@@ -110,9 +110,9 @@ class CoblLanguages(Languages):
                            model_col=Variety.sort_order, bSearchable=False),
             CoblCladeCol(self, 'Clade', model_col=Variety.clade),
             LinkCol(self, 'name'),
-            HistoricBoolCol(self, 'historical', model_col=Variety.historical,
-                            sTooltip='Checked if language is marked as to be historical; when given in brackets the earliest and latest time depth bound',
-                            sDescription='Checked if language is marked as to be historical; when given in brackets the earliest and latest time depth bound'),
+            BoolCol(self, 'historical', model_col=Variety.historical,
+                sDescription='Language marked as "historical" with date calibration',
+                sTooltip='Language marked as "historical" with date calibration'),
             CoblGlottologCol(self, 'Glottocode', model_col=Variety.glottocode),
             Col(self, 'iso', model_col=Variety.iso, sTitle="ISO 639-3"),
             LinkToMapCol(self, 'm'),
@@ -460,18 +460,6 @@ class BoolCol(Col):
     def format(self, item):
         v = str(self.get_value(item))
         if v == 'True':
-            return '<span style="display:block; text-align:center; margin:0 auto;">✓</span>'
-        return ''
-
-
-class HistoricBoolCol(Col):
-    def format(self, item):
-        v = str(self.get_value(item))
-        if v == 'True':
-            if item.earliest_timedepthbound:
-                return '<span style="display:block; text-align:center; margin:0 auto;">✓ <small>({}-{})</small></span>'.format(
-                    item.earliest_timedepthbound, item.latest_timedepthbound
-                )
             return '<span style="display:block; text-align:center; margin:0 auto;">✓</span>'
         return ''
 

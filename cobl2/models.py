@@ -31,7 +31,6 @@ class Clade(Base, IdNameDescriptionMixin):
     clade_level2 = sa.Column(sa.Integer)
     clade_level3 = sa.Column(sa.Integer)
     short_name = sa.Column(sa.Unicode)
-    distribution = sa.Column(sa.Unicode)
 
 
 class Lexeme(CustomModelMixin, Value):
@@ -130,8 +129,12 @@ class Variety(CustomModelMixin, Language):
     clade_name = sa.Column(sa.Unicode)
     fossil = sa.Column(sa.Boolean, default=False)
     historical = sa.Column(sa.Boolean, default=False)
-    earliest_timedepthbound = sa.Column(sa.Unicode)
-    latest_timedepthbound = sa.Column(sa.Unicode)
+    distribution = sa.Column(sa.Unicode)
+    logNormalMean = sa.Column(sa.Integer)
+    logNormalOffset = sa.Column(sa.Integer)
+    logNormalStDev = sa.Column(sa.Float)
+    normalMean = sa.Column(sa.Integer)
+    normalStDev = sa.Column(sa.Integer)
     glottocode = sa.Column(sa.Unicode)
     ascii_name = sa.Column(sa.Unicode)
     iso = sa.Column(sa.Unicode)
