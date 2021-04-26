@@ -40,13 +40,13 @@ ${request.get_datatable('values', h.models.Value, language=ctx).render()}
         <dt><i>Language Date Calibration</i></dt>
         <dt>Distribution</dt>
         <dd>${ctx.distribution}</dd>
+        % if ctx.logNormalOffset:
+        <dt>Offset for log normal distribution</dt>
+        <dd>${ctx.logNormalOffset}</dd>
+        % endif
         % if ctx.logNormalMean:
         <dt>Mean for log normal distribution</dt>
         <dd>${ctx.logNormalMean}</dd>
-        % endif
-        % if ctx.logNormalOffset:
-        <dt>Offest for log normal distribution</dt>
-        <dd>${ctx.logNormalOffset}</dd>
         % endif
         % if ctx.logNormalStDev:
         <dt>Standard deviation for log normal distribution</dt>
