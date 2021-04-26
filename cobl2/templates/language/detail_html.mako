@@ -22,12 +22,6 @@ ${request.get_datatable('values', h.models.Value, language=ctx).render()}
       % if ctx.historical:
         <dt>Historical</dt>
         <dd>yes</dd>
-        % if ctx.earliest_timedepthbound:
-          <dt>Earliest time depth bound</dt>
-          <dd>${ctx.earliest_timedepthbound}</dd>
-          <dt>Latest time depth bound</dt>
-          <dd>${ctx.latest_timedepthbound}</dd>
-        % endif
       % endif
       % if ctx.variety:
         <dt>Variety</dt>
@@ -40,6 +34,32 @@ ${request.get_datatable('values', h.models.Value, language=ctx).render()}
       % if ctx.loc_justification:
         <dt>Note on geographical location</dt>
         <dd>${ctx.loc_justification}</dd>
+      % endif
+      % if ctx.distribution:
+        <br />
+        <dt><i>Language Date Calibration</i></dt>
+        <dt>Distribution</dt>
+        <dd>${ctx.distribution}</dd>
+        % if ctx.logNormalOffset:
+        <dt>Offset</dt>
+        <dd>${ctx.logNormalOffset}</dd>
+        % endif
+        % if ctx.logNormalMean:
+        <dt>Mean</dt>
+        <dd>${ctx.logNormalMean}</dd>
+        % endif
+        % if ctx.logNormalStDev:
+        <dt>Standard deviation</dt>
+        <dd>${ctx.logNormalStDev}</dd>
+        % endif
+        % if ctx.normalMean:
+        <dt>Mean</dt>
+        <dd>${ctx.normalMean}</dd>
+        % endif
+        % if ctx.normalStDev:
+        <dt>Standard deviation</dt>
+        <dd>${ctx.normalStDev}</dd>
+        % endif
       % endif
     </dl>
     </div>

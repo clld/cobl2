@@ -129,7 +129,6 @@ def main(args):
             clade_name=row['clade_name'],
             short_name=row['short_name'],
             color=row['color'],
-            distribution=row['distribution']
         )
 
     for row in ds['LanguageTable']:
@@ -155,8 +154,12 @@ def main(args):
             clade_name=row['clade_name'],
             glottocode=row['Glottocode'],
             historical=row['historical'],
-            earliest_timedepthbound=row['earliestTimeDepthBound'],
-            latest_timedepthbound=row['latestTimeDepthBound'],
+            distribution=row['distribution'],
+            logNormalMean=row['logNormalMean'],
+            logNormalOffset=row['logNormalOffset'],
+            logNormalStDev=row['logNormalStDev'],
+            normalMean=row['normalMean'],
+            normalStDev=row['normalStDev'],
             ascii_name=row['ascii_name'],
             iso=row['ISO639P3code'],
             lang_description=row['Description'],
