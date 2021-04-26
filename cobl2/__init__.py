@@ -71,5 +71,4 @@ def main(global_config, **settings):
     config.registry.registerUtility(link_attrs, ILinkAttrs)
     config.registry.registerUtility(CoblMapMarker(), IMapMarker)
     config.register_resource('clade', models.Clade, interfaces.IClade, True)
-    config.register_resource('policie', models.Policie, interfaces.IPolicie, True)
     return config.make_wsgi_app()
