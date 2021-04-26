@@ -41,23 +41,23 @@ ${request.get_datatable('values', h.models.Value, language=ctx).render()}
         <dt>Distribution</dt>
         <dd>${ctx.distribution}</dd>
         % if ctx.logNormalOffset:
-        <dt>Offset for log normal distribution</dt>
+        <dt>Offset</dt>
         <dd>${ctx.logNormalOffset}</dd>
         % endif
         % if ctx.logNormalMean:
-        <dt>Mean for log normal distribution</dt>
+        <dt>Mean</dt>
         <dd>${ctx.logNormalMean}</dd>
         % endif
         % if ctx.logNormalStDev:
-        <dt>Standard deviation for log normal distribution</dt>
+        <dt>Standard deviation</dt>
         <dd>${ctx.logNormalStDev}</dd>
         % endif
         % if ctx.normalMean:
-        <dt>Mean for normal distribution</dt>
+        <dt>Mean</dt>
         <dd>${ctx.normalMean}</dd>
         % endif
         % if ctx.normalStDev:
-        <dt>Standard deviation for normal distribution</dt>
+        <dt>Standard deviation</dt>
         <dd>${ctx.normalStDev}</dd>
         % endif
       % endif
