@@ -98,6 +98,23 @@ class CoblMeanings(Meanings):
         ]
 
 
+class HistoricBoolCol(Col):
+    def format(self, item):
+        v = str(self.get_value(item))
+        if v == 'True':
+            if item.distribution:
+                stats = ''
+                if item.distribution[0] == 'O':
+                    stats = '{}/{}/{}'.format(item.logNormalOffset, item.logNormalMean, item.logNormalStDev)
+                elif item.distribution[0] == 'N':
+                    stats = '{}/{}'.format(item.normalMean, item.normalStDev)
+                return '<span style="display:block; text-align:center; margin:0 auto;">✓ <span style="font-size:70%">({}:{})</span></span>'.format(
+                    item.distribution[0], stats
+                )
+            return '<span style="display:block; text-align:center; margin:0 auto;">✓</span>'
+        return ''
+
+
 class CoblLanguages(Languages):
     def get_default_options(self):
         opts = super(Languages, self).get_default_options()
@@ -110,9 +127,9 @@ class CoblLanguages(Languages):
                            model_col=Variety.sort_order, bSearchable=False),
             CoblCladeCol(self, 'Clade', model_col=Variety.clade),
             LinkCol(self, 'name'),
-            BoolCol(self, 'historical', model_col=Variety.historical,
-                sDescription='Language marked as "historical" with date calibration',
-                sTooltip='Language marked as "historical" with date calibration'),
+            HistoricBoolCol(self, 'historical', model_col=Variety.historical,
+                sDescription='Language marked as "historical" with date calibration (Type:{offset/}mean/std deviation)',
+                sTooltip='Language marked as "historical" with date calibration (Type:{offset/}mean/std deviation)'),
             CoblGlottologCol(self, 'Glottocode', model_col=Variety.glottocode),
             Col(self, 'iso', model_col=Variety.iso, sTitle="ISO 639-3"),
             LinkToMapCol(self, 'm'),
