@@ -41,23 +41,23 @@ ${request.get_datatable('values', h.models.Value, language=ctx).render()}
         <dt>Distribution</dt>
         <dd>${ctx.distribution}</dd>
         % if ctx.logNormalOffset:
-        <dt>Offset</dt>
+        <dt>Offset <i>(years before 2000 AD)</i></dt>
         <dd>${ctx.logNormalOffset}</dd>
         % endif
         % if ctx.logNormalMean:
-        <dt>Mean</dt>
+        <dt>Mean <i>(years additional to offset)</i></dt>
         <dd>${ctx.logNormalMean}</dd>
         % endif
         % if ctx.logNormalStDev:
-        <dt>Standard deviation</dt>
+        <dt>Standard deviation <i>(years)</i></dt>
         <dd>${ctx.logNormalStDev}</dd>
         % endif
         % if ctx.normalMean:
-        <dt>Mean</dt>
+        <dt>Mean <i>(years before 2000 AD)</i></dt>
         <dd>${ctx.normalMean}</dd>
         % endif
         % if ctx.normalStDev:
-        <dt>Standard deviation</dt>
+        <dt>Standard deviation <i>(years)</i></dt>
         <dd>${ctx.normalStDev}</dd>
         % endif
       % endif
