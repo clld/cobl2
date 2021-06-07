@@ -16,7 +16,7 @@
 
 <h4>IE-CoR:  for the <strong>I</strong>ndo-<strong>E</strong>uropean language family</h4>
 
-<p>CoR is a database structure model that can be extended to any language family.  It is applied first here to the Indo-European language family, as IE-CoR.  It succeeds and aspires to supersede the ${h.external_link('http://ielex.mpi.nl/', label='IELex')} database by ${h.external_link('http://katalog.uu.se/empinfo/?id=N14-1084', label='Michael Dunn')} &#8212; as used in high-profile and controversial articles by ${h.external_link('http://dx.doi.org/10.1126/science.1219669', label='Bouckaert et al. 2012')} in <em>Science</em> and ${h.external_link('http://dx.doi.org/10.1353/lan.2015.0005', label='Chang et al. 2015')} in <em>Language</em>, for example.  </p>
+<p>CoR is a database structure model that can be extended to any language family.  It is applied first here to the Indo-European language family, as IE-CoR.  It succeeds and aspires to supersede the IELex database by ${h.external_link('http://katalog.uu.se/empinfo/?id=N14-1084', label='Michael Dunn')} &#8212; as used in high-profile and controversial articles by ${h.external_link('http://dx.doi.org/10.1126/science.1219669', label='Bouckaert et al. 2012')} in <em>Science</em> and ${h.external_link('http://dx.doi.org/10.1353/lan.2015.0005', label='Chang et al. 2015')} in <em>Language</em>, for example.  </p>
 
 <p>Data are compiled through the ‘CoR online database creation system’, by a consortium of language and branch experts across the Indo-European family, working together with cross-family cognacy specialists to determine cognate status.  </p>
 
@@ -24,7 +24,7 @@
 
 <h4>Who We Are</h4>
 
-<p>The main authors of IE-CoR are ${h.external_link('https://shh-mpg.academia.edu/PaulHeggarty', label='Paul Heggarty')}, ${h.external_link('https://www.shh.mpg.de/employees/44299/25522', label='Cormac Anderson')} and ${h.external_link('https://shh-mpg.academia.edu/MatthewScarborough', label='Matthew Scarborough')}, at the ${h.external_link('https://www.shh.mpg.de/DLCE-research-overview', label='Dept of Linguistic and Cultural Evolution')} at the ${h.external_link('https://www.shh.mpg.de/en', label='Max Planck Institute for the Science of Human History')} in Jena, Germany.</p>
+<p>The main authors of IE-CoR are ${h.external_link('https://shh-mpg.academia.edu/PaulHeggarty', label='Paul Heggarty')}, ${h.external_link('https://www.shh.mpg.de/employees/44299/25522', label='Cormac Anderson')} and ${h.external_link('https://shh-mpg.academia.edu/MatthewScarborough', label='Matthew Scarborough')}, at the ${h.external_link('https://www.eva.mpg.de/linguistic-and-cultural-evolution/index/', label='Dept of Linguistic and Cultural Evolution')} at the ${h.external_link('https://www.eva.mpg.de', label='Max Planck Institute for Evolutionary Anthropology')} in Leipzig, Germany.</p>
 
 <p>CoR was designed by Heggarty and Anderson, who also designed the data collection methodology, and (especially Anderson) coordinated the linguistic coding team for IE-CoR.  Scarborough oversaw all determinations of cognacy at the deep Indo-European level.</p>
 
