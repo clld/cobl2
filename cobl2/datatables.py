@@ -57,7 +57,7 @@ class CoblFilterCladeNameCol(Col):
 class CoblCladeNameCol(Col):
     def format(self, item):
         # add to clade name the color code as left border
-        return '<span style="border-left:12px solid %s;padding-left:5px">%s</span>' % (
+        return '<span style="border-left:12px solid {};padding-left:5px">{}</span>'.format(
             item.color, item.clade_name)
 
 
@@ -168,7 +168,7 @@ class CoblGlottologCol(Col):
 class CoblCladeCol(Col):
     def format(self, item):
         # add to clade name the color code as left border
-        return '<span style="border-left:12px solid %s;padding-left:5px">%s</span>' % (
+        return '<span style="border-left:12px solid {};padding-left:5px">{}</span>'.format(
             item.color, item.clade)
 
 
@@ -176,7 +176,7 @@ class CoblCognateSetId(IdCol):
     def format(self, item):
         obj = super(CoblCognateSetId, self).format(item)
         if item.color:
-            return '<span style="padding:0px 2px;">%s</span><span style="border-left:12px solid %sEE;padding-left:5px"></span>' % (
+            return '<span style="padding:0px 2px;">{}</span><span style="border-left:12px solid {}EE;padding-left:5px"></span>'.format(
                 obj, item.color)
         return obj
 
@@ -254,8 +254,8 @@ class CoblCladesCol(Col):
             if c == '0':
                 colors.append('<div class="clade-col-block-item-white"></div>')
             else:
-                colors.append('<div class="clade-col-block-item" style="background-color:%s;"></div>' % (c))
-        return('<div style="display:block;">%i<span class="clade-col-block" title="Found in clades:\n%s">%s</span></div>' % (
+                colors.append('<div class="clade-col-block-item" style="background-color:{};"></div>'.format(c))
+        return('<div style="display:block;">{}<span class="clade-col-block" title="Found in clades:\n{}">{}</span></div>'.format(
             item.count_clades,
             item.clades,
             ''.join(colors)
@@ -303,7 +303,7 @@ class CognatesetColorCol(LinkCol):
     def format(self, item):
         obj = super(CognatesetColorCol, self).format(item)
         if item.cognates[0].cognateset.color:
-            return '<div style="background-color:%s33;padding:0px 2px;">%s</div>' % (
+            return '<div style="background-color:{}33;padding:0px 2px;">{}</div>'.format(
                 item.cognates[0].cognateset.color, obj)
         return obj
 
@@ -312,7 +312,7 @@ class CoblFormLanguageCol(LinkCol):
     def format(self, item):
         obj = super(CoblFormLanguageCol, self).format(item)
         # add to language name the color code as left border with tooltip
-        return '<span style="border-left:12px solid %s;padding-left:5px" title="Clade: %s">&nbsp;</span>%s' % (
+        return '<span style="border-left:12px solid {};padding-left:5px" title="Clade: {}">&nbsp;</span>{}'.format(
             item.valueset.language.color, item.valueset.language.clade, obj)
 
 
@@ -514,7 +514,7 @@ def cobl_linked_references(req, obj):
             chunks.append(HTML.span(
                 link(req, ref.source),
                 HTML.span(
-                    ': %s' % d if d else '',
+                    ': {}'.format(d) if d else '',
                     class_='pages'),
                 class_='citation',
             ))

@@ -3,6 +3,12 @@
 <%namespace name="util" file="util.mako"/>
 
 <h3>Downloads</h3>
-<p>
-  Please find here the underlying dataset ${h.external_link('https://github.com/lexibank/iecor', label='https://github.com/lexibank/iecor')}.
-</p>
+
+<div class="alert alert-info">
+    <p>
+        This IE-CoR web application serves the latest
+        ${h.external_link('https://github.com/lexibank/iecor/releases', label='released version')}
+        of data curated at
+        ${h.external_link('https://github.com/lexibank/iecor', label='cldf-datasets/iecor')}.
+    </p>
+</div>

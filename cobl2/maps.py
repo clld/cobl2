@@ -1,4 +1,5 @@
 from clld.web.maps import ParameterMap, Map
+from clld_cognacy_plugin.maps import CognatesetMap
 
 
 class MeaningMap(ParameterMap):
@@ -6,7 +7,7 @@ class MeaningMap(ParameterMap):
         return {
             'base_layer': 'Esri.WorldPhysical',
             'icon_size': 15,
-            'max_zoom': 9,
+            'max_zoom': 8,
         }
 
 
@@ -15,7 +16,24 @@ class LanguagesMap(Map):
         return {
             'base_layer': 'Esri.WorldPhysical',
             'icon_size': 15,
-            'max_zoom': 9,
+            'max_zoom': 8,
+        }
+
+
+class CoblCognateSetMap(CognatesetMap):
+    def get_default_options(self):
+        return {
+            'info_query': {
+                'parameter': self.ctx.pk,
+                'is_cognateset_map': True,
+            },
+            'hash': True}
+
+    def get_options(self):
+        return {
+            'base_layer': 'Esri.WorldPhysical',
+            'icon_size': 15,
+            'max_zoom': 8,
         }
 
 
