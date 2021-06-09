@@ -2,9 +2,12 @@
 <%namespace name="util" file="../util.mako"/>
 
 % if request.params.get('parameter'):
-    ## called for the info windows on parameter maps
-    ##<% valueset = h.DBSession.query(h.models.ValueSet).filter(h.models.ValueSet.parameter_pk == int(request.params['parameter'])).filter(h.models.ValueSet.language_pk == ctx.pk).first() %>
-    <% valueset = h.get_valueset(request, ctx) %>
+    ## called for the info windows on parameter and cognateset maps
+    % if request.params.get('is_cognateset_map'):
+      <% valueset = u.get_valueset_via_cognate(request, ctx) %>
+    % else:
+      <% valueset = h.get_valueset(request, ctx) %>
+    % endif
     <h4>${h.link(request, ctx)}</h4>
     % if valueset:
         <h5>${_('Value')}</h5>
