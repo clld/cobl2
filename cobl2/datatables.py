@@ -127,7 +127,7 @@ class CoblLanguages(Languages):
                            model_col=Variety.sort_order, bSearchable=False),
             CoblCladeCol(self, 'Clade', model_col=Variety.clade),
             LinkCol(self, 'name'),
-            HistoricBoolCol(self, 'historical',model_col=Variety.historical,
+            HistoricBoolCol(self, 'historical', model_col=Variety.historical,
                 sDescription='Language marked as "historical" with date calibration (Type:{offset/}mean/std deviation)',
                 sTooltip='Language marked as "historical" with date calibration (Type:{offset/}mean/std deviation)'),
             CoblGlottologCol(self, 'Glottocode', model_col=Variety.glottocode),
