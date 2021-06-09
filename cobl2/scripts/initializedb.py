@@ -97,11 +97,11 @@ def main(args):
 
     def parse_links(m):
         try:
-            return '<a href="%s%s">%s</a>' % (
+            return '<a href="{}{}">{}</a>'.format(
                 link_map[m.group('type')], m.group('id'), m.group('label'))
         except KeyError:
-            print("parse_links: type error in '%s'" % (":".join(m.groups())))
-            return '[%s](%s-%s)' % (m.group('label'), m.group('type'), m.group('id'))
+            print("parse_links: type error in '{}'".format(":".join(m.groups())))
+            return '[{}]({}-{})'.format(m.group('label'), m.group('type'), m.group('id'))
 
     for param in ds['ParameterTable']:
         data.add(

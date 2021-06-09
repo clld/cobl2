@@ -74,7 +74,7 @@ def get_revisors(context=None, request=None, **kw):
         return None
     for r in context.revised_by.split(','):
         for f in DBSession.query(Author).filter(Author.id == r):
-            res.append(HTML.a(f.name, href='%s/%s' % (request.route_url('contributors'), r)))
+            res.append(HTML.a(f.name, href='{}/{}'.format(request.route_url('contributors'), r)))
     return ', '.join(res)
 
 
@@ -145,9 +145,9 @@ def cobl_linked_references(req, obj, comments=False):
                 if ref.description:
                     d = ref.description.split('{')
                     if len(d) == 1:
-                        r += HTML.span(": %s" % (d[0] if d[0] else ''), class_='pages')
+                        r += HTML.span(": {}".format(d[0] if d[0] else ''), class_='pages')
                     else:
-                        r += HTML.span(": %s" % (d[0] if d[0] else ''), class_='pages')
+                        r += HTML.span(": {}".format(d[0] if d[0] else ''), class_='pages')
                         if d[1]:
                             r += HTML.blockquote(d[1][:-1])
                 chunks.append(HTML.li(r))
@@ -162,7 +162,7 @@ def cobl_linked_references(req, obj, comments=False):
                 chunks.append(HTML.span(
                     link(req, ref.source),
                     HTML.span(
-                        ': %s' % d if d else '',
+                        ': {}'.format(d) if d else '',
                         class_='pages'),
                     class_='citation',
                 ))
