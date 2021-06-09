@@ -13,6 +13,7 @@ import pytest
         ('get_html', '/languages/albanianstandard.snippet.html?parameter=2688'),
         ('get_html', '/languages/albanianstandard.snippet.html'),
         ('get_html', '/languages.geojson?layer=id'),
+        ('get_html', '/languages'),
         ('get_html', '/clades'),
         ('get_html', '/contributors'),
         ('get_html', '/contributors/1'),
@@ -30,6 +31,7 @@ import pytest
         ('get_html', '/cognatesets/5007.snippet.html'),
         ('get_html', '/values?sSearch_1=Albanian'),
         ('get_html', '/values/7-208-1'),
+        ('get_html', '/values'),
     ])
 def test_pages(app, method, path):
     getattr(app, method)(path)
