@@ -7,28 +7,34 @@
 <div class="container-fluid">
     <div style="float: left;margin-right: 30px;">
         <dl>
-          % if ctx.root_form:
-            <dt>${_('IE-CoR reference form')}</dt>
-            <dd><i>${ctx.root_form}</i></dd>
+          % if ctx.root_form_calc:
+            <dt>${_('IE-CoR reference form')}:</dt>
+            <dd><i>${ctx.root_form_calc}</i></dd>
+          % elif ctx.root_form:
+            <dt>${_('IE-CoR reference form')}:</dt>
+            <dd>${ctx.root_form}</dd>
           % endif
-          % if ctx.root_language:
-            <dt>${_('IE-CoR reference language')}</dt>
+          % if ctx.root_language_calc:
+            <dt>${_('IE-CoR reference language')}:</dt>
+            <dd><i>${ctx.root_language_calc}</i></dd>
+          % elif ctx.root_language:
+            <dt>${_('IE-CoR reference language')}:</dt>
             <dd>${ctx.root_language}</dd>
           % endif
           % if ctx.root_gloss:
-            <dt>${_('Gloss in IE-CoR reference language')}</dt>
+            <dt>${_('Gloss in IE-CoR reference language')}:</dt>
             <dd>${ctx.root_gloss}</dd>
           % endif
-            <dt>${_('Ideophonic')}</dt>
+            <dt>${_('Ideophonic')}:</dt>
             <dd>${_('yes') if ctx.ideophonic else _('no')}</dd>
-            <dt>${_('Parallel derivation')}</dt>
+            <dt>${_('Parallel derivation')}:</dt>
             <dd>${_('yes') if ctx.parallel_derivation else _('no')}</dd>
           % if ctx.cognates[0].doubt:
-            <dt>${_('Dubious set')}</dt>
+            <dt>${_('Dubious set')}:</dt>
             <dd>yes</dd>
           % endif
           % if ctx.proposedAsCognateTo:
-            <dt>${_('Proposed as cognate to')}</dt>
+            <dt>${_('Proposed as cognate to')}:</dt>
             <dd><a href="${request.route_url('cognatesets')}/${ctx.proposedAsCognateTo[0].cognateclass[0].id}">
                 ${ctx.proposedAsCognateTo[0].cognateclass[0]}</a>
                 <i>scale:</i> ${ctx.proposedAsCognateTo[0].scale}</dd>
@@ -39,24 +45,24 @@
 % if ctx.is_loan:
     <div style="float: left;margin-right: 30px;">
         <dl>
-            <dt>${_('Loan event')}</dt>
+            <dt>${_('Loan event')}:</dt>
             <dd>${_('yes')}</dd>
-            <dt>${_('Parallel loan event')}</dt>
+            <dt>${_('Parallel loan event')}:</dt>
             <dd>${_('yes') if ctx.parallel_loan_event else _('no')}</dd>
-          % if ctx.loan_source:
-            <dt>${_('Loan from')}</dt>
-            <dd>${h.link(req, ctx.loan_source)}</dd>
-          % endif
           % if ctx.loan_source_languoid:
-            <dt>${_('Loan source')}</dt>
+            <dt>${_('Loan source language')}:</dt>
             <dd>${ctx.loan_source_languoid}</dd>
           % endif
           % if ctx.loan_source_form:
-            <dt>${_('Source form in loan language')}</dt>
+            <dt>${_('Source lexeme in loan source language')}:</dt>
             <dd>${ctx.loan_source_form}</dd>
           % endif
+          % if ctx.loan_source:
+            <dt>${_('Loan source lexeme belongs to cognate set')}:</dt>
+            <dd>${h.link(req, ctx.loan_source)}</dd>
+          % endif
           % if ctx.loan_notes:
-            <dt>${_('Loan notes')}</dt>
+            <dt>${_('Loan notes')}:</dt>
             <dd>${ctx.loan_notes}</dd>
           % endif
         </dl>
@@ -66,15 +72,15 @@
     <div style="float: left;width:70%">
         <dl>
           % if ctx.justification:
-            <dt>${_('Justification')}</dt>
+            <dt>${_('Justification')}:</dt>
             <dd>${ctx.justification | n}</dd>
           % endif
           % if ctx.clades:
-            <dt>${_('Found in clades')}</dt>
+            <dt>${_('Found in clades')}:</dt>
             <dd>${ctx.clades}</dd>
           % endif
           % if revisors:
-            <dt>${_('Revised by')}</dt>
+            <dt>${_('Revised by')}:</dt>
             <dd>${revisors|n}</dd>
           % endif
         </dl>
