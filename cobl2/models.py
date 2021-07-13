@@ -103,14 +103,9 @@ class CognateClass(CustomModelMixin, Cognateset):
     meaning_rel = sa.orm.relationship('Meaning', viewonly=True)
 
     def __str__(self):
-        if self.root_form:
-            res = self.root_form
-        elif self.root_form_calc:
-            res = self.root_form_calc
+        res = self.root_form if self.root_form else ''
         if self.root_language:
             res += ' [{0}]'.format(self.root_language)
-        elif self.root_language_calc:
-            res += ' [{0}]'.format(self.root_language_calc)
         if len(res) > 0:
             return res
         return Cognateset.__str__(self)

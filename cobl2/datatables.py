@@ -236,13 +236,17 @@ class CognateClasses(Cognatesets):
             BoolCol(self, 'parallel_derivation', model_col=CognateClass.parallel_derivation,
                     sTitle='pll deriv.?',
                     sTooltip='is cognate set marked as parallel derivation'),
-            Col(self, 'Loan_source', model_col=CognateClass.loan_source_languoid),
+            Col(self, 'Loan_source', model_col=CognateClass.loan_source_languoid,
+                    sTitle='loan src lang.',
+                    sTooltip='loan source language'),
             LinkCol(
                 self,
                 'loaned_from',
                 sClass='left',
                 model_col=CognateClass.loan_source_pk,
-                get_object=lambda cc: cc.loan_source),
+                get_object=lambda cc: cc.loan_source,
+                sTitle='src lex cogset.',
+                sTooltip='loan source lexeme belongs to cognate set'),
             DetailsRowLinkCol(self, 'more'),
         ]
 
@@ -279,16 +283,16 @@ class CoblRootFormCol(Col):
                 item.get_superset_color(), item.superset_id)
         else:
             cp = '<span style="border-left:6px solid #ffffff00;padding-left:5px"></span>'
-        if item.root_form:
-            return '{0}{1}'.format(cp, item.root_form)
-        return '{0}{1}'.format(cp, item.root_form_calc)
+        if item.root_form_calc:
+            return '{0}<i>{1}</i>'.format(cp, item.root_form_calc)
+        return '{0}{1}'.format(cp, item.root_form)
 
 
 class CoblRootLanguageCol(Col):
     def format(self, item):
-        if item.root_language:
-            return item.root_language
-        return item.root_language_calc
+        if item.root_language_calc:
+            return '<i>{0}</i>'.format(item.root_language_calc)
+        return item.root_language
 
 
 class CognatesetColorCol(LinkCol):
@@ -302,9 +306,13 @@ class CognatesetColorCol(LinkCol):
 
     def format(self, item):
         obj = super(CognatesetColorCol, self).format(item)
-        if item.cognates[0].cognateset.color:
+        icog = item.cognates[0].cognateset
+        if icog.color:
+            if icog.root_form_calc:
+                return '<div style="background-color:{}33;padding:0px 2px;"><i>{}</i></div>'.format(
+                    icog.color, obj)
             return '<div style="background-color:{}33;padding:0px 2px;">{}</div>'.format(
-                item.cognates[0].cognateset.color, obj)
+                icog.color, obj)
         return obj
 
 
