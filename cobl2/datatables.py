@@ -149,7 +149,7 @@ class CoblLanguages(Languages):
 
 
 class CoblSortIntCol(Col):
-    __kw__ = {'sTitle': ''}
+    __kw__ = {'sTitle': '', 'sTooltip': 'sort languages thematically by clades'}
 
     def order(self):
         return as_int(self.model_col)
@@ -380,7 +380,7 @@ class Forms(value.Values):
         opts = super(value.Values, self).get_default_options()
         opts['iDisplayLength'] = 200,
         if not self.parameter and not self.language:
-            opts['aaSorting'] = [[0, 'asc'], [2, 'asc'], [5, 'asc']]
+            opts['aaSorting'] = [[1, 'asc'], [0, 'asc'], [4, 'asc']]
         return opts
 
     def col_defs(self):
@@ -427,6 +427,8 @@ class Forms(value.Values):
                 # DetailsSourceRowLinkCol(self, 'source', button_text='source', sTitle='Source')
             ]
         return [
+            CoblSortIntCol(self, 'sort_order',
+                           model_col=Variety.sort_order, bSearchable=False),
             CoblFormSelectMeaningCol(
                 self,
                 'name',
@@ -454,10 +456,10 @@ class Forms(value.Values):
                 input_size='large',
                 sTooltip='Choose one or more languages (CTRL/⌘ + click)',
                 choices=get_distinct_values(Language.name)),
-            LinkCol(self, 'name', sTitle='Lexeme'),
-            Col(self, 'phonetic', model_col=Lexeme.phonetic),
-            Col(self, 'phonemic', model_col=Lexeme.phonemic),
+            LinkCol(self, 'name', sTitle='Romanised'),
             Col(self, 'native_script', model_col=Lexeme.native_script),
+            Col(self, 'phonemic', model_col=Lexeme.phonemic),
+            Col(self, 'phonetic', model_col=Lexeme.phonetic),
             CognatesetColorCol(self, 'cognate_class', sTitle='Cognate set'),
             BoolCol(self, 'is_loan', model_col=CognateClass.is_loan,
                     get_object=lambda i: i.cognates[0].cognateset,
