@@ -47,8 +47,8 @@ def main(args):
     dataset = common.Dataset(
         id=cobl2.__name__,
         name="IE-CoR",
-        publisher_name="Max Planck Institute for the Science of Human History",
-        publisher_place="Jena",
+        publisher_name="Max Planck Institute for Evolutionary Anthropology",
+        publisher_place="Leipzig",
         publisher_url="https://www.eva.mpg.de",
         license="https://creativecommons.org/licenses/by/4.0/",
         domain='iecor.clld.org',
