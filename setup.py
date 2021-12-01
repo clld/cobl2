@@ -21,10 +21,11 @@ setup(
     zip_safe=False,
     install_requires=[
         'clldutils>=3.9.0',
-        'clld>=8.0.0',
+        'clld>=8.0.1',
         'clldmpg>=4.2.0',
         'clld-cognacy-plugin>=0.2.1',
         'clld-phylogeny-plugin>=1.5.0',
+        'sqlalchemy>=1.4.27',
         'Markdown>=3.3.4',
     ],
     extras_require={
@@ -33,8 +34,8 @@ setup(
             'tox',
             'mock>=4.0.3',
             'psycopg2>=2.8.6',
-            'pytest>=6.2.3',
-            'pytest-clld>=1.0.2',
+            'pytest>=6.2.5',
+            'pytest-clld>=1.1.0',
             'pytest-mock>=3.5.1',
             'pytest-cov>=2.11.1',
             'coverage>=5.3',
