@@ -15,7 +15,6 @@ from clldutils.color import qualitative_colors, rgb_as_hex
 from clldutils.path import Path
 from clldutils.misc import slug
 from pycldf import Wordlist
-from clld_phylogeny_plugin.models import Phylogeny, TreeLabel, LanguageTreeLabel
 from clld_cognacy_plugin.models import Cognate, Cognateset
 from csvw.dsv import reader
 
@@ -25,21 +24,9 @@ from cobl2 import models
 import clld_cognacy_plugin.models
 
 
-data_file_path = Path(cobl2.__file__).parent / '../..' / 'iecor'
+data_file_path = Path(cobl2.__file__).parent.parent.parent.parent / 'lexibank' / 'iecor'
 
 ds = Wordlist.from_metadata(data_file_path / 'cldf' / 'cldf-metadata.json')
-
-photos = {
-    p.stem: p.as_posix() for p in
-    (Path(cobl2.__file__).parent / '../..' / 'CoBL-public' / 'cobl' / 'static' / 'contributors').iterdir()
-    if p.suffix == '.jpg'}
-for k, v in {
-    'Kümmel': 'Kuemmel',
-    'de Vaan': 'deVaan',
-    'Dewey-Findell': 'Dewey',
-}.items():
-    photos[k] = photos[v]
-
 
 def main(args):
     data = Data()
@@ -70,7 +57,7 @@ def main(args):
             id=row['ID'],
             name='{0} {1}'.format(row['First_Name'], row['Last_Name']),
             url=row['URL'],
-            photo=data_uri(photos[row['Last_Name']], 'image/jpg') if row['Last_Name'] in photos else None)
+            photo=None)
 
     for i, cid in enumerate(editors.values()):
         common.Editor(dataset=dataset, contributor=data['Author'][cid], ord=i + 1)
@@ -268,45 +255,6 @@ def main(args):
             doubt=row['Doubt'],
         )
 
-    l_by_gc = {}
-    for s in DBSession.query(models.Variety):
-        l_by_gc[s.glottocode] = s.pk
-
-    tree = Phylogeny(
-        id='1',
-        name='Bouckaert et al.',
-        description='',
-        newick=Path.read_text(data_file_path / 'raw' / 'bouckaert_et_al2012' / 'newick.txt'),
-    )
-    for k, taxon in enumerate(reader(data_file_path / 'raw' / 'bouckaert_et_al2012' / 'taxa.csv', namedtuples=True)):
-        label = TreeLabel(
-            id='{0}-{1}-{2}'.format(tree.id, slug(taxon.taxon), k + 1),
-            name=taxon.taxon,
-            phylogeny=tree,
-            description=taxon.glottocode)
-        if taxon.glottocode in l_by_gc:
-            LanguageTreeLabel(language_pk=l_by_gc[taxon.glottocode], treelabel=label)
-    DBSession.add(tree)
-
-    l_by_ascii = {}
-    for s in DBSession.query(models.Variety):
-        l_by_ascii[s.ascii_name] = s.pk
-
-    tree = Phylogeny(
-        id='2',
-        name='CoBL consensu',
-        description='',
-        newick=Path.read_text(data_file_path / 'raw' / 'ie122' / 'newick.txt'),
-    )
-    for k, taxon in enumerate(reader(data_file_path / 'raw' / 'ie122' / 'taxa.csv', namedtuples=True)):
-        label = TreeLabel(
-            id='{0}-{1}-{2}'.format(tree.id, slug(taxon.taxon), k + 1),
-            name=taxon.taxon,
-            phylogeny=tree)
-        if taxon.taxon in l_by_ascii:
-            LanguageTreeLabel(language_pk=l_by_ascii[taxon.taxon], treelabel=label)
-    DBSession.add(tree)
-
 
 def prime_cache(args):
     """If data needs to be denormalized for lookup, do that here.
@@ -363,8 +311,8 @@ def prime_cache(args):
                                                  if cc.is_loan])
 
     for meaning in DBSession.query(
-        models.Meaning, func.count(common.Parameter.pk))\
-            .join(common.Parameter).join(common.ValueSet).join(common.Value).group_by(
+        models.Meaning, func.count(models.Meaning.pk))\
+            .join(common.ValueSet).join(common.Value).group_by(
                 models.Meaning.pk, common.Parameter.pk):
         meaning[0].count_lexemes = meaning[1]
 

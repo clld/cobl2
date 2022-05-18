@@ -78,13 +78,6 @@ def get_revisors(context=None, request=None, **kw):
     return ', '.join(res)
 
 
-def parameter_detail_html(request=None, context=None, **kw):
-    return {
-        'tree1': CognateClassTree(request, context, Phylogeny.get('1')),
-        'tree2': CognateClassTree(request, context, Phylogeny.get('2')),
-    }
-
-
 def dataset_detail_html(context=None, request=None, **kw):
     contributor_names = [
         'Cormac Anderson',
