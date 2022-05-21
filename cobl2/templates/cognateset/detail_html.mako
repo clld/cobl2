@@ -91,6 +91,9 @@
 <p>${ctx.description}</p>
 % endif
 
+<div class="alert alert-info">
+    Found in ${ctx.count_clades} clade${clades_suf} by ${ctx.count_lexemes} lexeme${lexemes_suf}.
+</div>
 % if map_ or request.map:
 <div style="margin-top:30px">
 ${(map_ or request.map).render()}

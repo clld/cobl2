@@ -65,7 +65,18 @@ def cognateset_snippet_html(context=None, request=None, **kw):
 
 
 def cognateset_detail_html(context=None, request=None, **kw):
-    return {'revisors': get_revisors(context, request)}
+    return {
+        'revisors': get_revisors(context, request),
+        'clades_suf': 's' if context.count_clades > 1 else '',
+        'lexemes_suf': 's' if context.count_lexemes > 1 else '',
+    }
+
+
+def parameter_detail_html(context=None, request=None, **kw):
+    return {
+        'langs_suf': 's' if context.count_languages > 1 else '',
+        'cogclasses_suf': 's' if context.count_cognateclasses > 1 else '',
+    }
 
 
 def get_revisors(context=None, request=None, **kw):
