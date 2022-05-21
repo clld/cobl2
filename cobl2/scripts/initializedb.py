@@ -28,6 +28,7 @@ data_file_path = Path(cobl2.__file__).parent.parent.parent.parent / 'lexibank' /
 
 ds = Wordlist.from_metadata(data_file_path / 'cldf' / 'cldf-metadata.json')
 
+
 def main(args):
     data = Data()
 
