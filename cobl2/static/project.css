@@ -28,4 +28,9 @@
   display: inline-block;
   background-color: #ffffff00;
 }
-
+.accordion-toggle{
+  font-size:110%;
+}
+.accordion-inner{
+  font-size:110%;
+}
