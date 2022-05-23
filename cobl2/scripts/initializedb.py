@@ -264,6 +264,7 @@ def prime_cache(args):
     """
     ordered_clade_colors = {k: v for k, v in DBSession.query(models.Clade.clade_name, models.Clade.color)
                             .filter(models.Clade.short_name != '')
+                            .filter(models.Clade.short_name != 'IrcSW')
                             .order_by(models.Clade.clade_level0).all()}
     for _, cc in groupby(
             DBSession.query(models.CognateClass, models.Variety.clade_name)
