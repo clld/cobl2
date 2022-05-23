@@ -40,7 +40,11 @@ class CoblMapMarker(MapMarker):
         if IValueSet.providedBy(ctx):
             v = ctx.values[0]
             if v.cognates:
-                color = v.cognates[0].cognateset.color
+                if hasattr(req.root, 'cognates'):
+                    # cognate set map coloured by language clades
+                    color = ctx.language.color
+                else:
+                    color = v.cognates[0].cognateset.color
             else:
                 color = '#fff'
             if ctx.language.historical:

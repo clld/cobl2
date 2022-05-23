@@ -65,7 +65,18 @@ def cognateset_snippet_html(context=None, request=None, **kw):
 
 
 def cognateset_detail_html(context=None, request=None, **kw):
-    return {'revisors': get_revisors(context, request)}
+    return {
+        'revisors': get_revisors(context, request),
+        'clades_suf': 's' if context.count_clades > 1 else '',
+        'lexemes_suf': 's' if context.count_lexemes > 1 else '',
+    }
+
+
+def parameter_detail_html(context=None, request=None, **kw):
+    return {
+        'langs_suf': 's' if context.count_languages > 1 else '',
+        'cogclasses_suf': 's' if context.count_cognateclasses > 1 else '',
+    }
 
 
 def get_revisors(context=None, request=None, **kw):
@@ -76,13 +87,6 @@ def get_revisors(context=None, request=None, **kw):
         for f in DBSession.query(Author).filter(Author.id == r):
             res.append(HTML.a(f.name, href='{}/{}'.format(request.route_url('contributors'), r)))
     return ', '.join(res)
-
-
-def parameter_detail_html(request=None, context=None, **kw):
-    return {
-        'tree1': CognateClassTree(request, context, Phylogeny.get('1')),
-        'tree2': CognateClassTree(request, context, Phylogeny.get('2')),
-    }
 
 
 def dataset_detail_html(context=None, request=None, **kw):
