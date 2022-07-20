@@ -21,9 +21,10 @@ setup(
     zip_safe=False,
     install_requires=[
         'clldutils>=3.11.1',
-        'clld>=9.1.0',
+        'clld>=9.2.1',
         'clldmpg>=4.2.0',
         'clld-cognacy-plugin>=0.2.1',
+        'clld-phylogeny-plugin',
         'sqlalchemy>=1.4.35',
         'Markdown>=3.3.6',
     ],
