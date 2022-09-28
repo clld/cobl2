@@ -2,7 +2,7 @@
 
 <h2>Welcome to IE-CoR &#8230;</h2>
 
-<span style='font-size:110%'>&#8230; a new breed of language databases on <strong>Co</strong>gnate <strong>R</strong>elationships across language families, implemented here in the first instance to the <strong>I</strong>ndo-<strong>E</strong>uropean language family.</span>
+<span style='font-size:110%'>&#8230; a new of <strong>I</strong>ndo-<strong>E</strong>uropean <strong>Co</strong>gnate <strong>R</strong>elationships</span>
 
 <h4>What are <strong>Co</strong>gnate <strong>R</strong>elationships?</h4>
 
@@ -16,7 +16,7 @@
 
 <h4>IE-CoR:  for the <strong>I</strong>ndo-<strong>E</strong>uropean language family</h4>
 
-<p>CoR is a database structure model that can be extended to any language family.  It is applied first here to the Indo-European language family, as IE-CoR.  It succeeds and aspires to supersede the IELex database by ${h.external_link('http://katalog.uu.se/empinfo/?id=N14-1084', label='Michael Dunn')} &#8212; as used in high-profile and controversial articles by ${h.external_link('http://dx.doi.org/10.1126/science.1219669', label='Bouckaert et al. 2012')} in <em>Science</em> and ${h.external_link('http://dx.doi.org/10.1353/lan.2015.0005', label='Chang et al. 2015')} in <em>Language</em>, for example.  </p>
+<p>IE-CoR succeeds and aspires to supersede the IELex database by ${h.external_link('http://katalog.uu.se/empinfo/?id=N14-1084', label='Michael Dunn')} &#8212; as used in high-profile and controversial articles by ${h.external_link('http://dx.doi.org/10.1126/science.1219669', label='Bouckaert et al. 2012')} in <em>Science</em> and ${h.external_link('http://dx.doi.org/10.1353/lan.2015.0005', label='Chang et al. 2015')} in <em>Language</em>, for example.  </p>
 
 <p>Data are compiled through the ‘CoR online database creation system’, by a consortium of language and branch experts across the Indo-European family, working together with cross-family cognacy specialists to determine cognate status.  </p>
 
