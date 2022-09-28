@@ -2,7 +2,7 @@
 
 <h2>Welcome to IE-CoR &#8230;</h2>
 
-<span style='font-size:110%'>&#8230; a new of <strong>I</strong>ndo-<strong>E</strong>uropean <strong>Co</strong>gnate <strong>R</strong>elationships</span>
+<span style='font-size:110%'>&#8230; a new database of <strong>I</strong>ndo-<strong>E</strong>uropean <strong>Co</strong>gnate <strong>R</strong>elationships</span>
 
 <h4>What are <strong>Co</strong>gnate <strong>R</strong>elationships?</h4>
 
