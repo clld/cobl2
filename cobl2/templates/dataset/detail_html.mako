@@ -24,7 +24,7 @@
 
 <h4>Who We Are</h4>
 
-<p>The main authors of IE-CoR are ${h.external_link('https://shh-mpg.academia.edu/PaulHeggarty', label='Paul Heggarty')}, ${h.external_link('https://www.shh.mpg.de/employees/44299/25522', label='Cormac Anderson')} and ${h.external_link('https://shh-mpg.academia.edu/MatthewScarborough', label='Matthew Scarborough')}, at the ${h.external_link('https://www.eva.mpg.de/linguistic-and-cultural-evolution/index/', label='Dept of Linguistic and Cultural Evolution')} at the ${h.external_link('https://www.eva.mpg.de', label='Max Planck Institute for Evolutionary Anthropology')} in Leipzig, Germany.</p>
+<p>The main authors of IE-CoR are Paul Heggarty, Cormac Anderson and Matthew Scarborough, at the ${h.external_link('https://www.eva.mpg.de/linguistic-and-cultural-evolution/index/', label='Dept of Linguistic and Cultural Evolution')} at the ${h.external_link('https://www.eva.mpg.de', label='Max Planck Institute for Evolutionary Anthropology')} in Leipzig, Germany.</p>
 
 <p>CoR was designed by Heggarty and Anderson, who also designed the data collection methodology, and (especially Anderson) coordinated the linguistic coding team for IE-CoR.  Scarborough oversaw all determinations of cognacy at the deep Indo-European level.</p>
 
