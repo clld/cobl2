@@ -2,11 +2,13 @@
 
 <h3>Welcome to IE-CoR &#8230;</h3>
 
-<p>Please click to <strong>${h.external_link('https://www.science.org/stoken/author-tokens/ST-1344/full', label='download free our paper in Science')}</strong>. &nbsp;&nbsp;(Permitted link provided by <em>Science</em>.)</p>
+<p>Please click to <strong>${h.external_link('https://www.science.org/stoken/author-tokens/ST-1344/full', label='download free our paper in Science')}</strong>. &nbsp;&nbsp;(Permitted link provided by <em>Science</em>.)
+<br />
+Once on the <em>Science</em> page, click on the <strong>red pdf icon</strong>, to the right under the article title.</p>
 
 <p>&nbsp;&nbsp;<em><strong>Language trees with sampled ancestors support a hybrid model for the origin of Indo-European languages</strong></em>.</p>
 
-<p>&nbsp;&nbsp;Heggarty et al. (2023) &nbsp;—&nbsp; doi: 10.1126/science.abg0818 &nbsp;—&nbsp; entry on <em>Science</em> ${h.external_link('https://doi.org/10.1126/science.abg0818', label='here')} &nbsp;—&nbsp; support page ${h.external_link('https://paulheggarty.info/indoeuropean', label='here')}.</p>
+<p>&nbsp;&nbsp;Heggarty et al. (2023) &nbsp;—&nbsp; doi: 10.1126/science.abg0818 &nbsp;—&nbsp; supplement on <em>Science</em> ${h.external_link('https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.abg0818&file=science.abg0818_sm.pdf', label='here')} &nbsp;—&nbsp; support page ${h.external_link('https://paulheggarty.info/indoeuropean', label='here')}.</p>
 
 <p>The phylogenetic analyses and results reported in that paper are based on the IE-CoR database that you can now explore here.</p>
 
@@ -15,7 +17,7 @@
 
 <p>IE-CoR is a new breed of language databases on <strong>Co</strong>gnate <strong>R</strong>elationships across language families, implemented here in the first instance to the <strong>I</strong>ndo-<strong>E</strong>uropean language family.</p>
 
-<p>The IE-CoR database and the protocols followed in drawing it up are set out very extensively in the free online ${h.external_link('https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.abg0818&file=science.abg0818_sm.pdf', label='supplementary information')}, especially section 3.</p>
+<p>The IE-CoR database and the protocols followed in drawing it up are set out extensively in the free online ${h.external_link('https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.abg0818&file=science.abg0818_sm.pdf', label='supplementary information')}, especially section 3.</p>
 
 <p>The logic behind this new IE-CoR database, and a comparison with previous databases, are set out in ${h.external_link('https://www.annualreviews.org/doi/10.1146/annurev-linguistics-011619-030507', label='Cognacy Databases and Phylogenetic Research on Indo-European')}.</p>
 
@@ -27,7 +29,7 @@
 <p>&nbsp;</p>
 <h4>The IE-CoR Database System</h4>
 
-<p>IE-CoR uses a new database structure for exploring how languages relate to each other, in whether they still use cognate words in their ‘core’ vocabulary. The ‘core’ vocabulary referred to is a set of common and basic word meanings, such as ‘one’, ‘water’, ‘black’, ‘drink’, and so on. IE-CoR uses a new ‘Jena 170’ meaning set, based on a combination of three sets already widely used in linguistics: the Swadesh 100-meaning set, the Swadesh 200-meaning set, and the Leipzig-Jakarta 100-meaning set (they overlap heavily with each other, but not entirely). These three were combined, adapted and above all optimised to ensure the most consistent data-set. </p>
+<p>IE-CoR uses a new database structure for exploring how languages relate to each other, in whether they still use cognate words in their ‘core’ vocabulary. The ‘core’ vocabulary referred to is a set of common and basic word meanings, such as ‘one’, ‘water’, ‘black’, ‘drink’, and so on. IE-CoR uses a new ‘Jena 170’ meaning set, based on a combination of three sets already widely used in linguistics: the Swadesh 100-meaning set, the Swadesh 200-meaning set, and the Leipzig-Jakarta 100-meaning set. These three were combined, adapted and above all optimised to ensure the most consistent data-set. </p>
 
 <p>IE-CoR is tailored for qualitative as well as quantitative research purposes, and this data-exploration website allows users to search the rich linguistic data covered: cognate sets, orthography, morphology, phonemic and IPA phonetic transcriptions. It provides full citation of all cognate sets at the Indo-European level, and links to further resources.</p>
 
@@ -43,7 +45,7 @@
 <p>&nbsp;</p>
 <h4>Who We Are</h4>
 
-<p>The main authors of IE-CoR are ${h.external_link('https://shh-mpg.academia.edu/PaulHeggarty', label='Paul Heggarty')}, ${h.external_link('https://shh-mpg.academia.edu/CormacAnderson', label='Cormac Anderson')} and ${h.external_link('https://shh-mpg.academia.edu/MatthewScarborough', label='Matthew Scarborough')}, at the ${h.external_link('https://www.eva.mpg.de/linguistic-and-cultural-evolution', label='Dept of Linguistic and Cultural Evolution')}, initially at the former Max Planck Institute for the Science of Human History in Jena, Germany, in 2021 relocated to the ${h.external_link('https://www.eva.mpg.de', label='Max Planck Institute for the Evolutionary Anthropology')} in Leipzig, Germany.</p>
+<p>The main authors of IE-CoR are ${h.external_link('https://shh-mpg.academia.edu/PaulHeggarty', label='Paul Heggarty')}, ${h.external_link('https://shh-mpg.academia.edu/CormacAnderson', label='Cormac Anderson')} and ${h.external_link('https://shh-mpg.academia.edu/MatthewScarborough', label='Matthew Scarborough')}, while based at the ${h.external_link('https://www.eva.mpg.de/linguistic-and-cultural-evolution', label='Dept of Linguistic and Cultural Evolution')}, initially at the former Max Planck Institute for the Science of Human History in Jena, Germany, in 2021 relocated to the ${h.external_link('https://www.eva.mpg.de', label='Max Planck Institute for the Evolutionary Anthropology')} in Leipzig, Germany.</p>
 
 <p>IE-CoR was designed by Heggarty and Anderson, who also designed the data collection methodology, and (especially Anderson) coordinated the linguistic coding team for IE-CoR. Scarborough oversaw all determinations of cognacy at the deep Indo-European level.</p>
 
