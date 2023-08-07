@@ -8,7 +8,7 @@ Once on the <em>Science</em> page, click on the <strong>red pdf icon</strong>, t
 
 <p>&nbsp;&nbsp;<em><strong>Language trees with sampled ancestors support a hybrid model for the origin of Indo-European languages</strong></em>.</p>
 
-<p>&nbsp;&nbsp;Heggarty et al. (2023) &nbsp;—&nbsp; doi: 10.1126/science.abg0818 &nbsp;—&nbsp; supplement on <em>Science</em> ${h.external_link('https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.abg0818&file=science.abg0818_sm.pdf', label='here')} &nbsp;—&nbsp; support page ${h.external_link('https://paulheggarty.info/indoeuropean', label='here')}.</p>
+<p>&nbsp;&nbsp;Heggarty et al. (2023) &nbsp;—&nbsp; doi: 10.1126/science.abg0818 &nbsp;—&nbsp; supplement on <em>Science</em> ${h.external_link('https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.abg0818&file=science.abg0818_sm.pdf', label='here')}.</p>
 
 <p>The phylogenetic analyses and results reported in that paper are based on the IE-CoR database that you can now explore here.</p>
 
