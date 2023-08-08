@@ -2,8 +2,15 @@
 
 <h3>Welcome to IE-CoR &#8230;</h3>
 
-<p>Please click ${h.external_link('https://www.eva.mpg.de/linguistic-and-cultural-evolution/research/ie-cor/', label='here')} for more information.</p>
+<p>Please click for a <strong>${h.external_link('https://www.science.org/stoken/author-tokens/ST-1344/full', label='free download of our paper in Science')}</strong>. (permitted link, provided by <em>Science</em>).
+<br />
+Once on the <em>Science</em> page, click on the <strong>red pdf icon</strong>, to the right under the article title.</p>
 
+<p>&nbsp;&nbsp;<em><strong>Language trees with sampled ancestors support a hybrid model for the origin of Indo-European languages</strong></em>.</p>
+
+<p>&nbsp;&nbsp;Heggarty et al. (2023) &nbsp;—&nbsp; doi: 10.1126/science.abg0818 &nbsp;—&nbsp; supplement on <em>Science</em> ${h.external_link('https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.abg0818&file=science.abg0818_sm.pdf', label='here')}.</p>
+
+<p>The phylogenetic analyses and results reported in that paper are based on the IE-CoR database that you can now explore here.</p>
 <p>&nbsp;</p>
 <h4>What is IE-CoR?</h4>
 
@@ -55,4 +62,4 @@
 <li><p><strong>Cognacy determination</strong>: establishing, separately for each individual IE-CoR reference meaning, which of the (primary!) lexemes in different languages belong to the same cognate set, i.e. derive from the same source word by direct descent (not borrowing). In most cases, especially all 1600+ cognate sets that <a href="${request.route_url('cognatesets')}?sSearch_3=Proto-Indo-European">go back to Proto-Indo-European</a>, these cognacy determinations are supported by multiple citations of leading works in Indo-European linguistics, not least <a href="${request.route_url('sources')}/141">LIV²</a> and <a href="${request.route_url('sources')}/274">NIL</a>. This referencing was performed in consultation among various specialists in the IE-CoR team, especially by ${h.external_link('https://shh-mpg.academia.edu/MatthewScarborough', label='Matthew Scarborough')} at the Indo-European level, and with other experts at the level of individual major branches, e.g. by ${h.external_link('https://ajp.academia.edu/Lechos%C5%82awJocz', label='Lechosław Jocz')} for the Slavic branch.</p></li>
 </ol>
 
-<p>For full details on the IE-CoR protocols for lexeme and cognate determination, see respectively sections 3.5 and 3.6 of the ${h.external_link('https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.abg0818&file=science.abg0818_sm.pdf', label='supplementary information')} to the article Heggarty et al. (2023) in <em>Science</em>.</p>
+<p>For full details on the IE-CoR protocols for lexeme and cognate determination, see respectively sections 3.5 and 3.6 of the ${h.external_link('https://www.science.org/action/downloadSupplement?doi=10.1126%2Fscience.abg0818&file=science.abg0818_sm.pdf', label='supplementary information')} to the article Heggarty et al. (2023) in <em>Science</em> (see download link above).</p>
