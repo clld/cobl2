@@ -48,7 +48,7 @@ Once on the <em>Science</em> page, click on the <strong>red pdf icon</strong>, t
 
 <p>IE-CoR was designed by Heggarty and Anderson, who also designed the data collection methodology, and (especially Anderson) coordinated the linguistic coding team for IE-CoR. Scarborough oversaw all determinations of cognacy at the deep Indo-European level.</p>
 
-<p>The website and underlying database structure originated in the LEXdb system programmed by ${h.external_link('http://katalog.uu.se/empinfo/?id=N14-1084', label='Michael Dunn')}, but for IE-CoR have been entirely re-designed, re-programmed and hugely expanded by ${h.external_link('https://github.com/runjak', label='Jakob Runge')} and ${h.external_link('https://www.eva.mpg.de/linguistic-and-cultural-evolution/staff/hans-joerg-bibiko/', label='Hans-Jörg Bibiko')}. </p>
+<p>The website and underlying database structure originated in the LEXdb system programmed by ${h.external_link('http://katalog.uu.se/empinfo/?id=N14-1084', label='Michael Dunn')}, but for IE-CoR have been entirely re-designed, re-programmed and hugely expanded by ${h.external_link('https://runjak.codes/', label='Fiona Runge')} and ${h.external_link('https://www.eva.mpg.de/linguistic-and-cultural-evolution/staff/hans-joerg-bibiko/', label='Hans-Jörg Bibiko')}. </p>
 
 <p>The data for individual languages were provided by our many <a href="${request.route_url('contributors')}">contributing authors</a>.</p>
 
