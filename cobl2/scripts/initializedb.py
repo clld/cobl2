@@ -1,6 +1,5 @@
-import sys
 import re
-import os
+import sys
 from collections import OrderedDict
 from itertools import groupby
 
@@ -10,26 +9,16 @@ from clld.cliutil import Data
 from clld.db.meta import DBSession
 from clld.db.models import common
 from clld.lib.bibtex import EntryType
-from clld.web.util.helpers import data_uri
 from clldutils.color import qualitative_colors, rgb_as_hex
-from clldutils.path import Path
 from clldutils.misc import slug
-from pycldf import Wordlist
-from clld_cognacy_plugin.models import Cognate, Cognateset
-from csvw.dsv import reader
-
+import clld_cognacy_plugin.models
 
 import cobl2
 from cobl2 import models
-import clld_cognacy_plugin.models
-
-
-data_file_path = Path(cobl2.__file__).parent.parent.parent.parent / 'lexibank' / 'iecor'
-
-ds = Wordlist.from_metadata(data_file_path / 'cldf' / 'cldf-metadata.json')
 
 
 def main(args):
+    ds = args.cldf
     data = Data()
 
     dataset = common.Dataset(
@@ -331,8 +320,3 @@ def prime_cache(args):
                 spks.add(ref.source_pk)
         for spk in spks:
             DBSession.add(common.LanguageSource(language_pk=language.pk, source_pk=spk))
-
-
-if __name__ == '__main__':
-    initializedb(create=main, prime_cache=prime_cache)
-    sys.exit(0)

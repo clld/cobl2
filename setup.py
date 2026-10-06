@@ -27,6 +27,8 @@ setup(
         'clld-phylogeny-plugin',
         'sqlalchemy>=1.4.35',
         'Markdown>=3.4.3',
+        'pycldf',
+        'psycopg2',
     ],
     extras_require={
         'dev': ['flake8', 'waitress'],
