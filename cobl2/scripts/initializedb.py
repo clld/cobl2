@@ -50,7 +50,7 @@ def main(args):
             photo=None)
 
     for i, cid in enumerate(editors.values()):
-        common.Editor(dataset=dataset, contributor=data['Author'][cid], ord=i + 1)
+        DBSession.add(common.Editor(dataset=dataset, contributor=data['Author'][cid], ord=i + 1))
 
     for src in ds.sources.items():
         for invalid in ['isbn', 'part', 'institution']:

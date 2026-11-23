@@ -198,7 +198,7 @@ class CognateClasses(Cognatesets):
             query = query.filter(and_(*q))
         if self.parameter:
             query = query.filter(Meaning.id == self.parameter.id)
-        return query.distinct()
+        return query
 
     def get_default_options(self):
         opts = super(Cognatesets, self).get_default_options()
@@ -367,14 +367,14 @@ class Forms(value.Values):
     def base_query(self, query):
         query = value.Values.base_query(self, query)
         if not self.parameter and not self.language:
-            return query.join(Value.cognates, Cognate.cognateset).distinct()\
+            return query.join(Value.cognates).join(Cognate.cognateset).distinct()\
                 .join(ValueSet.parameter).join(ValueSet.language).options(
                     joinedload(Value.cognates),
                     joinedload(Value.cognates, Cognate.cognateset),
                     joinedload(Value.valueset, ValueSet.parameter),
                     joinedload(Value.valueset, ValueSet.language))
         else:
-            return query.join(Value.cognates, Cognate.cognateset).distinct()\
+            return query.join(Value.cognates).join(Cognate.cognateset).distinct()\
                 .options(
                     joinedload(Value.cognates),
                     joinedload(Value.cognates, Cognate.cognateset))
